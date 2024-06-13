@@ -1,0 +1,8 @@
+Had a couple bugs - this is to document what the causes were and how they were fixed.
+
+Chunks generating in front of the player - This was caused due to a difference in player coordinates and block coordinates - 
+1 block equalling 2 player coordinates.
+
+Crashes at higher render distances (12 -> 24) Not yet solved, but spent a long while trying to find the offender.
+Was looking in the wrong script. Something important to do on crashes : 
+Run the app, let it crash, dont check solely output, but also the Errors tab. 
