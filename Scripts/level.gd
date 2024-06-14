@@ -1,6 +1,7 @@
 extends Node3D
 
 var chunk_size = Vector3(16, 16, 16)
+var block_size = 2.0 # Each block is 2x2 world coordinates
 var blocks = {} # A dictionary to store block types at positions
 
 @export var texture_atlas: Texture2D
@@ -21,7 +22,7 @@ func _ready():
 func generate_terrain():
 	for x in range(chunk_size.x):
 		for z in range(chunk_size.z):
-			var height = int(noise.get_noise_2d(x, z) * (chunk_size.y / 2)) + (chunk_size.y / 2)
+			var height = int(noise.get_noise_2d(float(x), float(z)) * (chunk_size.y / 2)) + int(chunk_size.y / 2)
 			for y in range(height):
 				blocks[Vector3(x, y, z)] = "Stone"  # Example block type
 
@@ -60,18 +61,28 @@ func generate_chunk_mesh():
 		mesh_instance.material_override = material
 		
 		add_child(mesh_instance)
+		
+		# Add collision shapes for each block
+		for block_pos in blocks.keys():
+			add_block_collision(block_pos)
 
 func add_block_faces(vertices, normals, uvs, indices, position, block_type):
 	var base_index = vertices.size()
+	var scale = block_size  # Scale each block to be 2 units in size
 
-	# Faces are defined with correct vertex ordering to ensure correct normal orientation
 	var faces = [
-		[Vector3(0, 1, 0), [Vector3(0, 1, 0), Vector3(1, 1, 0), Vector3(1, 1, 1), Vector3(0, 1, 1)]], # Top
-		[Vector3(0, -1, 0), [Vector3(0, 0, 0), Vector3(0, 0, 1), Vector3(1, 0, 1), Vector3(1, 0, 0)]], # Bottom
-		[Vector3(1, 0, 0), [Vector3(1, 0, 0), Vector3(1, 0, 1), Vector3(1, 1, 1), Vector3(1, 1, 0)]], # Right
-		[Vector3(-1, 0, 0), [Vector3(0, 0, 0), Vector3(0, 1, 0), Vector3(0, 1, 1), Vector3(0, 0, 1)]], # Left
-		[Vector3(0, 0, 1), [Vector3(0, 0, 1), Vector3(1, 0, 1), Vector3(1, 1, 1), Vector3(0, 1, 1)]], # Front
-		[Vector3(0, 0, -1), [Vector3(0, 0, 0), Vector3(0, 1, 0), Vector3(1, 1, 0), Vector3(1, 0, 0)]] # Back
+		# Top face
+		[Vector3(0, 1, 0), [Vector3(0, 1, 0) * scale, Vector3(1, 1, 0) * scale, Vector3(1, 1, 1) * scale, Vector3(0, 1, 1) * scale]],
+		# Bottom face
+		[Vector3(0, -1, 0), [Vector3(0, 0, 0) * scale, Vector3(0, 0, 1) * scale, Vector3(1, 0, 1) * scale, Vector3(1, 0, 0) * scale]],
+		# Right face
+		[Vector3(1, 0, 0), [Vector3(1, 0, 0) * scale, Vector3(1, 0, 1) * scale, Vector3(1, 1, 1) * scale, Vector3(1, 1, 0) * scale]],
+		# Left face
+		[Vector3(-1, 0, 0), [Vector3(0, 0, 0) * scale, Vector3(0, 1, 0) * scale, Vector3(0, 1, 1) * scale, Vector3(0, 0, 1) * scale]],
+		# Front face
+		[Vector3(0, 0, 1), [Vector3(0, 0, 1) * scale, Vector3(0, 1, 1) * scale, Vector3(1, 1, 1) * scale, Vector3(1, 0, 1) * scale]],
+		# Back face
+		[Vector3(0, 0, -1), [Vector3(0, 0, 0) * scale, Vector3(1, 0, 0) * scale, Vector3(1, 1, 0) * scale, Vector3(0, 1, 0) * scale]]
 	]
 
 	for face in faces:
@@ -79,7 +90,7 @@ func add_block_faces(vertices, normals, uvs, indices, position, block_type):
 		var face_vertices = face[1]
 
 		for vertex in face_vertices:
-			vertices.append(position + vertex)
+			vertices.append((position * block_size) + vertex)  # Adjust position with block size
 			normals.append(normal)
 		
 		var uv_start = Vector2(0, 0)
@@ -102,6 +113,23 @@ func add_block_faces(vertices, normals, uvs, indices, position, block_type):
 		indices.append(base_index + 3)
 
 		base_index += 4
+
+func add_block_collision(position):
+	var static_body = StaticBody3D.new()
+	var collision_shape = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.extents = Vector3(block_size / 2, block_size / 2, block_size / 2)
+	collision_shape.shape = shape
+	
+	static_body.add_child(collision_shape)
+	
+	# Set the transform of StaticBody3D to position the collision shape
+	var transform = Transform3D()
+	transform.origin = position * block_size + Vector3(block_size / 2, block_size / 2, block_size / 2)
+	static_body.transform = transform
+	
+	add_child(static_body)
+
 
 func is_surface_block(pos):
 	var directions = [
