@@ -27,7 +27,6 @@ func normalize_uv(rect: Rect2, atlas_size: Vector2) -> Rect2:
 		rect.size / atlas_size
 	)
 
-
 # Define block types with normalized UV coordinates
 var BLOCK_TYPES = {
 	"Grass": BlockType.new("Grass", 
@@ -51,7 +50,6 @@ var BLOCK_TYPES = {
 func _ready():
 	# Load the texture atlas
 	texture_atlas = load("res://Textures/texture_atlas.png")
-	
 	
 	# Initialize the noise parameters
 	noise.seed = randi()
@@ -110,6 +108,8 @@ func generate_chunk_mesh():
 		# Add collision shapes for each block
 		for block_pos in blocks.keys():
 			add_block_collision(block_pos)
+		
+		print("Mesh generated with vertices: ", vertices.size(), " and indices: ", indices.size())
 
 func add_block_faces(vertices, normals, uvs, indices, position, block_type):
 	var base_index = vertices.size()
@@ -193,4 +193,42 @@ func is_surface_block(pos):
 			return true
 	return false
 
+func update_chunk_mesh():
+	# Clear previous children to remove old mesh and collision shapes
+	print("Clearing old mesh and collision shapes...")
+	for child in get_children():
+		if child is MeshInstance3D or child is StaticBody3D:
+			child.queue_free()
 
+	print("Old children cleared. Regenerating chunk mesh...")
+	generate_chunk_mesh()
+
+	# Verify camera and lighting
+	var camera = get_node("/root/Level/Player/Camera3D")
+	if camera:
+		print("Camera found: ", camera.name, " Position: ", camera.global_transform.origin)
+	else:
+		print("Error: Camera not found!")
+
+	var light = get_node("/root/Level/DirectionalLight3D")
+	if light:
+		print("Light found: ", light.name, " Position: ", light.global_transform.origin)
+	else:
+		print("Error: Light not found!")
+	
+
+
+func destroy_block(world_coordinate):
+	var position = (world_coordinate / block_size).floor()
+	print("Destroying block at grid position: ", position)
+	if blocks.has(position):
+		blocks.erase(position)
+		update_chunk_mesh()
+	else:
+		print("Error: No block found at ", position)
+
+func place_block(world_coordinate, block_type):
+	var position = (world_coordinate / block_size).floor()
+	print("Placing block at grid position: ", position, " with type: ", block_type)
+	blocks[position] = block_type
+	update_chunk_mesh()
