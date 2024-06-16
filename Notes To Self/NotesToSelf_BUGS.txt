@@ -6,3 +6,7 @@ Chunks generating in front of the player - This was caused due to a difference i
 Crashes at higher render distances (12 -> 24) Not yet solved, but spent a long while trying to find the offender.
 Was looking in the wrong script. Something important to do on crashes : 
 Run the app, let it crash, dont check solely output, but also the Errors tab. 
+
+
+When I was trying to disable the mipmapping and filtering to make the textures not blurry, it was done through the use of the
+material.x attribute.
