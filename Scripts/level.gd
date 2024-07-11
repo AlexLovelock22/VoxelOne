@@ -32,7 +32,7 @@ var BLOCK_TYPES = {
 	"Grass": BlockType.new("Grass", 
 		normalize_uv(Rect2(0, 0, 16, 16), texture_atlas_size),    # Top
 		normalize_uv(Rect2(32, 0, 16, 16), texture_atlas_size),   # Side
-		normalize_uv(Rect2(12, 0, 16, 16), texture_atlas_size)    # Bottom
+		normalize_uv(Rect2(16, 0, 16, 16), texture_atlas_size)    # Bottom
 	),
 	#Dirt uses grass right now, just to show the texture rotation issue
 	"Dirt": BlockType.new("Dirt", 
