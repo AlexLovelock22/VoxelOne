@@ -149,10 +149,51 @@ func add_block_faces(vertices, normals, uvs, indices, position, block_type):
 			normals.append(normal)
 
 		# Ensure the UV coordinates are correctly applied in the right order
-		uvs.append(uv_coords[0])
-		uvs.append(uv_coords[1])
-		uvs.append(uv_coords[2])
-		uvs.append(uv_coords[3])
+		if normal == Vector3(0, 1, 0):
+			# Top face (no rotation needed)
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[3])
+			
+		elif normal == Vector3(0, -1, 0):
+			# Bottom face (rotate 180 degrees)
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+		
+		#Think faces are wrong. Comeback to. 
+		elif normal == Vector3(1, 0, 0):
+			# Right face (rotate 90 degrees clockwise)
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+		
+		#This one faces inwards - COMPLETE
+		elif normal == Vector3(-1, 0, 0):
+			# Left face (rotate 90 degrees counter-clockwise)
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[2])
+		
+		# Front (+Z) - COMPLETE
+		elif normal == Vector3(0, 0, 1):
+			# Front face (no rotation needed) (3,0,1,2)
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[2])
+			
+		# Back (-Z) Not inwards side of map
+		elif normal == Vector3(0, 0, -1):
+			# Back face (rotate 180 degrees)
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[0])
 
 		# Ensure the winding order of the indices is consistent
 		indices.append(base_index)
@@ -163,6 +204,7 @@ func add_block_faces(vertices, normals, uvs, indices, position, block_type):
 		indices.append(base_index + 3)
 
 		base_index += 4
+
 
 func add_block_collision(position):
 	var static_body = StaticBody3D.new()

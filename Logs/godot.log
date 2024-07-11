@@ -1,517 +1,101 @@
 Godot Engine v4.2.2.stable.mono.official.15073afe3 - https://godotengine.org
-Vulkan API 1.3.270 - Forward+ - Using Vulkan Device #0: AMD - AMD Radeon RX 7900 XT
+Vulkan API 1.3.242 - Forward+ - Using Vulkan Device #0: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU
  
 Selected block type: Stone
-Mesh generated with vertices: 20688 and indices: 31032
-Destroying block at: (14.35494, 14.81304, 22.85362)
-Destroying block at grid position: (7, 7, 11)
+Mesh generated with vertices: 21288 and indices: 31932
+Placing block at: (14.56728, 16.81304, 16.83278)
+Placing block at grid position: (7, 8, 8) with type: Stone
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.44148, 19.28552, 23.88171)
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (14.44035, 21.28624, 23.88377)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (14.65174, 14.81304, 21.23833)
-Destroying block at grid position: (7, 7, 10)
+Placing block at: (14.76758, 18.81304, 17.42658)
+Placing block at grid position: (7, 9, 8) with type: Stone
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.43953, 19.28552, 23.88503)
+Mesh generated with vertices: 21312 and indices: 31968
+Camera found: Camera3D Position: (14.44402, 22.83137, 23.88466)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (14.49524, 14.81304, 19.31615)
-Destroying block at grid position: (7, 7, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.44045, 19.28552, 23.88361)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (14.66469, 14.81304, 17.28254)
-Destroying block at grid position: (7, 7, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.44015, 19.28552, 23.88409)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Placing block at: (16.79689, 16.81304, 20.73977)
-Placing block at grid position: (8, 8, 10) with type: Stone
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20712 and indices: 31068
-Camera found: Camera3D Position: (14.42936, 19.28552, 23.89319)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.05564, 17.41071, 21)
-Destroying block at grid position: (8, 8, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42764, 19.28552, 23.89383)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.8876, 14.81304, 20.646)
-Destroying block at grid position: (8, 7, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42971, 19.28552, 23.89305)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.1969, 14.81304, 17.81223)
-Destroying block at grid position: (8, 7, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.43652, 19.28552, 23.88851)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.48632, 14.81304, 19.31934)
-Destroying block at grid position: (8, 7, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.4338, 19.28552, 23.89075)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.31093, 14.81304, 20.56223)
-Destroying block at grid position: (9, 7, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42445, 19.28552, 23.89464)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.16171, 14.81304, 19.56723)
-Destroying block at grid position: (9, 7, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42831, 19.28552, 23.8936)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.81716, 15.07879, 17)
-Destroying block at grid position: (9, 7, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42966, 19.28552, 23.89306)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (21, 15.23824, 20.42204)
-Destroying block at grid position: (10, 7, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.4209, 19.28552, 23.895)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (21, 15.20182, 19.07519)
-Destroying block at grid position: (10, 7, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42528, 19.28552, 23.89448)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (21, 15.26374, 17.93574)
-Destroying block at grid position: (10, 7, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.42724, 19.28552, 23.89396)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (19.64919, 14.81304, 22.59728)
-Destroying block at grid position: (9, 7, 11)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.41348, 19.28552, 23.894)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.83375, 14.81304, 22.87851)
-Destroying block at grid position: (8, 7, 11)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.41484, 19.28552, 23.89437)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (20.72942, 14.81304, 23.20277)
-Destroying block at grid position: (10, 7, 11)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.41058, 19.28552, 23.89291)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.82325, 12.81304, 21.15034)
-Destroying block at grid position: (9, 6, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00162, 19.29581, 24.92062)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.26299, 12.81304, 21.09458)
-Destroying block at grid position: (8, 6, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00507, 19.29065, 24.91307)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.15073, 13.77036, 19)
-Destroying block at grid position: (8, 6, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00468, 19.28808, 24.91042)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.23576, 12.81304, 19.18307)
-Destroying block at grid position: (9, 6, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00097, 19.28679, 24.91164)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (13.00546, 14.81304, 22.9287)
-Destroying block at grid position: (6, 7, 11)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.01099, 19.28552, 24.88436)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (13.01416, 14.81304, 21.52735)
-Destroying block at grid position: (6, 7, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.01179, 19.28552, 24.89157)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (13.4948, 14.81304, 18.75531)
-Destroying block at grid position: (6, 7, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.01062, 19.28552, 24.89789)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (13.93589, 14.81304, 17.79137)
-Destroying block at grid position: (6, 7, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.01012, 19.28552, 24.89926)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (13.48277, 15.1665, 15)
-Destroying block at grid position: (6, 7, 7)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.01033, 19.28552, 24.89873)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (15.20422, 15.04963, 15)
-Destroying block at grid position: (7, 7, 7)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00825, 19.28552, 24.90294)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.35533, 14.94866, 15)
-Destroying block at grid position: (8, 7, 7)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00422, 19.28552, 24.90782)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (19.61708, 14.73168, 15)
-Destroying block at grid position: (9, 7, 7)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.0007, 19.28552, 24.91049)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (21.20035, 14.72057, 15)
-Destroying block at grid position: (10, 7, 7)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.99809, 19.28552, 24.91189)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.95851, 12.81304, 17.34532)
-Destroying block at grid position: (9, 6, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00074, 19.28552, 24.91046)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.91725, 12.81304, 17.11955)
-Destroying block at grid position: (8, 6, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.00365, 19.28552, 24.90832)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.55333, 12.75024, 15)
-Destroying block at grid position: (8, 6, 7)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20712 and indices: 31068
-Camera found: Camera3D Position: (15.0065, 19.28552, 24.90539)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (15.43951, 12.81304, 17.71783)
-Destroying block at grid position: (7, 6, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20712 and indices: 31068
-Camera found: Camera3D Position: (15.00785, 19.28552, 24.90358)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (15.15011, 12.81304, 20.17469)
-Destroying block at grid position: (7, 6, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20712 and indices: 31068
-Camera found: Camera3D Position: (15.0082, 19.28552, 24.90302)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (15.16514, 11.87585, 19)
-Destroying block at grid position: (7, 5, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20760 and indices: 31140
-Camera found: Camera3D Position: (15.00818, 19.28552, 24.90306)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (15.21942, 12.81304, 18.69225)
-Destroying block at grid position: (7, 6, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20736 and indices: 31104
-Camera found: Camera3D Position: (15.00818, 19.28552, 24.90306)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Placing block at: (17.70823, 12.12139, 15)
-Placing block at grid position: (8, 6, 7) with type: Stone
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20712 and indices: 31068
-Camera found: Camera3D Position: (15.28581, 19.33523, 23.10003)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Placing block at: (15.54056, 10.66691, 19)
-Placing block at grid position: (7, 5, 9) with type: Stone
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (14.9909, 19.29328, 24.22362)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.80201, 10.81304, 18.05658)
-Destroying block at grid position: (8, 5, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20688 and indices: 31032
-Camera found: Camera3D Position: (15.28598, 17.83896, 20.58395)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.74741, 10.81304, 20.91783)
-Destroying block at grid position: (8, 5, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20712 and indices: 31068
-Camera found: Camera3D Position: (13.85927, 17.28623, 21.7134)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (14.47362, 10.81304, 21.3276)
-Destroying block at grid position: (7, 5, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20760 and indices: 31140
-Camera found: Camera3D Position: (13.86635, 17.28623, 21.71418)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (14.75457, 10.81304, 19.22202)
-Destroying block at grid position: (7, 5, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20784 and indices: 31176
-Camera found: Camera3D Position: (13.88055, 17.28623, 21.70865)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (15.63937, 10.81304, 17.37926)
-Destroying block at grid position: (7, 5, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20832 and indices: 31248
-Camera found: Camera3D Position: (13.87967, 17.28623, 21.70935)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.75541, 11.57831, 17)
-Destroying block at grid position: (8, 5, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20856 and indices: 31284
-Camera found: Camera3D Position: (13.87395, 17.28623, 21.71258)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (19, 11.45701, 18.51541)
-Destroying block at grid position: (9, 5, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20880 and indices: 31320
-Camera found: Camera3D Position: (13.8678, 17.28623, 21.71408)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.31564, 10.81304, 20.06362)
-Destroying block at grid position: (9, 5, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20928 and indices: 31392
-Camera found: Camera3D Position: (13.86042, 17.28623, 21.71367)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.91297, 8.813041, 21.26167)
-Destroying block at grid position: (9, 4, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 20976 and indices: 31464
-Camera found: Camera3D Position: (13.85518, 17.28623, 21.71188)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.06491, 8.813041, 21.15943)
-Destroying block at grid position: (8, 4, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21000 and indices: 31500
-Camera found: Camera3D Position: (13.8577, 17.28623, 21.71291)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.84632, 6.813041, 20.78721)
-Destroying block at grid position: (8, 3, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21072 and indices: 31608
-Camera found: Camera3D Position: (13.86069, 17.28623, 21.71373)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.02643, 7.396354, 19)
-Destroying block at grid position: (8, 3, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21144 and indices: 31716
-Camera found: Camera3D Position: (13.86522, 17.28623, 21.7142)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (16.67982, 8.81304, 19.43715)
-Destroying block at grid position: (8, 4, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21120 and indices: 31680
-Camera found: Camera3D Position: (13.86948, 17.28623, 21.71384)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (17.66417, 7.159286, 17)
-Destroying block at grid position: (8, 3, 8)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21192 and indices: 31788
-Camera found: Camera3D Position: (13.87123, 17.28623, 21.71346)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (18.31222, 8.067927, 19)
-Destroying block at grid position: (9, 4, 9)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21216 and indices: 31824
-Camera found: Camera3D Position: (17.00336, 9.290203, 21.02569)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (19, 7.789104, 20.23038)
-Destroying block at grid position: (9, 3, 10)
-Clearing old mesh and collision shapes...
-Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21264 and indices: 31896
-Camera found: Camera3D Position: (17.00241, 9.287897, 21.02488)
-Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
-Playing animation: arm_move
-Destroying block at: (19.09861, 4.813041, 20.19702)
-Destroying block at grid position: (9, 2, 10)
+Placing block at: (15.37765, 20.81304, 16.36343)
+Placing block at grid position: (7, 10, 8) with type: Stone
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
 Mesh generated with vertices: 21336 and indices: 32004
-Camera found: Camera3D Position: (16.99461, 9.286686, 21.02419)
+Camera found: Camera3D Position: (14.43995, 23.25308, 23.88595)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (19, 7.484435, 19.92183)
-Destroying block at grid position: (9, 3, 9)
+Destroying block at: (15.73822, 18.70958, 17)
+Destroying block at grid position: (7, 9, 8)
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21336 and indices: 32004
-Camera found: Camera3D Position: (17.00652, 9.286394, 21.02329)
+Mesh generated with vertices: 21312 and indices: 31968
+Camera found: Camera3D Position: (15.13179, 21.30422, 23.95854)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (17.97093, 4.813041, 19.4754)
-Destroying block at grid position: (8, 2, 9)
+Destroying block at: (15.728, 17.10734, 17)
+Destroying block at grid position: (7, 8, 8)
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21360 and indices: 32040
-Camera found: Camera3D Position: (17.01069, 9.286282, 21.02139)
+Mesh generated with vertices: 21312 and indices: 31968
+Camera found: Camera3D Position: (16.28541, 21.35909, 23.96778)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (17.21802, 2.813041, 19.02197)
-Destroying block at grid position: (8, 1, 9)
+Destroying block at: (15.5597, 20.23646, 17)
+Destroying block at grid position: (7, 10, 8)
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21432 and indices: 32148
-Camera found: Camera3D Position: (17.01834, 9.286249, 21.01441)
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (17.14093, 19.29429, 19.95755)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (18.51165, 4.813041, 19.8841)
-Destroying block at grid position: (9, 2, 9)
+Placing block at: (16.87263, 16.81304, 17.08182)
+Placing block at grid position: (8, 8, 8) with type: Stone
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21456 and indices: 32184
-Camera found: Camera3D Position: (17.00156, 9.286239, 21.0243)
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (22.21528, 19.373, 20.62713)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (17.33422, 4.813041, 20.71833)
-Destroying block at grid position: (8, 2, 10)
+Placing block at: (18.09894, 16.81304, 15.18542)
+Placing block at grid position: (9, 8, 7) with type: Stone
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21480 and indices: 32220
-Camera found: Camera3D Position: (17.00434, 9.286236, 21.02384)
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (23.99259, 19.18315, 18.68493)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (17.1749, 2.813041, 20.84604)
-Destroying block at grid position: (8, 1, 10)
+Placing block at: (20.56102, 16.81304, 14.42406)
+Placing block at grid position: (10, 8, 7) with type: Stone
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21504 and indices: 32256
-Camera found: Camera3D Position: (17.00579, 9.286236, 21.02345)
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (26.90118, 19.17888, 17.85288)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
-Destroying block at: (17.49106, 0.813041, 20.47727)
-Destroying block at grid position: (8, 0, 10)
+Destroying block at: (21, 17.30846, 15.72105)
+Destroying block at grid position: (10, 8, 7)
 Clearing old mesh and collision shapes...
 Old children cleared. Regenerating chunk mesh...
-Mesh generated with vertices: 21480 and indices: 32220
-Camera found: Camera3D Position: (17.00633, 7.827903, 21.02328)
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (28.49742, 19.42856, 18.60787)
+Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
+Playing animation: arm_move
+Destroying block at: (19, 17.13466, 15.28612)
+Destroying block at grid position: (9, 8, 7)
+Clearing old mesh and collision shapes...
+Old children cleared. Regenerating chunk mesh...
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (27.26257, 19.38268, 18.99314)
+Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
+Playing animation: arm_move
+Destroying block at: (17, 17.35579, 17.18552)
+Destroying block at grid position: (8, 8, 8)
+Clearing old mesh and collision shapes...
+Old children cleared. Regenerating chunk mesh...
+Mesh generated with vertices: 21288 and indices: 31932
+Camera found: Camera3D Position: (24.74434, 19.20436, 19.92524)
 Light found: DirectionalLight3D Position: (-360.801, 164.306, -166.525)
 Playing animation: arm_move
