@@ -21,6 +21,11 @@ class BlockType:
 		self.side_uv = side_uv
 		self.bottom_uv = bottom_uv
 
+
+#func _process(delta):
+	# delta is the elapsed time since the last frame in seconds
+	#print("Frametime: ", delta, " seconds")
+
 func normalize_uv(rect: Rect2, atlas_size: Vector2) -> Rect2:
 	return Rect2(
 		rect.position / atlas_size,
@@ -260,17 +265,95 @@ func update_chunk_mesh():
 	
 
 
-func destroy_block(world_coordinate):
-	var position = (world_coordinate / block_size).floor()
-	print("Destroying block at grid position: ", position)
-	if blocks.has(position):
-		blocks.erase(position)
-		update_chunk_mesh()
-	else:
-		print("Error: No block found at ", position)
-
 func place_block(world_coordinate, block_type):
 	var position = (world_coordinate / block_size).floor()
 	print("Placing block at grid position: ", position, " with type: ", block_type)
 	blocks[position] = block_type
-	update_chunk_mesh()
+	update_adjacent_blocks_mesh(position)
+
+func destroy_block(world_coordinate):
+	var position = (world_coordinate / block_size).floor()
+	print("Destroying block at grid position: ", position)
+	if blocks.has(position):
+		# First, update the mesh with the block still in place for context
+		update_adjacent_blocks_mesh(position)
+
+		# Now, remove the block after the mesh has been updated
+		print("Erasing block at position:", position)
+		print("Before removal: ", blocks.size())
+		blocks.erase(position)  # Remove the block from your data structure
+		print("After removal: ", blocks.size())
+
+		# Collision and visual removal is handled post-update
+		print("Block and collisions removed at position: ", position)
+	else:
+		print("Error: No block found at ", position)
+
+
+
+
+func update_adjacent_blocks_mesh(position):
+	var affected_positions = [position]
+	var directions = [
+		Vector3(1, 0, 0), Vector3(-1, 0, 0),
+		Vector3(0, 1, 0), Vector3(0, -1, 0),
+		Vector3(0, 0, 1), Vector3(0, 0, -1)
+	]
+	
+
+	for dir in directions:
+		var neighbor_pos = position + dir
+		if blocks.has(neighbor_pos):
+			affected_positions.append(neighbor_pos)
+
+	# Remove old mesh instances and collision shapes
+	for child in get_children():
+		if child is MeshInstance3D or child is StaticBody3D:
+			var child_pos = (child.transform.origin / block_size).floor()
+			if child_pos in affected_positions:
+				child.queue_free()
+
+	# Rebuild mesh and collisions for affected positions
+	
+	rebuild_mesh_and_collisions(affected_positions)
+
+
+func rebuild_mesh_and_collisions(affected_positions):
+	var mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+
+	var vertices = PackedVector3Array()
+	var normals = PackedVector3Array()
+	var uvs = PackedVector2Array()
+	var indices = PackedInt32Array()
+
+	print("Rebuilding mesh for positions: ", affected_positions)
+	for pos in affected_positions:
+		if blocks.has(pos) and is_surface_block(pos):
+			add_block_faces(vertices, normals, uvs, indices, pos, blocks[pos])
+		else:
+			print("No block at position or not a surface block: ", pos)
+
+	if vertices.size() > 0:
+		arrays[Mesh.ARRAY_VERTEX] = vertices
+		arrays[Mesh.ARRAY_NORMAL] = normals
+		arrays[Mesh.ARRAY_TEX_UV] = uvs
+		arrays[Mesh.ARRAY_INDEX] = indices
+
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		var mesh_instance = MeshInstance3D.new()
+		mesh_instance.mesh = mesh
+		var material = StandardMaterial3D.new()
+		material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+		material.albedo_texture = texture_atlas
+		mesh_instance.material_override = material
+		add_child(mesh_instance)
+
+		# Add collision shapes for the affected blocks
+		for block_pos in affected_positions:
+			if blocks.has(block_pos):
+				add_block_collision(block_pos)
+		print("Mesh and collisions updated for affected blocks.")
+	else:
+		print("No vertices were added, check the affected blocks.")
