@@ -275,17 +275,8 @@ func destroy_block(world_coordinate):
 	var position = (world_coordinate / block_size).floor()
 	print("Destroying block at grid position: ", position)
 	if blocks.has(position):
-		# First, update the mesh with the block still in place for context
-		update_adjacent_blocks_mesh(position)
-
-		# Now, remove the block after the mesh has been updated
-		print("Erasing block at position:", position)
-		print("Before removal: ", blocks.size())
-		blocks.erase(position)  # Remove the block from your data structure
-		print("After removal: ", blocks.size())
-
-		# Collision and visual removal is handled post-update
-		print("Block and collisions removed at position: ", position)
+		blocks.erase(position)  # Remove first
+		update_chunk_mesh()     # Rebuild entire mesh + collisions
 	else:
 		print("Error: No block found at ", position)
 
