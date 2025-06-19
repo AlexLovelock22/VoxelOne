@@ -40,87 +40,117 @@ func _generate_visible_mesh():
 	var normals = PackedVector3Array()
 	var uvs = PackedVector2Array()
 	var indices = PackedInt32Array()
-
 	var index_offset = 0
 
-	# Greedy meshing for top faces (y+)
-	for y in range(CHUNK_SIZE):
+	# Face directions
+	var face_defs = [
+		{ "normal": Vector3.UP,    "offset": Vector3i(0, 1, 0),  "plane": [0, 2], "y_adjust": 1.0 },
+		{ "normal": Vector3.DOWN,  "offset": Vector3i(0, -1, 0), "plane": [0, 2], "y_adjust": 0.0 },
+		{ "normal": Vector3.RIGHT, "offset": Vector3i(1, 0, 0),  "plane": [1, 2], "x_adjust": 1.0 },
+		{ "normal": Vector3.LEFT,  "offset": Vector3i(-1, 0, 0), "plane": [1, 2], "x_adjust": 0.0 },
+		{ "normal": Vector3.FORWARD, "offset": Vector3i(0, 0, 1), "plane": [0, 1], "z_adjust": 1.0 },
+		{ "normal": Vector3.BACK,    "offset": Vector3i(0, 0, -1),"plane": [0, 1], "z_adjust": 0.0 },
+	]
+
+	for face in face_defs:
 		var visited := {}
-		for z in range(CHUNK_SIZE):
-			for x in range(CHUNK_SIZE):
-				var pos = Vector3i(x, y, z)
-				if visited.has(pos):
-					continue
+		var dir: Vector3i = face["offset"]
+		var normal: Vector3 = face["normal"]
+		var ax: int = face["plane"][0]
+		var ay: int = face["plane"][1]
 
-				if not block_map.has(pos):
-					continue
+		for a in range(CHUNK_SIZE):
+			for b in range(CHUNK_SIZE):
+				for c in range(CHUNK_SIZE):
+					var pos := Vector3i(0, 0, 0)
+					pos[ax] = a
+					pos[ay] = b
+					pos[3 - ax - ay] = c
 
-				var above = Vector3i(x, y + 1, z)
-				if block_map.has(above):
-					continue # face is not visible
+					if visited.has(pos) or not block_map.has(pos):
+						continue
 
-				# Greedily merge along +x
-				var width = 1
-				while x + width < CHUNK_SIZE:
-					var next_pos = Vector3i(x + width, y, z)
-					var next_above = Vector3i(x + width, y + 1, z)
-					if block_map.has(next_pos) and not block_map.has(next_above) and not visited.has(next_pos):
-						width += 1
-					else:
-						break
+					var neighbor_pos = pos + dir
+					if block_map.has(neighbor_pos):
+						continue
 
-				# Greedily merge along +z
-				var height = 1
-				while z + height < CHUNK_SIZE:
-					var can_extend = true
-					for dx in range(width):
-						var check_pos = Vector3i(x + dx, y, z + height)
-						var check_above = Vector3i(x + dx, y + 1, z + height)
-						if not block_map.has(check_pos) or block_map.has(check_above) or visited.has(check_pos):
-							can_extend = false
+					# Greedy extend width
+					var width = 1
+					while c + width < CHUNK_SIZE:
+						var next_pos = pos
+						next_pos[3 - ax - ay] = c + width
+						var next_neigh = next_pos + dir
+						if block_map.has(next_pos) and not block_map.has(next_neigh) and not visited.has(next_pos):
+							width += 1
+						else:
 							break
-					if can_extend:
-						height += 1
-					else:
-						break
 
-				# Mark all merged positions as visited
-				for dz in range(height):
-					for dx in range(width):
-						visited[Vector3i(x + dx, y, z + dz)] = true
+					# Greedy extend height
+					var height = 1
+					while b + height < CHUNK_SIZE:
+						var can_extend = true
+						for w in range(width):
+							var check_pos = pos
+							check_pos[ay] = b + height
+							check_pos[3 - ax - ay] = c + w
+							var check_neigh = check_pos + dir
+							if not block_map.has(check_pos) or block_map.has(check_neigh) or visited.has(check_pos):
+								can_extend = false
+								break
+						if can_extend:
+							height += 1
+						else:
+							break
 
-				# Add the merged top face
-				var p = Vector3(x, y + 1, z) * BLOCK_SIZE
-				var w = width * BLOCK_SIZE
-				var h = height * BLOCK_SIZE
+					# Mark visited
+					for h in range(height):
+						for w in range(width):
+							var mark = pos
+							mark[ay] = b + h
+							mark[3 - ax - ay] = c + w
+							visited[mark] = true
 
-				var face_vertices = [
-					p,
-					p + Vector3(w, 0, 0),
-					p + Vector3(w, 0, h),
-					p + Vector3(0, 0, h)
-				]
+					# Base position
+					var base = Vector3(pos.x, pos.y, pos.z) * BLOCK_SIZE
+					if dir == Vector3i(0, 1, 0): base.y += BLOCK_SIZE
+					if dir == Vector3i(1, 0, 0): base.x += BLOCK_SIZE
+					if dir == Vector3i(0, 0, 1): base.z += BLOCK_SIZE
 
-				for v in face_vertices:
-					vertices.append(v)
-					normals.append(Vector3.UP)
-					uvs.append(Vector2(v.x, v.z) * 0.1) # simple UVs
+					var size_a = width * BLOCK_SIZE
+					var size_b = height * BLOCK_SIZE
 
-				indices.append_array([
-					index_offset, index_offset + 1, index_offset + 2,
-					index_offset, index_offset + 2, index_offset + 3
-				])
-				index_offset += 4
+					var dx = Vector3()
+					var dy = Vector3()
+					dx[ax] = size_a
+					dy[ay] = size_b
 
-	# TODO: add non-top exposed faces here (same as current _add_face calls)
+					var face_vertices = [
+						base,
+						base + dx,
+						base + dx + dy,
+						base + dy
+					]
+
+					for v in face_vertices:
+						vertices.append(v)
+						normals.append(normal)
+						uvs.append(Vector2(v.x, v.z) * 0.1)
+
+					indices.append_array([
+						index_offset, index_offset + 1, index_offset + 2,
+						index_offset, index_offset + 2, index_offset + 3
+					])
+					index_offset += 4
+
+	# Commit mesh
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
 	arrays[Mesh.ARRAY_INDEX] = indices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-
 	$MeshInstance3D.mesh = mesh
 
+	# Collision shape
 	var collider = StaticBody3D.new()
 	var collision_shape = CollisionShape3D.new()
 	var shape = ConcavePolygonShape3D.new()
@@ -135,6 +165,7 @@ func _generate_visible_mesh():
 	add_child(collider)
 
 	print("Chunk generated with %d vertices, %d indices, and 1 collision shape" % [vertices.size(), indices.size()])
+
 
 func _add_face(pos: Vector3i, normal: Vector3, vert_idx: Array, vertices, normals, uvs, indices):
 	var base_index = vertices.size()
