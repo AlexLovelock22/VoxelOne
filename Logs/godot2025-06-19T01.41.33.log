@@ -2,34 +2,45 @@ Godot Engine v4.2.2.stable.mono.official.15073afe3 - https://godotengine.org
 Vulkan API 1.4.308 - Forward+ - Using Vulkan Device #0: AMD - AMD Radeon RX 7900 XT
 Requested V-Sync mode: Enabled - FPS will likely be capped to the monitor refresh rate.
  
+✅ Generated chunk at (-256, 0, -256) with 35616 vertices, 53424 indices. Faces added: 8904, Faces culled: 0
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 3888 vertices, 5832 indices.
+Spawned chunk at (-1, 0, -1) global offset (-16, 0, -16)
+✅ Generated chunk at (-256, 0, 0) with 43080 vertices, 64620 indices. Faces added: 10770, Faces culled: 0
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4104 vertices, 6156 indices.
+Spawned chunk at (-1, 0, 0) global offset (-16, 0, 0)
+✅ Generated chunk at (-256, 0, 256) with 47544 vertices, 71316 indices. Faces added: 11886, Faces culled: 6
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4144 vertices, 6216 indices.
+Spawned chunk at (-1, 0, 1) global offset (-16, 0, 16)
+✅ Generated chunk at (0, 0, -256) with 52416 vertices, 78624 indices. Faces added: 13104, Faces culled: 0
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4344 vertices, 6516 indices.
+Spawned chunk at (0, 0, -1) global offset (0, 0, -16)
+✅ Generated chunk at (0, 0, 0) with 61464 vertices, 92196 indices. Faces added: 15366, Faces culled: 0
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4752 vertices, 7128 indices.
+Spawned chunk at (0, 0, 0) global offset (0, 0, 0)
+✅ Generated chunk at (0, 0, 256) with 59360 vertices, 89040 indices. Faces added: 14840, Faces culled: 166
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4768 vertices, 7152 indices.
+Spawned chunk at (0, 0, 1) global offset (0, 0, 16)
+✅ Generated chunk at (256, 0, -256) with 58888 vertices, 88332 indices. Faces added: 14722, Faces culled: 146
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4632 vertices, 6948 indices.
+Spawned chunk at (1, 0, -1) global offset (16, 0, -16)
+✅ Generated chunk at (256, 0, 0) with 62724 vertices, 94086 indices. Faces added: 15681, Faces culled: 165
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4888 vertices, 7332 indices.
+Spawned chunk at (1, 0, 0) global offset (16, 0, 0)
+✅ Generated chunk at (256, 0, 256) with 64068 vertices, 96102 indices. Faces added: 16017, Faces culled: 345
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4976 vertices, 7464 indices.
-Project FPS: 168 (5.95 mspf)
+Spawned chunk at (1, 0, 1) global offset (16, 0, 16)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 181 (5.52 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
@@ -53,6 +64,11 @@ Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
-Project FPS: 180 (5.55 mspf)
 Project FPS: 181 (5.52 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)

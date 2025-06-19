@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="VoxelOne"
-run/main_scene="res://Scenes/menu.tscn"
+run/main_scene="res://worldroot.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=615
 
 [debug]
 
 file_logging/enable_file_logging=true
 file_logging/log_path="res://logs/godot.log"
+settings/stdout/print_fps=true
 
 [display]
 
