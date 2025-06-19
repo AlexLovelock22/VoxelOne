@@ -3,12 +3,12 @@ extends CharacterBody3D
 var SPEED = 15.0
 const RUN_SPEED = 23.0
 #const JUMP_VELOCITY = 14.5
-const JUMP_VELOCITY = 40.5
+const JUMP_VELOCITY = 14.5
 const AIR_DECELERATION = 0.1
 const AIR_CONTROL = 0.04
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = 50
+var gravity = 10
 var sens = 0.002
 
 @onready var camera_3d = $Camera3D

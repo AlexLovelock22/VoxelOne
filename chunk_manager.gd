@@ -12,8 +12,8 @@ func _ready():
 	shared_noise.frequency = 0.01
 
 	# Generate 3x3 chunk grid around origin
-	for x in range(-1, 2):
-		for z in range(-1, 2):
+	for x in range(-1, 40):
+		for z in range(-1, 40):
 			spawn_chunk(Vector3i(x, 0, z))
 
 func spawn_chunk(chunk_pos: Vector3i):
@@ -23,7 +23,8 @@ func spawn_chunk(chunk_pos: Vector3i):
 	var chunk_instance = chunk_scene.instantiate()
 
 	chunk_instance.position = chunk_pos
-	chunk_instance.global_position = chunk_pos * chunk_instance.CHUNK_SIZE * chunk_instance.BLOCK_SIZE
+	chunk_instance.position = chunk_pos * chunk_instance.CHUNK_SIZE * chunk_instance.BLOCK_SIZE
+
 
 	chunk_instance.set_chunk_data(shared_noise, chunk_pos)
 	chunk_instance.chunk_offset = chunk_pos * chunk_instance.CHUNK_SIZE  # <- this makes noise seamless

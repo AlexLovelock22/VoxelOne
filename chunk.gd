@@ -41,11 +41,78 @@ func _generate_visible_mesh():
 	var uvs = PackedVector2Array()
 	var indices = PackedInt32Array()
 
-	for pos in block_map.keys():
-		for dir in _get_directions():
-			if not block_map.has(pos + dir.offset):
-				_add_face(pos, dir.normal, dir.verts, vertices, normals, uvs, indices)
+	var index_offset = 0
 
+	# Greedy meshing for top faces (y+)
+	for y in range(CHUNK_SIZE):
+		var visited := {}
+		for z in range(CHUNK_SIZE):
+			for x in range(CHUNK_SIZE):
+				var pos = Vector3i(x, y, z)
+				if visited.has(pos):
+					continue
+
+				if not block_map.has(pos):
+					continue
+
+				var above = Vector3i(x, y + 1, z)
+				if block_map.has(above):
+					continue # face is not visible
+
+				# Greedily merge along +x
+				var width = 1
+				while x + width < CHUNK_SIZE:
+					var next_pos = Vector3i(x + width, y, z)
+					var next_above = Vector3i(x + width, y + 1, z)
+					if block_map.has(next_pos) and not block_map.has(next_above) and not visited.has(next_pos):
+						width += 1
+					else:
+						break
+
+				# Greedily merge along +z
+				var height = 1
+				while z + height < CHUNK_SIZE:
+					var can_extend = true
+					for dx in range(width):
+						var check_pos = Vector3i(x + dx, y, z + height)
+						var check_above = Vector3i(x + dx, y + 1, z + height)
+						if not block_map.has(check_pos) or block_map.has(check_above) or visited.has(check_pos):
+							can_extend = false
+							break
+					if can_extend:
+						height += 1
+					else:
+						break
+
+				# Mark all merged positions as visited
+				for dz in range(height):
+					for dx in range(width):
+						visited[Vector3i(x + dx, y, z + dz)] = true
+
+				# Add the merged top face
+				var p = Vector3(x, y + 1, z) * BLOCK_SIZE
+				var w = width * BLOCK_SIZE
+				var h = height * BLOCK_SIZE
+
+				var face_vertices = [
+					p,
+					p + Vector3(w, 0, 0),
+					p + Vector3(w, 0, h),
+					p + Vector3(0, 0, h)
+				]
+
+				for v in face_vertices:
+					vertices.append(v)
+					normals.append(Vector3.UP)
+					uvs.append(Vector2(v.x, v.z) * 0.1) # simple UVs
+
+				indices.append_array([
+					index_offset, index_offset + 1, index_offset + 2,
+					index_offset, index_offset + 2, index_offset + 3
+				])
+				index_offset += 4
+
+	# TODO: add non-top exposed faces here (same as current _add_face calls)
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
@@ -54,25 +121,20 @@ func _generate_visible_mesh():
 
 	$MeshInstance3D.mesh = mesh
 
-	# Chunk-wide collision
 	var collider = StaticBody3D.new()
 	var collision_shape = CollisionShape3D.new()
 	var shape = ConcavePolygonShape3D.new()
-
-	var surface_arrays = mesh.surface_get_arrays(0)
-	var verts = surface_arrays[Mesh.ARRAY_VERTEX]
-	var index_array = surface_arrays[Mesh.ARRAY_INDEX]
 	var faces = PackedVector3Array()
-	for i in index_array.size():
-		faces.append(verts[index_array[i]])
+
+	for i in indices:
+		faces.append(vertices[i])
 
 	shape.set_faces(faces)
 	collision_shape.shape = shape
 	collider.add_child(collision_shape)
 	add_child(collider)
 
-	# Debug print
-	print("Chunk generated with %d vertices, %d indices, and 1 collision shape" % [verts.size(), index_array.size()])
+	print("Chunk generated with %d vertices, %d indices, and 1 collision shape" % [vertices.size(), indices.size()])
 
 func _add_face(pos: Vector3i, normal: Vector3, vert_idx: Array, vertices, normals, uvs, indices):
 	var base_index = vertices.size()
