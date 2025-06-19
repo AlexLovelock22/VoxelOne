@@ -6,7 +6,9 @@ var chunks = {}
 var shared_noise := FastNoiseLite.new()
 
 func _ready():
-	shared_noise.seed = 1337  # constant seed ensures seamless terrain
+	var rng = RandomNumberGenerator.new()
+	var seed = rng.randi()
+	shared_noise.seed = seed
 	shared_noise.frequency = 0.01
 
 	# Generate 3x3 chunk grid around origin

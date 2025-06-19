@@ -40,6 +40,12 @@ func _unhandled_input(event):
 		camera_3d.rotation.x -= event.relative.y * sens
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(85))
 
+func _process(delta):
+	if $fps_label:
+		$fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
+
+
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():

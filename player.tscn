@@ -82,6 +82,7 @@ mesh = SubResource("CapsuleMesh_2d4dr")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.999949, -0.0101402, 1.32972e-09, 0.0101402, 0.999949, -1.74838e-07, 4.43243e-10, 1.74843e-07, 1, 0.0202709, 0.230383, 0.0119081)
+current = true
 
 [node name="PlayerArm" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(0.480591, 0.0190925, 0.34619, -0.00677681, 0.41065, -0.265908, -0.102373, 0.0624458, 1.64279, 1.31671, -0.676452, -0.73283)
@@ -98,6 +99,7 @@ libraries = {
 }
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+visible = false
 target_position = Vector3(0, 0, -16)
 
 [node name="fps_label" type="Label" parent="."]

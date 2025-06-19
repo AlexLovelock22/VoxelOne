@@ -4,36 +4,66 @@ Requested V-Sync mode: Enabled - FPS will likely be capped to the monitor refres
  
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 3888 vertices, 5832 indices.
+Chunk generated with 4200 vertices, 6300 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4104 vertices, 6156 indices.
+Chunk generated with 4096 vertices, 6144 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4144 vertices, 6216 indices.
+Chunk generated with 4112 vertices, 6168 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4344 vertices, 6516 indices.
+Chunk generated with 4360 vertices, 6540 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4752 vertices, 7128 indices.
+Chunk generated with 4208 vertices, 6312 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4768 vertices, 7152 indices.
+Chunk generated with 4120 vertices, 6180 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4632 vertices, 6948 indices.
+Chunk generated with 4872 vertices, 7308 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4888 vertices, 7332 indices.
+Chunk generated with 4512 vertices, 6768 indices, and 1 collision shape
 USER ERROR: Condition "!is_inside_tree()" is true. Returning: Transform3D()
    at: get_global_transform (scene/3d/node_3d.cpp:343)
-Generated mesh with 4976 vertices, 7464 indices.
-Project FPS: 168 (5.95 mspf)
+Chunk generated with 4256 vertices, 6384 indices, and 1 collision shape
+Project FPS: 149 (6.71 mspf)
+Project FPS: 139 (7.19 mspf)
+Project FPS: 134 (7.46 mspf)
+Project FPS: 133 (7.51 mspf)
+Project FPS: 147 (6.80 mspf)
+Project FPS: 144 (6.94 mspf)
+Project FPS: 179 (5.58 mspf)
+Project FPS: 179 (5.58 mspf)
+Project FPS: 181 (5.52 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 181 (5.52 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 180 (5.55 mspf)
+Project FPS: 179 (5.58 mspf)
+Project FPS: 134 (7.46 mspf)
+Project FPS: 131 (7.63 mspf)
+Project FPS: 135 (7.40 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
@@ -52,7 +82,4 @@ Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
 Project FPS: 180 (5.55 mspf)
-Project FPS: 180 (5.55 mspf)
-Project FPS: 180 (5.55 mspf)
-Project FPS: 181 (5.52 mspf)
 Project FPS: 180 (5.55 mspf)

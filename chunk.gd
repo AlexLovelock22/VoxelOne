@@ -31,7 +31,6 @@ func _generate_block_map():
 			for y in range(height):
 				block_map[Vector3i(x, y, z)] = true
 				
-
 func _generate_visible_mesh():
 	var mesh = ArrayMesh.new()
 	var arrays = []
@@ -42,23 +41,38 @@ func _generate_visible_mesh():
 	var uvs = PackedVector2Array()
 	var indices = PackedInt32Array()
 
-	var collision_parent = StaticBody3D.new()
-
 	for pos in block_map.keys():
 		for dir in _get_directions():
 			if not block_map.has(pos + dir.offset):
 				_add_face(pos, dir.normal, dir.verts, vertices, normals, uvs, indices)
-				_add_collision_box(collision_parent, pos)
 
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
 	arrays[Mesh.ARRAY_INDEX] = indices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	print("Generated mesh with ", vertices.size(), " vertices, ", indices.size(), " indices.")
 
 	$MeshInstance3D.mesh = mesh
-	$StaticBody3D.add_child(collision_parent)
+
+	# Chunk-wide collision
+	var collider = StaticBody3D.new()
+	var collision_shape = CollisionShape3D.new()
+	var shape = ConcavePolygonShape3D.new()
+
+	var surface_arrays = mesh.surface_get_arrays(0)
+	var verts = surface_arrays[Mesh.ARRAY_VERTEX]
+	var index_array = surface_arrays[Mesh.ARRAY_INDEX]
+	var faces = PackedVector3Array()
+	for i in index_array.size():
+		faces.append(verts[index_array[i]])
+
+	shape.set_faces(faces)
+	collision_shape.shape = shape
+	collider.add_child(collision_shape)
+	add_child(collider)
+
+	# Debug print
+	print("Chunk generated with %d vertices, %d indices, and 1 collision shape" % [verts.size(), index_array.size()])
 
 func _add_face(pos: Vector3i, normal: Vector3, vert_idx: Array, vertices, normals, uvs, indices):
 	var base_index = vertices.size()
@@ -72,7 +86,7 @@ func _add_face(pos: Vector3i, normal: Vector3, vert_idx: Array, vertices, normal
 		p + Vector3(1, 1, 1) * s, p + Vector3(0, 1, 1) * s
 	]
 
-	var uv_rect = [Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(0,1)]
+	var uv_rect = [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
 	for i in range(4):
 		vertices.append(v[vert_idx[i]])
 		normals.append(normal)
@@ -89,7 +103,7 @@ func _add_collision_box(parent: Node, grid_pos: Vector3i):
 	var box = BoxShape3D.new()
 	box.size = Vector3(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
 	shape.shape = box
-	body.position = grid_pos * BLOCK_SIZE
+	body.transform.origin = grid_pos * BLOCK_SIZE
 	body.add_child(shape)
 	parent.add_child(body)
 
