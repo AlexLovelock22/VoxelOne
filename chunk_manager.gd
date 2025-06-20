@@ -9,11 +9,11 @@ func _ready():
 	var rng = RandomNumberGenerator.new()
 	var seed = rng.randi()
 	shared_noise.seed = seed
-	shared_noise.frequency = 0.01
+	shared_noise.frequency = 0.02
 
 	# Generate 3x3 chunk grid around origin
-	for x in range(-1, 40):
-		for z in range(-1, 40):
+	for x in range(-4, 4):
+		for z in range(-4, 4):
 			spawn_chunk(Vector3i(x, 0, z))
 
 func spawn_chunk(chunk_pos: Vector3i):
