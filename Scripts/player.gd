@@ -3,7 +3,7 @@ extends CharacterBody3D
 var SPEED = 11.0
 const RUN_SPEED = 30.0
 #const JUMP_VELOCITY = 14.5
-const JUMP_VELOCITY = 14.5
+const JUMP_VELOCITY = 54.5
 const AIR_DECELERATION = 0.1
 const AIR_CONTROL = 0.04
 
@@ -30,6 +30,8 @@ var original_camera_position = Vector3.ZERO
 var original_arm_position = Vector3.ZERO
 
 func _ready():
+	if $fps_label:
+		$fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	original_camera_position = camera_3d.position
 	original_arm_position = player_arm.position

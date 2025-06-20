@@ -12,8 +12,8 @@ func _ready():
 	shared_noise.frequency = 0.02
 
 	# Generate 3x3 chunk grid around origin
-	for x in range(-4, 4):
-		for z in range(-4, 4):
+	for x in range(-10, 10):
+		for z in range(-10, 10):
 			spawn_chunk(Vector3i(x, 0, z))
 
 func spawn_chunk(chunk_pos: Vector3i):

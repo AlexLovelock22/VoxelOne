@@ -31,6 +31,7 @@ func _generate_block_map():
 			for y in range(height):
 				block_map[Vector3i(x, y, z)] = true
 				
+
 func _generate_visible_mesh():
 	var mesh = ArrayMesh.new()
 	var arrays = []
@@ -50,29 +51,25 @@ func _generate_visible_mesh():
 				var pos = Vector3i(x, y, z)
 				if visited.has(pos) or not block_map.has(pos):
 					continue
-
-				var above = Vector3i(x, y + 1, z)
-				if block_map.has(above):
+				if block_map.has(Vector3i(x, y + 1, z)):
 					continue
 
-				# Greedy merge +x
 				var width = 1
 				while x + width < CHUNK_SIZE:
-					var next_pos = Vector3i(x + width, y, z)
-					var next_above = Vector3i(x + width, y + 1, z)
-					if block_map.has(next_pos) and not block_map.has(next_above) and not visited.has(next_pos):
+					var p2 = Vector3i(x + width, y, z)
+					var a2 = Vector3i(x + width, y + 1, z)
+					if block_map.has(p2) and not block_map.has(a2) and not visited.has(p2):
 						width += 1
 					else:
 						break
 
-				# Greedy merge +z
 				var height = 1
 				while z + height < CHUNK_SIZE:
 					var can_extend = true
 					for dx in range(width):
-						var check_pos = Vector3i(x + dx, y, z + height)
-						var check_above = Vector3i(x + dx, y + 1, z + height)
-						if not block_map.has(check_pos) or block_map.has(check_above) or visited.has(check_pos):
+						var cp = Vector3i(x + dx, y, z + height)
+						var ca = Vector3i(x + dx, y + 1, z + height)
+						if not block_map.has(cp) or block_map.has(ca) or visited.has(cp):
 							can_extend = false
 							break
 					if can_extend:
@@ -80,16 +77,13 @@ func _generate_visible_mesh():
 					else:
 						break
 
-				# Mark visited
 				for dz in range(height):
 					for dx in range(width):
 						visited[Vector3i(x + dx, y, z + dz)] = true
 
-				# Create top face
 				var p = Vector3(x, y + 1, z) * BLOCK_SIZE
 				var w = width * BLOCK_SIZE
 				var h = height * BLOCK_SIZE
-
 				var face_vertices = [
 					p,
 					p + Vector3(w, 0, 0),
@@ -116,29 +110,25 @@ func _generate_visible_mesh():
 				var pos = Vector3i(x, y, z)
 				if visited.has(pos) or not block_map.has(pos):
 					continue
-
-				var below = Vector3i(x, y - 1, z)
-				if block_map.has(below):
+				if block_map.has(Vector3i(x, y - 1, z)):
 					continue
 
-				# Greedy merge +x
 				var width = 1
 				while x + width < CHUNK_SIZE:
-					var next_pos = Vector3i(x + width, y, z)
-					var next_below = Vector3i(x + width, y - 1, z)
-					if block_map.has(next_pos) and not block_map.has(next_below) and not visited.has(next_pos):
+					var p2 = Vector3i(x + width, y, z)
+					var b2 = Vector3i(x + width, y - 1, z)
+					if block_map.has(p2) and not block_map.has(b2) and not visited.has(p2):
 						width += 1
 					else:
 						break
 
-				# Greedy merge +z
 				var height = 1
 				while z + height < CHUNK_SIZE:
 					var can_extend = true
 					for dx in range(width):
-						var check_pos = Vector3i(x + dx, y, z + height)
-						var check_below = Vector3i(x + dx, y - 1, z + height)
-						if not block_map.has(check_pos) or block_map.has(check_below) or visited.has(check_pos):
+						var cp = Vector3i(x + dx, y, z + height)
+						var cb = Vector3i(x + dx, y - 1, z + height)
+						if not block_map.has(cp) or block_map.has(cb) or visited.has(cp):
 							can_extend = false
 							break
 					if can_extend:
@@ -146,16 +136,13 @@ func _generate_visible_mesh():
 					else:
 						break
 
-				# Mark visited
 				for dz in range(height):
 					for dx in range(width):
 						visited[Vector3i(x + dx, y, z + dz)] = true
 
-				# Create bottom face (facing down)
 				var p = Vector3(x, y, z) * BLOCK_SIZE
 				var w = width * BLOCK_SIZE
 				var h = height * BLOCK_SIZE
-
 				var face_vertices = [
 					p,
 					p + Vector3(0, 0, h),
@@ -173,6 +160,243 @@ func _generate_visible_mesh():
 					index_offset, index_offset + 2, index_offset + 3
 				])
 				index_offset += 4
+
+	# --- RIGHT FACES (x+)
+	for x in range(CHUNK_SIZE):
+		var visited := {}
+		for y in range(CHUNK_SIZE):
+			for z in range(CHUNK_SIZE):
+				var pos = Vector3i(x, y, z)
+				if visited.has(pos) or not block_map.has(pos):
+					continue
+				if block_map.has(Vector3i(x + 1, y, z)):
+					continue
+
+				var width = 1
+				while z + width < CHUNK_SIZE:
+					var p2 = Vector3i(x, y, z + width)
+					var r2 = Vector3i(x + 1, y, z + width)
+					if block_map.has(p2) and not block_map.has(r2) and not visited.has(p2):
+						width += 1
+					else:
+						break
+
+				var height = 1
+				while y + height < CHUNK_SIZE:
+					var can_extend = true
+					for dz in range(width):
+						var cp = Vector3i(x, y + height, z + dz)
+						var cr = Vector3i(x + 1, y + height, z + dz)
+						if not block_map.has(cp) or block_map.has(cr) or visited.has(cp):
+							can_extend = false
+							break
+					if can_extend:
+						height += 1
+					else:
+						break
+
+				for dz in range(width):
+					for dy in range(height):
+						visited[Vector3i(x, y + dy, z + dz)] = true
+
+				var p = Vector3(x + 1, y, z) * BLOCK_SIZE
+				var w = width * BLOCK_SIZE
+				var h = height * BLOCK_SIZE
+				var face_vertices = [
+					p,
+					p + Vector3(0, 0, w),
+					p + Vector3(0, h, w),
+					p + Vector3(0, h, 0)
+				]
+
+				for v in face_vertices:
+					vertices.append(v)
+					normals.append(Vector3.RIGHT)
+					uvs.append(Vector2(v.y, v.z) * 0.1)
+
+				indices.append_array([
+					index_offset, index_offset + 1, index_offset + 2,
+					index_offset, index_offset + 2, index_offset + 3
+				])
+				index_offset += 4
+				
+	# --- LEFT FACES (x−)
+	for x in range(CHUNK_SIZE):
+		var visited := {}
+		for y in range(CHUNK_SIZE):
+			for z in range(CHUNK_SIZE):
+				var pos = Vector3i(x, y, z)
+				if visited.has(pos) or not block_map.has(pos):
+					continue
+				if block_map.has(Vector3i(x - 1, y, z)):
+					continue
+
+				var width = 1
+				while z + width < CHUNK_SIZE:
+					var p2 = Vector3i(x, y, z + width)
+					var l2 = Vector3i(x - 1, y, z + width)
+					if block_map.has(p2) and not block_map.has(l2) and not visited.has(p2):
+						width += 1
+					else:
+						break
+
+				var height = 1
+				while y + height < CHUNK_SIZE:
+					var can_extend = true
+					for dz in range(width):
+						var cp = Vector3i(x, y + height, z + dz)
+						var cl = Vector3i(x - 1, y + height, z + dz)
+						if not block_map.has(cp) or block_map.has(cl) or visited.has(cp):
+							can_extend = false
+							break
+					if can_extend:
+						height += 1
+					else:
+						break
+
+				for dz in range(width):
+					for dy in range(height):
+						visited[Vector3i(x, y + dy, z + dz)] = true
+
+				var p = Vector3(x, y, z) * BLOCK_SIZE
+				var w = width * BLOCK_SIZE
+				var h = height * BLOCK_SIZE
+				var face_vertices = [
+					p,
+					p + Vector3(0, h, 0),
+					p + Vector3(0, h, w),
+					p + Vector3(0, 0, w)
+				]
+
+				for v in face_vertices:
+					vertices.append(v)
+					normals.append(Vector3.LEFT)
+					uvs.append(Vector2(v.y, v.z) * 0.1)
+
+				indices.append_array([
+					index_offset, index_offset + 1, index_offset + 2,
+					index_offset, index_offset + 2, index_offset + 3
+				])
+				index_offset += 4
+				
+	# --- FORWARD FACES (z+)
+	for z in range(CHUNK_SIZE):
+		var visited := {}
+		for y in range(CHUNK_SIZE):
+			for x in range(CHUNK_SIZE):
+				var pos = Vector3i(x, y, z)
+				if visited.has(pos) or not block_map.has(pos):
+					continue
+				if block_map.has(Vector3i(x, y, z + 1)):
+					continue
+
+				var width = 1
+				while x + width < CHUNK_SIZE:
+					var p2 = Vector3i(x + width, y, z)
+					var f2 = Vector3i(x + width, y, z + 1)
+					if block_map.has(p2) and not block_map.has(f2) and not visited.has(p2):
+						width += 1
+					else:
+						break
+
+				var height = 1
+				while y + height < CHUNK_SIZE:
+					var can_extend = true
+					for dx in range(width):
+						var cp = Vector3i(x + dx, y + height, z)
+						var cf = Vector3i(x + dx, y + height, z + 1)
+						if not block_map.has(cp) or block_map.has(cf) or visited.has(cp):
+							can_extend = false
+							break
+					if can_extend:
+						height += 1
+					else:
+						break
+
+				for dx in range(width):
+					for dy in range(height):
+						visited[Vector3i(x + dx, y + dy, z)] = true
+
+				var p = Vector3(x, y, z + 1) * BLOCK_SIZE
+				var w = width * BLOCK_SIZE
+				var h = height * BLOCK_SIZE
+				var face_vertices = [
+					p,
+					p + Vector3(0, h, 0),
+					p + Vector3(w, h, 0),
+					p + Vector3(w, 0, 0)
+				]
+
+				for v in face_vertices:
+					vertices.append(v)
+					normals.append(Vector3.FORWARD)
+					uvs.append(Vector2(v.x, v.y) * 0.1)
+
+				indices.append_array([
+					index_offset, index_offset + 1, index_offset + 2,
+					index_offset, index_offset + 2, index_offset + 3
+				])
+				index_offset += 4
+	
+	# --- BACK FACES (z−)
+	for z in range(CHUNK_SIZE):
+		var visited := {}
+		for y in range(CHUNK_SIZE):
+			for x in range(CHUNK_SIZE):
+				var pos = Vector3i(x, y, z)
+				if visited.has(pos) or not block_map.has(pos):
+					continue
+				if block_map.has(Vector3i(x, y, z - 1)):
+					continue
+
+				var width = 1
+				while x + width < CHUNK_SIZE:
+					var p2 = Vector3i(x + width, y, z)
+					var b2 = Vector3i(x + width, y, z - 1)
+					if block_map.has(p2) and not block_map.has(b2) and not visited.has(p2):
+						width += 1
+					else:
+						break
+
+				var height = 1
+				while y + height < CHUNK_SIZE:
+					var can_extend = true
+					for dx in range(width):
+						var cp = Vector3i(x + dx, y + height, z)
+						var cb = Vector3i(x + dx, y + height, z - 1)
+						if not block_map.has(cp) or block_map.has(cb) or visited.has(cp):
+							can_extend = false
+							break
+					if can_extend:
+						height += 1
+					else:
+						break
+
+				for dx in range(width):
+					for dy in range(height):
+						visited[Vector3i(x + dx, y + dy, z)] = true
+
+				var p = Vector3(x, y, z) * BLOCK_SIZE
+				var w = width * BLOCK_SIZE
+				var h = height * BLOCK_SIZE
+				var face_vertices = [
+					p,
+					p + Vector3(w, 0, 0),
+					p + Vector3(w, h, 0),
+					p + Vector3(0, h, 0)
+				]
+
+				for v in face_vertices:
+					vertices.append(v)
+					normals.append(Vector3.BACK)
+					uvs.append(Vector2(v.x, v.y) * 0.1)
+
+				indices.append_array([
+					index_offset, index_offset + 1, index_offset + 2,
+					index_offset, index_offset + 2, index_offset + 3
+				])
+				index_offset += 4
+	# TODO: Add LEFT, FORWARD, and BACK face passes similarly
 
 	# Finalize mesh
 	arrays[Mesh.ARRAY_VERTEX] = vertices
