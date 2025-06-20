@@ -43,6 +43,17 @@ func _unhandled_input(event):
 func _process(delta):
 	if $fps_label:
 		$fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
+	
+	var forward = -global_transform.basis.z.normalized()
+	var dir_name = ""
+
+	if abs(forward.x) > abs(forward.z):
+		dir_name = "East" if forward.x > 0 else "West"
+	else:
+		dir_name = "South" if forward.z > 0 else "North"
+
+	if Input.is_action_just_pressed("ui_focus_next"):  # press TAB to debug
+		print("Looking toward: ", dir_name, " | Vector: ", forward)
 
 
 
