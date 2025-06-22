@@ -3,7 +3,7 @@ extends CharacterBody3D
 var SPEED = 11.0
 const RUN_SPEED = 30.0
 #const JUMP_VELOCITY = 14.5
-const JUMP_VELOCITY = 54.5
+const JUMP_VELOCITY = 104.5
 const AIR_DECELERATION = 0.1
 const AIR_CONTROL = 0.04
 

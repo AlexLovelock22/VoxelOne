@@ -22,7 +22,7 @@ func generate_chunk():
 var mesh_generated := false
 
 func generate_mesh():
-	print("Meshing chunk at ", chunk_offset)
+	#print("Meshing chunk at ", chunk_offset)
 	_generate_visible_mesh()
 	mesh_generated = true
 
@@ -58,66 +58,7 @@ func _generate_visible_mesh():
 	var indices = PackedInt32Array()
 	var index_offset = 0
 
-	## --- TOP FACES (y+)
-	#for y in range(CHUNK_SIZE):
-		#var visited := {}
-		#for z in range(CHUNK_SIZE):
-			#for x in range(CHUNK_SIZE):
-				#var pos = Vector3i(x, y, z)
-				#if visited.has(pos) or not block_map.has(pos):
-					#continue
-				#if block_map.has(Vector3i(x, y + 1, z)):
-					#continue
-#
-				#var width = 1
-				#while x + width < CHUNK_SIZE:
-					#var p2 = Vector3i(x + width, y, z)
-					#var a2 = Vector3i(x + width, y + 1, z)
-					#if block_map.has(p2) and not block_map.has(a2) and not visited.has(p2):
-						#width += 1
-					#else:
-						#break
-#
-				#var height = 1
-				#while z + height < CHUNK_SIZE:
-					#var can_extend = true
-					#for dx in range(width):
-						#var cp = Vector3i(x + dx, y, z + height)
-						#var ca = Vector3i(x + dx, y + 1, z + height)
-						#if not block_map.has(cp) or block_map.has(ca) or visited.has(cp):
-							#can_extend = false
-							#break
-					#if can_extend:
-						#height += 1
-					#else:
-						#break
-#
-				#for dz in range(height):
-					#for dx in range(width):
-						#visited[Vector3i(x + dx, y, z + dz)] = true
-#
-				#var p = Vector3(x, y + 1, z) * BLOCK_SIZE
-				#var w = width * BLOCK_SIZE
-				#var h = height * BLOCK_SIZE
-				#var face_vertices = [
-					#p,
-					#p + Vector3(w, 0, 0),
-					#p + Vector3(w, 0, h),
-					#p + Vector3(0, 0, h)
-				#]
-#
-				#for v in face_vertices:
-					#vertices.append(v)
-					#normals.append(Vector3.UP)
-					#uvs.append(Vector2(v.x, v.z) * 0.1)
-#
-				#indices.append_array([
-					#index_offset, index_offset + 1, index_offset + 2,
-					#index_offset, index_offset + 2, index_offset + 3
-				#])
-				#index_offset += 4
-
-	# --- BOTTOM FACES (y−)
+	# --- TOP FACES (y+)
 	for y in range(CHUNK_SIZE):
 		var visited := {}
 		for z in range(CHUNK_SIZE):
@@ -125,25 +66,137 @@ func _generate_visible_mesh():
 				var pos = Vector3i(x, y, z)
 				if visited.has(pos) or not block_map.has(pos):
 					continue
-				if block_map.has(Vector3i(x, y - 1, z)):
+
+				var adjacent := Vector3i(x, y + 1, z)
+				var occluded := false
+
+				if _is_inside_chunk(adjacent):
+					occluded = block_map.has(adjacent)
+				else:
+					var world_adj = Vector3(chunk_offset) + Vector3(adjacent) * BLOCK_SIZE
+					occluded = chunk_manager.is_block_solid_at_world_pos(world_adj)
+
+				if occluded:
 					continue
 
-				var width = 1
+				var width := 1
 				while x + width < CHUNK_SIZE:
 					var p2 = Vector3i(x + width, y, z)
-					var b2 = Vector3i(x + width, y - 1, z)
-					if block_map.has(p2) and not block_map.has(b2) and not visited.has(p2):
+					var a2 = Vector3i(x + width, y + 1, z)
+
+					var occluded2 := false
+					if _is_inside_chunk(a2):
+						occluded2 = block_map.has(a2)
+					else:
+						var world_a2 = Vector3(chunk_offset) + Vector3(a2) * BLOCK_SIZE
+						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_a2)
+
+					if block_map.has(p2) and not occluded2 and not visited.has(p2):
 						width += 1
 					else:
 						break
 
-				var height = 1
+				var height := 1
 				while z + height < CHUNK_SIZE:
-					var can_extend = true
+					var can_extend := true
+					for dx in range(width):
+						var cp = Vector3i(x + dx, y, z + height)
+						var ca = Vector3i(x + dx, y + 1, z + height)
+
+						var occluded3 := false
+						if _is_inside_chunk(ca):
+							occluded3 = block_map.has(ca)
+						else:
+							var world_ca = Vector3(chunk_offset) + Vector3(ca) * BLOCK_SIZE
+							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_ca)
+
+						if not block_map.has(cp) or occluded3 or visited.has(cp):
+							can_extend = false
+							break
+					if can_extend:
+						height += 1
+					else:
+						break
+
+				for dz in range(height):
+					for dx in range(width):
+						visited[Vector3i(x + dx, y, z + dz)] = true
+
+				var p = Vector3(x, y + 1, z) * BLOCK_SIZE
+				var w = width * BLOCK_SIZE
+				var h = height * BLOCK_SIZE
+				var face_vertices = [
+					p,
+					p + Vector3(w, 0, 0),
+					p + Vector3(w, 0, h),
+					p + Vector3(0, 0, h)
+				]
+
+				for v in face_vertices:
+					vertices.append(v)
+					normals.append(Vector3.UP)
+					uvs.append(Vector2(v.x, v.z) * 0.1)
+
+				indices.append_array([
+					index_offset, index_offset + 1, index_offset + 2,
+					index_offset, index_offset + 2, index_offset + 3
+				])
+				index_offset += 4
+
+
+		# --- BOTTOM FACES (y−)
+	for y in range(CHUNK_SIZE):
+		var visited := {}
+		for z in range(CHUNK_SIZE):
+			for x in range(CHUNK_SIZE):
+				var pos = Vector3i(x, y, z)
+				if visited.has(pos) or not block_map.has(pos):
+					continue
+
+				var adjacent := Vector3i(x, y - 1, z)
+				var occluded := false
+
+				if _is_inside_chunk(adjacent):
+					occluded = block_map.has(adjacent)
+				else:
+					var world_adj = Vector3(chunk_offset) + Vector3(adjacent) * BLOCK_SIZE
+					occluded = chunk_manager.is_block_solid_at_world_pos(world_adj)
+
+				if occluded:
+					continue
+
+				var width := 1
+				while x + width < CHUNK_SIZE:
+					var p2 = Vector3i(x + width, y, z)
+					var b2 = Vector3i(x + width, y - 1, z)
+
+					var occluded2 := false
+					if _is_inside_chunk(b2):
+						occluded2 = block_map.has(b2)
+					else:
+						var world_b2 = Vector3(chunk_offset) + Vector3(b2) * BLOCK_SIZE
+						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_b2)
+
+					if block_map.has(p2) and not occluded2 and not visited.has(p2):
+						width += 1
+					else:
+						break
+
+				var height := 1
+				while z + height < CHUNK_SIZE:
+					var can_extend := true
 					for dx in range(width):
 						var cp = Vector3i(x + dx, y, z + height)
 						var cb = Vector3i(x + dx, y - 1, z + height)
-						if not block_map.has(cp) or block_map.has(cb) or visited.has(cp):
+
+						var occluded3 := false
+						if _is_inside_chunk(cb):
+							occluded3 = block_map.has(cb)
+						else:
+							var world_cb = Vector3(chunk_offset) + Vector3(cb) * BLOCK_SIZE
+							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_cb)
+
+						if not block_map.has(cp) or occluded3 or visited.has(cp):
 							can_extend = false
 							break
 					if can_extend:
@@ -176,6 +229,7 @@ func _generate_visible_mesh():
 				])
 				index_offset += 4
 
+
 	# --- RIGHT FACES (x+)
 	for x in range(CHUNK_SIZE):
 		var visited := {}
@@ -185,13 +239,13 @@ func _generate_visible_mesh():
 				if visited.has(pos) or not block_map.has(pos):
 					continue
 
-				var adjacent = Vector3i(x + 1, y, z)
+				var adjacent := Vector3i(x + 1, y, z)
 				var occluded := false
 
 				if _is_inside_chunk(adjacent):
 					occluded = block_map.has(adjacent)
 				else:
-					var world_adj = chunk_offset + adjacent
+					var world_adj = Vector3(chunk_offset) + Vector3(adjacent) * BLOCK_SIZE
 					occluded = chunk_manager.is_block_solid_at_world_pos(world_adj)
 
 				if occluded:
@@ -199,17 +253,17 @@ func _generate_visible_mesh():
 
 				var width = 1
 				while z + width < CHUNK_SIZE:
-					var p2 = Vector3i(x, y, z + width)
-					var a2 = Vector3i(x + 1, y, z + width)
+					var next = Vector3i(x, y, z + width)
+					var next_adj = Vector3i(x + 1, y, z + width)
 
 					var occluded2 := false
-					if _is_inside_chunk(a2):
-						occluded2 = block_map.has(a2)
+					if _is_inside_chunk(next_adj):
+						occluded2 = block_map.has(next_adj)
 					else:
-						var world_a2 = chunk_offset + a2
-						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_a2)
+						var world_next = Vector3(chunk_offset) + Vector3(next_adj) * BLOCK_SIZE
+						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_next)
 
-					if block_map.has(p2) and not occluded2 and not visited.has(p2):
+					if block_map.has(next) and not occluded2 and not visited.has(next):
 						width += 1
 					else:
 						break
@@ -219,18 +273,19 @@ func _generate_visible_mesh():
 					var can_extend := true
 					for dz in range(width):
 						var cp = Vector3i(x, y + height, z + dz)
-						var cr = Vector3i(x + 1, y + height, z + dz)
+						var ca = Vector3i(x + 1, y + height, z + dz)
 
 						var occluded3 := false
-						if _is_inside_chunk(cr):
-							occluded3 = block_map.has(cr)
+						if _is_inside_chunk(ca):
+							occluded3 = block_map.has(ca)
 						else:
-							var world_cr = chunk_offset + cr
-							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_cr)
+							var world_check = Vector3(chunk_offset) + Vector3(ca) * BLOCK_SIZE
+							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_check)
 
 						if not block_map.has(cp) or occluded3 or visited.has(cp):
 							can_extend = false
 							break
+
 					if can_extend:
 						height += 1
 					else:
@@ -260,7 +315,8 @@ func _generate_visible_mesh():
 					index_offset, index_offset + 2, index_offset + 3
 				])
 				index_offset += 4
-				
+
+
 		# --- LEFT FACES (x−)
 	for x in range(CHUNK_SIZE):
 		var visited := {}
@@ -270,12 +326,13 @@ func _generate_visible_mesh():
 				if visited.has(pos) or not block_map.has(pos):
 					continue
 
-				var adjacent = Vector3i(x - 1, y, z)
+				var adjacent := Vector3i(x - 1, y, z)
 				var occluded := false
+
 				if _is_inside_chunk(adjacent):
 					occluded = block_map.has(adjacent)
 				else:
-					var world_adj = chunk_offset + adjacent
+					var world_adj = Vector3(chunk_offset) + Vector3(adjacent) * BLOCK_SIZE
 					occluded = chunk_manager.is_block_solid_at_world_pos(world_adj)
 
 				if occluded:
@@ -283,16 +340,17 @@ func _generate_visible_mesh():
 
 				var width = 1
 				while z + width < CHUNK_SIZE:
-					var p2 = Vector3i(x, y, z + width)
-					var a2 = Vector3i(x - 1, y, z + width)
-					var occluded2 := false
-					if _is_inside_chunk(a2):
-						occluded2 = block_map.has(a2)
-					else:
-						var world_a2 = chunk_offset + a2
-						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_a2)
+					var next = Vector3i(x, y, z + width)
+					var next_adj = Vector3i(x - 1, y, z + width)
 
-					if block_map.has(p2) and not occluded2 and not visited.has(p2):
+					var occluded2 := false
+					if _is_inside_chunk(next_adj):
+						occluded2 = block_map.has(next_adj)
+					else:
+						var world_next = Vector3(chunk_offset) + Vector3(next_adj) * BLOCK_SIZE
+						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_next)
+
+					if block_map.has(next) and not occluded2 and not visited.has(next):
 						width += 1
 					else:
 						break
@@ -302,17 +360,19 @@ func _generate_visible_mesh():
 					var can_extend := true
 					for dz in range(width):
 						var cp = Vector3i(x, y + height, z + dz)
-						var cr = Vector3i(x - 1, y + height, z + dz)
+						var ca = Vector3i(x - 1, y + height, z + dz)
+
 						var occluded3 := false
-						if _is_inside_chunk(cr):
-							occluded3 = block_map.has(cr)
+						if _is_inside_chunk(ca):
+							occluded3 = block_map.has(ca)
 						else:
-							var world_cr = chunk_offset + cr
-							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_cr)
+							var world_check = Vector3(chunk_offset) + Vector3(ca) * BLOCK_SIZE
+							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_check)
 
 						if not block_map.has(cp) or occluded3 or visited.has(cp):
 							can_extend = false
 							break
+
 					if can_extend:
 						height += 1
 					else:
@@ -342,7 +402,7 @@ func _generate_visible_mesh():
 					index_offset, index_offset + 2, index_offset + 3
 				])
 				index_offset += 4
-				
+
 		# --- FRONT FACES (z+)
 	for z in range(CHUNK_SIZE):
 		var visited := {}
@@ -352,12 +412,12 @@ func _generate_visible_mesh():
 				if visited.has(pos) or not block_map.has(pos):
 					continue
 
-				var adjacent = Vector3i(x, y, z + 1)
+				var adjacent := Vector3i(x, y, z + 1)
 				var occluded := false
 				if _is_inside_chunk(adjacent):
 					occluded = block_map.has(adjacent)
 				else:
-					var world_adj = chunk_offset + adjacent
+					var world_adj = Vector3(chunk_offset) + Vector3(adjacent) * BLOCK_SIZE
 					occluded = chunk_manager.is_block_solid_at_world_pos(world_adj)
 
 				if occluded:
@@ -365,16 +425,17 @@ func _generate_visible_mesh():
 
 				var width = 1
 				while x + width < CHUNK_SIZE:
-					var p2 = Vector3i(x + width, y, z)
-					var a2 = Vector3i(x + width, y, z + 1)
-					var occluded2 := false
-					if _is_inside_chunk(a2):
-						occluded2 = block_map.has(a2)
-					else:
-						var world_a2 = chunk_offset + a2
-						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_a2)
+					var next = Vector3i(x + width, y, z)
+					var next_adj = Vector3i(x + width, y, z + 1)
 
-					if block_map.has(p2) and not occluded2 and not visited.has(p2):
+					var occluded2 := false
+					if _is_inside_chunk(next_adj):
+						occluded2 = block_map.has(next_adj)
+					else:
+						var world_next = Vector3(chunk_offset) + Vector3(next_adj) * BLOCK_SIZE
+						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_next)
+
+					if block_map.has(next) and not occluded2 and not visited.has(next):
 						width += 1
 					else:
 						break
@@ -384,17 +445,19 @@ func _generate_visible_mesh():
 					var can_extend := true
 					for dx in range(width):
 						var cp = Vector3i(x + dx, y + height, z)
-						var cr = Vector3i(x + dx, y + height, z + 1)
+						var ca = Vector3i(x + dx, y + height, z + 1)
+
 						var occluded3 := false
-						if _is_inside_chunk(cr):
-							occluded3 = block_map.has(cr)
+						if _is_inside_chunk(ca):
+							occluded3 = block_map.has(ca)
 						else:
-							var world_cr = chunk_offset + cr
-							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_cr)
+							var world_check = Vector3(chunk_offset) + Vector3(ca) * BLOCK_SIZE
+							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_check)
 
 						if not block_map.has(cp) or occluded3 or visited.has(cp):
 							can_extend = false
 							break
+
 					if can_extend:
 						height += 1
 					else:
@@ -424,9 +487,9 @@ func _generate_visible_mesh():
 					index_offset, index_offset + 2, index_offset + 3
 				])
 				index_offset += 4
-
-	
-			# --- BACK FACES (z−)
+				
+				
+					# --- BACK FACES (z−)
 	for z in range(CHUNK_SIZE):
 		var visited := {}
 		for y in range(CHUNK_SIZE):
@@ -435,12 +498,12 @@ func _generate_visible_mesh():
 				if visited.has(pos) or not block_map.has(pos):
 					continue
 
-				var adjacent = Vector3i(x, y, z - 1)
+				var adjacent := Vector3i(x, y, z - 1)
 				var occluded := false
 				if _is_inside_chunk(adjacent):
 					occluded = block_map.has(adjacent)
 				else:
-					var world_adj = chunk_offset + adjacent
+					var world_adj = Vector3(chunk_offset) + Vector3(adjacent) * BLOCK_SIZE
 					occluded = chunk_manager.is_block_solid_at_world_pos(world_adj)
 
 				if occluded:
@@ -448,16 +511,17 @@ func _generate_visible_mesh():
 
 				var width = 1
 				while x + width < CHUNK_SIZE:
-					var p2 = Vector3i(x + width, y, z)
-					var a2 = Vector3i(x + width, y, z - 1)
-					var occluded2 := false
-					if _is_inside_chunk(a2):
-						occluded2 = block_map.has(a2)
-					else:
-						var world_a2 = chunk_offset + a2
-						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_a2)
+					var next = Vector3i(x + width, y, z)
+					var next_adj = Vector3i(x + width, y, z - 1)
 
-					if block_map.has(p2) and not occluded2 and not visited.has(p2):
+					var occluded2 := false
+					if _is_inside_chunk(next_adj):
+						occluded2 = block_map.has(next_adj)
+					else:
+						var world_next = Vector3(chunk_offset) + Vector3(next_adj) * BLOCK_SIZE
+						occluded2 = chunk_manager.is_block_solid_at_world_pos(world_next)
+
+					if block_map.has(next) and not occluded2 and not visited.has(next):
 						width += 1
 					else:
 						break
@@ -467,17 +531,19 @@ func _generate_visible_mesh():
 					var can_extend := true
 					for dx in range(width):
 						var cp = Vector3i(x + dx, y + height, z)
-						var cr = Vector3i(x + dx, y + height, z - 1)
+						var ca = Vector3i(x + dx, y + height, z - 1)
+
 						var occluded3 := false
-						if _is_inside_chunk(cr):
-							occluded3 = block_map.has(cr)
+						if _is_inside_chunk(ca):
+							occluded3 = block_map.has(ca)
 						else:
-							var world_cr = chunk_offset + cr
-							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_cr)
+							var world_check = Vector3(chunk_offset) + Vector3(ca) * BLOCK_SIZE
+							occluded3 = chunk_manager.is_block_solid_at_world_pos(world_check)
 
 						if not block_map.has(cp) or occluded3 or visited.has(cp):
 							can_extend = false
 							break
+
 					if can_extend:
 						height += 1
 					else:
@@ -507,6 +573,7 @@ func _generate_visible_mesh():
 					index_offset, index_offset + 2, index_offset + 3
 				])
 				index_offset += 4
+
 
 	# TODO: Add LEFT, FORWARD, and BACK face passes similarly
 
