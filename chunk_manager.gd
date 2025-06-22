@@ -11,7 +11,8 @@ var log_buffer := []
 var log_thread: Thread = Thread.new()
 var log_mutex := Mutex.new()
 var stop_thread := false
-
+const CHUNK_SIZE := 16
+@export var BLOCK_SIZE: float = 1.0
 
 func _ready():
 	_clear_log_file()
@@ -67,7 +68,7 @@ func _spawn_chunk(chunk_pos: Vector3i):
 	chunks[chunk_pos] = chunk_instance
 
 	var quadrant = _get_quadrant(chunk_pos)
-	_log("🧱 Spawned chunk at: %s [%s]" % [chunk_pos, quadrant])
+	#_log("🧱 Spawned chunk at: %s [%s]" % [chunk_pos, quadrant])
 
 func _get_quadrant(pos: Vector3i) -> String:
 	if pos.x >= 0 and pos.z >= 0:
@@ -81,19 +82,19 @@ func _get_quadrant(pos: Vector3i) -> String:
 
 func _try_generate_if_ready(pos: Vector3i):
 	if not chunks.has(pos):
-		_log("❌ Attempted to mesh non-existent chunk: %s" % pos)
+		#_log("❌ Attempted to mesh non-existent chunk: %s" % pos)
 		return
 
 	for dir in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
 		if not chunks.has(pos + dir):
-			_log("⏳ Delaying mesh gen for %s, missing neighbor at %s" % [pos, pos + dir])
+			#_log("⏳ Delaying mesh gen for %s, missing neighbor at %s" % [pos, pos + dir])
 			pending_mesh[pos] = true
 			return
 
-	_log("✅ All neighbors ready for %s → meshing now." % pos)
+	#_log("✅ All neighbors ready for %s → meshing now." % pos)
 	var chunk = chunks[pos]
 	chunk.generate_mesh()
-	_log("✔️ Mesh generated for chunk %s" % pos)
+	#_log("✔️ Mesh generated for chunk %s" % pos)
 
 func _retry_pending_mesh():
 	var completed := []
@@ -106,7 +107,7 @@ func _retry_pending_mesh():
 		if ready:
 			var chunk = chunks[pos]
 			chunk.generate_mesh()
-			_log("🔁 Retried and meshed chunk: %s" % pos)
+			#_log("🔁 Retried and meshed chunk: %s" % pos)
 			completed.append(pos)
 
 	for pos in completed:
@@ -114,7 +115,7 @@ func _retry_pending_mesh():
 
 func is_block_solid_at_world_pos(world_pos: Vector3i) -> bool:
 	if chunks.is_empty():
-		_log("⚠️ Chunks empty during solid check for: %s" % world_pos)
+		#_log("⚠️ Chunks empty during solid check for: %s" % world_pos)
 		return false
 
 	var any_chunk = chunks.values()[0]
@@ -129,13 +130,14 @@ func is_block_solid_at_world_pos(world_pos: Vector3i) -> bool:
 	var local_pos = world_pos - chunk_pos * chunk_size
 
 	if not chunks.has(chunk_pos):
-		_log("🚫 No chunk at %s (from world pos %s)" % [chunk_pos, world_pos])
+		#_log("🚫 No chunk at %s (from world pos %s)" % [chunk_pos, world_pos])
 		return false
 
 	var chunk = chunks[chunk_pos]
 	var solid = chunk.block_map.has(local_pos)
-	_log("🔍 %s in chunk %s at local %s → solid: %s" % [world_pos, chunk_pos, local_pos, solid])
+	#_log("🔍 %s in chunk %s at local %s → solid: %s" % [world_pos, chunk_pos, local_pos, solid])
 	return solid
+
 
 
 # --- Buffered logging ---
@@ -160,3 +162,45 @@ func _flush_log_buffer(userdata=null):
 
 		# Avoid locking main thread
 		OS.delay_msec(50)
+
+func set_block_at_world_pos(world_pos: Vector3, place: bool):
+	var chunk_size := 16  # Or use a constant if available
+	var chunk_coords = Vector3i(
+		floori(world_pos.x / chunk_size),
+		0,
+		floori(world_pos.z / chunk_size)
+	)
+
+	var local_pos = Vector3i(
+		int(world_pos.x) % chunk_size,
+		int(world_pos.y),
+		int(world_pos.z) % chunk_size
+	)
+
+	if local_pos.x < 0:
+		local_pos.x += chunk_size
+	if local_pos.z < 0:
+		local_pos.z += chunk_size
+
+	print("🌍 Requested %s at world %s → chunk %s local %s" % [(place if place else "BREAK"), world_pos, chunk_coords, local_pos])
+
+	if not chunks.has(chunk_coords):
+		print("❌ No chunk found at %s" % chunk_coords)
+		return
+
+	var chunk = chunks[chunk_coords]
+
+	if place:
+		chunk.block_map[local_pos] = true
+		print("✅ Placed block at %s in chunk %s" % [local_pos, chunk_coords])
+	else:
+		if chunk.block_map.has(local_pos):
+			chunk.block_map.erase(local_pos)
+			print("🗑️ Removed block at %s in chunk %s" % [local_pos, chunk_coords])
+		else:
+			print("⚠️ Tried to remove nonexistent block at %s in chunk %s" % [local_pos, chunk_coords])
+
+	chunk._generate_visible_mesh()
+
+
+

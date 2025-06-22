@@ -48,6 +48,15 @@ func _is_inside_chunk(pos: Vector3i) -> bool:
 
 
 func _generate_visible_mesh():
+	# Clean up old mesh + collisions
+	if $MeshInstance3D.mesh:
+		$MeshInstance3D.mesh.clear_surfaces()
+
+	for child in get_children():
+		if child is StaticBody3D:
+			remove_child(child)
+			child.queue_free()
+
 	var mesh = ArrayMesh.new()
 	var arrays = []
 	arrays.resize(Mesh.ARRAY_MAX)
@@ -57,7 +66,7 @@ func _generate_visible_mesh():
 	var uvs = PackedVector2Array()
 	var indices = PackedInt32Array()
 	var index_offset = 0
-
+	
 	# --- TOP FACES (y+)
 	for y in range(CHUNK_SIZE):
 		var visited := {}
@@ -597,7 +606,7 @@ func _generate_visible_mesh():
 	collider.add_child(collision_shape)
 	add_child(collider)
 
-	print("Chunk generated with %d vertices, %d indices" % [vertices.size(), indices.size()])
+	print("✅ Chunk mesh updated with %d vertices, %d indices" % [vertices.size(), indices.size()])
 
 
 
@@ -643,3 +652,12 @@ func _get_directions():
 		{ "offset": Vector3i(0, 1, 0), "normal": Vector3(0, 1, 0), "verts": [3, 2, 6, 7] },
 		{ "offset": Vector3i(0, -1, 0), "normal": Vector3(0, -1, 0), "verts": [4, 5, 1, 0] }
 	]
+	
+
+func set_block_at_local_pos(local_pos: Vector3i, is_solid: bool):
+	if is_solid:
+		block_map[local_pos] = true
+	else:
+		block_map.erase(local_pos)
+
+	generate_mesh()

@@ -7,6 +7,8 @@ var blocks = {} # A dictionary to store block types at positions
 @export var texture_atlas: Texture2D
 var texture_atlas_size = Vector2(48, 32) # Size of the texture atlas grid in pixels
 
+
+
 var noise = FastNoiseLite.new()
 
 class BlockType:

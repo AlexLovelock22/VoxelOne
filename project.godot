@@ -19,7 +19,6 @@ run/max_fps=615
 
 file_logging/enable_file_logging=true
 file_logging/log_path="res://logs/godot.log"
-settings/stdout/print_fps=true
 
 [display]
 
