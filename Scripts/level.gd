@@ -1,218 +1,352 @@
 extends Node3D
 
-var chunk_size = Vector3(16, 32, 16)
-var render_distance = 24
+var chunk_size = Vector3(16, 16, 16)
+var block_size = 2.0 # Each block is 2x2 world coordinates
+var blocks = {} # A dictionary to store block types at positions
 
-var noise_generator: FastNoiseLite
-@export var mesh_library: MeshLibrary
-@onready var grid_map: GridMap = $GridMap
+@export var texture_atlas: Texture2D
+var texture_atlas_size = Vector2(48, 32) # Size of the texture atlas grid in pixels
 
-@onready var chunks_loaded_label = $Player/chunks_loaded_label
-@onready var player_position_label = $Player/player_position_label
-@onready var chunk_position_label = $Player/chunk_position_label
-@onready var queue_length_label = $Player/queue_length_label
 
-var generated_chunks = {}
-var current_player_chunk = Vector3(-999, 0, -999)
-var check_frequency = 0.5
-var time_since_last_check = 0
 
-var task_queue = []
-var max_tasks_per_frame = 1
+var noise = FastNoiseLite.new()
 
-# Define the chunk visualization mesh and instance
-var chunk_visualization_mesh: ArrayMesh = null
-var chunk_visualization_instance: MeshInstance3D = null
+class BlockType:
+	var name: String
+	var top_uv: Rect2
+	var side_uv: Rect2
+	var bottom_uv: Rect2
 
-func _ready():
-	mesh_library = load("res://Resources/blocks.tres")
-	if mesh_library == null:
-		print("Error: Mesh library could not be loaded.")
-		return
+	func _init(name, top_uv, side_uv, bottom_uv):
+		self.name = name
+		self.top_uv = top_uv
+		self.side_uv = side_uv
+		self.bottom_uv = bottom_uv
 
-	noise_generator = FastNoiseLite.new()
-	noise_generator.seed = randi()
-	noise_generator.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 
-	grid_map.mesh_library = mesh_library
+#func _process(delta):
+	# delta is the elapsed time since the last frame in seconds
+	#print("Frametime: ", delta, " seconds")
 
-	# Create ArrayMesh for chunk visualization
-	chunk_visualization_mesh = ArrayMesh.new()
-	chunk_visualization_instance = MeshInstance3D.new()
-	chunk_visualization_instance.mesh = chunk_visualization_mesh
-	add_child(chunk_visualization_instance)
-
-func _process(delta):
-	time_since_last_check += delta
-	if time_since_last_check >= check_frequency:
-		time_since_last_check = 0
-		var player_position = get_player_position()
-		var player_chunk = get_player_chunk(player_position)
-		
-		if player_chunk != current_player_chunk:
-			current_player_chunk = player_chunk
-			#print("Updating chunks... Player Position: ", player_position, " Player Chunk: ", player_chunk)
-			update_chunks(player_position)
-
-	process_task_queue()
-	update_metrics()
-	#update_chunk_visualization()
-
-func get_player_position():
-	return get_node("/root/Level/Player").global_transform.origin
-
-func get_player_chunk(player_position):
-	# Adjusting player position to align with chunk size
-	return Vector3(
-		int(floor(player_position.x / (chunk_size.x * 2))),
-		0,
-		int(floor(player_position.z / (chunk_size.z * 2)))
+func normalize_uv(rect: Rect2, atlas_size: Vector2) -> Rect2:
+	return Rect2(
+		rect.position / atlas_size,
+		rect.size / atlas_size
 	)
 
-func update_chunks(player_position):
-	var player_chunk = get_player_chunk(player_position)
-	var player_chunk_x = int(player_chunk.x)
-	var player_chunk_z = int(player_chunk.z)
+# Define block types with normalized UV coordinates
+var BLOCK_TYPES = {
+	"Grass": BlockType.new("Grass", 
+		normalize_uv(Rect2(0, 0, 16, 16), texture_atlas_size),    # Top
+		normalize_uv(Rect2(32, 0, 16, 16), texture_atlas_size),   # Side
+		normalize_uv(Rect2(16, 0, 16, 16), texture_atlas_size)    # Bottom
+	),
+	#Dirt uses grass right now, just to show the texture rotation issue
+	"Dirt": BlockType.new("Dirt", 
+		normalize_uv(Rect2(0, 0, 16, 16), texture_atlas_size),    # Top
+		normalize_uv(Rect2(32, 0, 16, 16), texture_atlas_size),   # Side
+		normalize_uv(Rect2(16, 0, 16, 16), texture_atlas_size)    # Bottom
+	),
+	"Stone": BlockType.new("Stone", 
+		normalize_uv(Rect2(0, 32, 16, 16), texture_atlas_size),
+		normalize_uv(Rect2(16, 32, 16, 16), texture_atlas_size),
+		normalize_uv(Rect2(32, 32, 16, 16), texture_atlas_size)
+	)
+}
+
+func _ready():
+	# Load the texture atlas
+	texture_atlas = load("res://Textures/texture_atlas.png")
 	
-	#print("Player Position during update: ", player_position, " Player Chunk: ", player_chunk)
-
-	var chunks_to_keep = {}
-	var radius = int(floor(render_distance / 2))
-
-	for x in range(player_chunk_x - radius, player_chunk_x + radius + 1):
-		for z in range(player_chunk_z - radius, player_chunk_z + radius + 1):
-			var chunk_position = Vector3(x, 0, z)
-			chunks_to_keep[chunk_position] = true
-			if not generated_chunks.has(chunk_position):
-				if not load_chunk(chunk_position):
-					#print("Generating chunk at: ", chunk_position, " for player chunk: ", player_chunk)
-					task_queue.append({"action": "generate", "chunk_position": chunk_position})
-				generated_chunks[chunk_position] = true
-
-	var keys_to_remove = []
-	for chunk_position in generated_chunks.keys():
-		if not chunks_to_keep.has(chunk_position) and not is_chunk_in_unload_queue(chunk_position):
-			task_queue.append({"action": "unload", "chunk_position": chunk_position})
-			keys_to_remove.append(chunk_position)
+	# Initialize the noise parameters
+	noise.seed = randi()
+	noise.fractal_octaves = 4
 	
-	for key in keys_to_remove:
-		generated_chunks.erase(key)
-	
-	print("Chunks loaded: ", generated_chunks.size())
+	# Generate terrain using noise
+	generate_terrain()
+	generate_chunk_mesh()
 
-func process_task_queue():
-	var tasks_to_process = min(task_queue.size(), max_tasks_per_frame)
-	for i in range(tasks_to_process):
-		var task = task_queue.pop_front()
-		if task["action"] == "generate":
-			generate_chunk(task["chunk_position"])
-		elif task["action"] == "unload":
-			unload_chunk(task["chunk_position"])
-
-func generate_chunk(chunk_position: Vector3):
-	#print("Generating chunk at: ", chunk_position, " Player Position during generation: ", get_player_position())
-	var chunk_data = {}
+func generate_terrain():
 	for x in range(chunk_size.x):
 		for z in range(chunk_size.z):
-			var world_x = int(chunk_position.x * chunk_size.x + x)
-			var world_z = int(chunk_position.z * chunk_size.z + z)
-			var height = int(combined_noise(world_x, world_z) * 25) + 15
-			for y in range(chunk_size.y):
-				var world_y = int(y)
-				var block_type = ""
-				if world_y <= height:
-					if noise_generator.get_noise_3d(world_x * 0.1, world_y * 0.1, world_z * 0.1) < 0.5:
-						block_type = "Grass"
-					elif world_y < height - 3:
-						block_type = "Dirt"
-					else:
-						block_type = "Stone"
-					set_block(world_x, world_y, world_z, block_type)
-				chunk_data[Vector3i(x, y, z)] = block_type
-	save_chunk_data(chunk_position, chunk_data)
-
-func unload_chunk(chunk_position: Vector3):
-	#print("Unloading chunk at: ", chunk_position, " Player Position: ", get_player_position())
-	for x in range(chunk_size.x):
-		for z in range(chunk_size.z):
-			for y in range(chunk_size.y):
-				var world_x = int(chunk_position.x * chunk_size.x + x)
-				var world_z = int(chunk_position.z * chunk_size.z + z)
-				grid_map.set_cell_item(Vector3i(world_x, y, world_z), -1)
-
-func combined_noise(x, z):
-	var noise1 = noise_generator.get_noise_2d(x * 0.1, z * 0.1)
-	var noise2 = noise_generator.get_noise_2d(x * 0.2, z * 0.2) * 0.5
-	var noise3 = noise_generator.get_noise_2d(x * 0.4, z * 0.4) * 0.25
-	return noise1 + noise2 + noise3
-
-func set_block(x: int, y: int, z: int, block_type: String):
-	if mesh_library == null:
-		print("Error: Mesh library is not loaded.")
-		return
-	
-	var block_id = mesh_library.find_item_by_name(block_type)
-	if block_id == -1:
-		print("Error: Block type", block_type, "not found in mesh library.")
-		return
-	
-	grid_map.set_cell_item(Vector3i(x, y, z), block_id)
-
-func save_chunk_data(chunk_position: Vector3, chunk_data: Dictionary):
-	var file_path = "res://chunks/%d_%d.chunk" % [int(chunk_position.x), int(chunk_position.z)]
-	var file = FileAccess.open(file_path, FileAccess.WRITE)
-	if file:
-		file.store_var(chunk_data)
-		file.close()
-	else:
-		print("Error: Could not open file for writing: " + file_path)
-
-func load_chunk(chunk_position: Vector3) -> bool:
-	var file_path = "res://chunks/%d_%d.chunk" % [int(chunk_position.x), int(chunk_position.z)]
-	if FileAccess.file_exists(file_path):
-		var file = FileAccess.open(file_path, FileAccess.READ)
-		if file:
-			var chunk_data = file.get_var()
-			file.close()
-			for coord in chunk_data.keys():
-				var block_type = chunk_data[coord]
-				if block_type != "":
-					var world_x = int(chunk_position.x * chunk_size.x + coord.x)
-					var world_y = int(coord.y)
-					var world_z = int(chunk_position.z * chunk_size.z + coord.z)
-					set_block(world_x, world_y, world_z, block_type)
-			#print("Chunk loaded at: ", chunk_position, " Player Position: ", get_player_position())
-			return true
-		else:
-			print("Error: Could not open file for reading: " + file_path)
-	return false
-
-func save_chunk(chunk_position: Vector3):
-	var chunk_data = {}
-	for x in range(chunk_size.x):
-		for z in range(chunk_size.z):
-			for y in range(chunk_size.y):
-				var world_x = int(chunk_position.x * chunk_size.x + x)
-				var world_z = int(chunk_position.z * chunk_size.z + z)
-				var block_id = grid_map.get_cell_item(Vector3i(world_x, y, world_z))
-				if block_id != -1:
-					var block_type = mesh_library.get_item_name(block_id)
-					chunk_data[Vector3i(x, y, z)] = block_type
+			var height = int(noise.get_noise_2d(float(x), float(z)) * (chunk_size.y / 2)) + int(chunk_size.y / 2)
+			for y in range(height):
+				if y == height - 1:
+					blocks[Vector3(x, y, z)] = "Grass"
+				elif y >= height - 3:
+					blocks[Vector3(x, y, z)] = "Dirt"
 				else:
-					chunk_data[Vector3i(x, y, z)] = ""
-	save_chunk_data(chunk_position, chunk_data)
+					blocks[Vector3(x, y, z)] = "Stone"
 
-func update_metrics():
-	var player_position = get_player_position()
-	var player_chunk = get_player_chunk(player_position)
-	player_position_label.text = "Player Position: (%.2f, %.2f, %.2f)" % [player_position.x, player_position.y, player_position.z]
-	chunk_position_label.text = "Player Chunk: (%d, %d, %d)" % [player_chunk.x, player_chunk.y, player_chunk.z]
-	chunks_loaded_label.text = "Chunks Loaded: %d" % generated_chunks.size()
-	queue_length_label.text = "Queue Length: %d" % task_queue.size()
+func generate_chunk_mesh():
+	var mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	
+	var vertices = PackedVector3Array()
+	var normals = PackedVector3Array()
+	var uvs = PackedVector2Array()
+	var indices = PackedInt32Array()
+
+	for pos in blocks.keys():
+		if is_surface_block(pos):
+			add_block_faces(vertices, normals, uvs, indices, pos, blocks[pos])
+
+	if vertices.size() == 0:
+		print("No vertices were added, blocks might be missing or not on the surface.")
+	else:
+		arrays[Mesh.ARRAY_VERTEX] = vertices
+		arrays[Mesh.ARRAY_NORMAL] = normals
+		arrays[Mesh.ARRAY_TEX_UV] = uvs
+		arrays[Mesh.ARRAY_INDEX] = indices
+		
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		var mesh_instance = MeshInstance3D.new()
+		mesh_instance.mesh = mesh
+		
+		# Create and assign a material with the texture atlas
+		var material = StandardMaterial3D.new()
+		material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+		material.albedo_texture = texture_atlas
+		mesh_instance.material_override = material
+		
+		add_child(mesh_instance)
+		
+		# Add collision shapes for each block
+		for block_pos in blocks.keys():
+			add_block_collision(block_pos)
+		
+		print("Mesh generated with vertices: ", vertices.size(), " and indices: ", indices.size())
+
+func add_block_faces(vertices, normals, uvs, indices, position, block_type):
+	var base_index = vertices.size()
+	var scale = block_size  # Scale each block to be 2 units in size
+
+	var block_data = BLOCK_TYPES[block_type]
+	
+	var faces = [
+		# Top face
+		[Vector3(0, 1, 0), [Vector3(0, 1, 0) * scale, Vector3(1, 1, 0) * scale, Vector3(1, 1, 1) * scale, Vector3(0, 1, 1) * scale], block_data.top_uv],
+		# Bottom face
+		[Vector3(0, -1, 0), [Vector3(0, 0, 0) * scale, Vector3(0, 0, 1) * scale, Vector3(1, 0, 1) * scale, Vector3(1, 0, 0) * scale], block_data.bottom_uv],
+		# Right face
+		[Vector3(1, 0, 0), [Vector3(1, 0, 0) * scale, Vector3(1, 0, 1) * scale, Vector3(1, 1, 1) * scale, Vector3(1, 1, 0) * scale], block_data.side_uv],
+		# Left face
+		[Vector3(-1, 0, 0), [Vector3(0, 0, 0) * scale, Vector3(0, 1, 0) * scale, Vector3(0, 1, 1) * scale, Vector3(0, 0, 1) * scale], block_data.side_uv],
+		# Front face
+		[Vector3(0, 0, 1), [Vector3(0, 0, 1) * scale, Vector3(0, 1, 1) * scale, Vector3(1, 1, 1) * scale, Vector3(1, 0, 1) * scale], block_data.side_uv],
+		# Back face
+		[Vector3(0, 0, -1), [Vector3(0, 0, 0) * scale, Vector3(1, 0, 0) * scale, Vector3(1, 1, 0) * scale, Vector3(0, 1, 0) * scale], block_data.side_uv]
+	]
+
+	for face in faces:
+		var normal = face[0]
+		var face_vertices = face[1]
+		var uv_rect = face[2]
+		var uv_coords = [
+			uv_rect.position,
+			uv_rect.position + Vector2(uv_rect.size.x, 0),
+			uv_rect.position + uv_rect.size,
+			uv_rect.position + Vector2(0, uv_rect.size.y)
+		]
+
+		# Add vertices and normals
+		for vertex in face_vertices:
+			vertices.append((position * block_size) + vertex)  # Adjust position with block size
+			normals.append(normal)
+
+		# Ensure the UV coordinates are correctly applied in the right order
+		if normal == Vector3(0, 1, 0):
+			# Top face (no rotation needed)
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[3])
+			
+		elif normal == Vector3(0, -1, 0):
+			# Bottom face (rotate 180 degrees)
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+		
+		#Think faces are wrong. Comeback to. 
+		elif normal == Vector3(1, 0, 0):
+			# Right face (rotate 90 degrees clockwise)
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+		
+		#This one faces inwards - COMPLETE
+		elif normal == Vector3(-1, 0, 0):
+			# Left face (rotate 90 degrees counter-clockwise)
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[2])
+		
+		# Front (+Z) - COMPLETE
+		elif normal == Vector3(0, 0, 1):
+			# Front face (no rotation needed) (3,0,1,2)
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[0])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[2])
+			
+		# Back (-Z) Not inwards side of map
+		elif normal == Vector3(0, 0, -1):
+			# Back face (rotate 180 degrees)
+			uvs.append(uv_coords[3])
+			uvs.append(uv_coords[2])
+			uvs.append(uv_coords[1])
+			uvs.append(uv_coords[0])
+
+		# Ensure the winding order of the indices is consistent
+		indices.append(base_index)
+		indices.append(base_index + 1)
+		indices.append(base_index + 2)
+		indices.append(base_index)
+		indices.append(base_index + 2)
+		indices.append(base_index + 3)
+
+		base_index += 4
 
 
-func is_chunk_in_unload_queue(chunk_position: Vector3) -> bool:
-	for task in task_queue:
-		if task["action"] == "unload" and task["chunk_position"] == chunk_position:
+func add_block_collision(position):
+	var static_body = StaticBody3D.new()
+	var collision_shape = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.extents = Vector3(block_size / 2, block_size / 2, block_size / 2)
+	collision_shape.shape = shape
+	
+	static_body.add_child(collision_shape)
+	
+	# Set the transform of StaticBody3D to position the collision shape
+	var transform = Transform3D()
+	transform.origin = position * block_size + Vector3(block_size / 2, block_size / 2, block_size / 2)
+	static_body.transform = transform
+	
+	add_child(static_body)
+
+func is_surface_block(pos):
+	var directions = [
+		Vector3(1, 0, 0), Vector3(-1, 0, 0), 
+		Vector3(0, 1, 0), Vector3(0, -1, 0),
+		Vector3(0, 0, 1), Vector3(0, 0, -1)
+	]
+
+	for dir in directions:
+		var neighbor_pos = pos + dir
+		if not blocks.has(neighbor_pos):
 			return true
 	return false
+
+func update_chunk_mesh():
+	# Clear previous children to remove old mesh and collision shapes
+	print("Clearing old mesh and collision shapes...")
+	for child in get_children():
+		if child is MeshInstance3D or child is StaticBody3D:
+			child.queue_free()
+
+	print("Old children cleared. Regenerating chunk mesh...")
+	generate_chunk_mesh()
+
+	# Verify camera and lighting
+	var camera = get_node("/root/Level/Player/Camera3D")
+	if camera:
+		print("Camera found: ", camera.name, " Position: ", camera.global_transform.origin)
+	else:
+		print("Error: Camera not found!")
+
+	var light = get_node("/root/Level/DirectionalLight3D")
+	if light:
+		print("Light found: ", light.name, " Position: ", light.global_transform.origin)
+	else:
+		print("Error: Light not found!")
+	
+
+
+func place_block(world_coordinate, block_type):
+	var position = (world_coordinate / block_size).floor()
+	print("Placing block at grid position: ", position, " with type: ", block_type)
+	blocks[position] = block_type
+	update_adjacent_blocks_mesh(position)
+
+func destroy_block(world_coordinate):
+	var position = (world_coordinate / block_size).floor()
+	print("Destroying block at grid position: ", position)
+	if blocks.has(position):
+		blocks.erase(position)  # Remove first
+		update_chunk_mesh()     # Rebuild entire mesh + collisions
+	else:
+		print("Error: No block found at ", position)
+
+
+
+
+func update_adjacent_blocks_mesh(position):
+	var affected_positions = [position]
+	var directions = [
+		Vector3(1, 0, 0), Vector3(-1, 0, 0),
+		Vector3(0, 1, 0), Vector3(0, -1, 0),
+		Vector3(0, 0, 1), Vector3(0, 0, -1)
+	]
+	
+
+	for dir in directions:
+		var neighbor_pos = position + dir
+		if blocks.has(neighbor_pos):
+			affected_positions.append(neighbor_pos)
+
+	# Remove old mesh instances and collision shapes
+	for child in get_children():
+		if child is MeshInstance3D or child is StaticBody3D:
+			var child_pos = (child.transform.origin / block_size).floor()
+			if child_pos in affected_positions:
+				child.queue_free()
+
+	# Rebuild mesh and collisions for affected positions
+	
+	rebuild_mesh_and_collisions(affected_positions)
+
+
+func rebuild_mesh_and_collisions(affected_positions):
+	var mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+
+	var vertices = PackedVector3Array()
+	var normals = PackedVector3Array()
+	var uvs = PackedVector2Array()
+	var indices = PackedInt32Array()
+
+	print("Rebuilding mesh for positions: ", affected_positions)
+	for pos in affected_positions:
+		if blocks.has(pos) and is_surface_block(pos):
+			add_block_faces(vertices, normals, uvs, indices, pos, blocks[pos])
+		else:
+			print("No block at position or not a surface block: ", pos)
+
+	if vertices.size() > 0:
+		arrays[Mesh.ARRAY_VERTEX] = vertices
+		arrays[Mesh.ARRAY_NORMAL] = normals
+		arrays[Mesh.ARRAY_TEX_UV] = uvs
+		arrays[Mesh.ARRAY_INDEX] = indices
+
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		var mesh_instance = MeshInstance3D.new()
+		mesh_instance.mesh = mesh
+		var material = StandardMaterial3D.new()
+		material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+		material.albedo_texture = texture_atlas
+		mesh_instance.material_override = material
+		add_child(mesh_instance)
+
+		# Add collision shapes for the affected blocks
+		for block_pos in affected_positions:
+			if blocks.has(block_pos):
+				add_block_collision(block_pos)
+		print("Mesh and collisions updated for affected blocks.")
+	else:
+		print("No vertices were added, check the affected blocks.")

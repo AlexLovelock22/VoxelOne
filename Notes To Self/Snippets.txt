@@ -1,0 +1,17 @@
+func set_block(x: int, y: int, z: int, block_type: String):
+	# Log coordinates and block type for debugging if needed
+	#print("Setting block at: x=", x, " y=", y, " z=", z, " block_type=", block_type)
+	
+	# Check if the mesh library is loaded
+	if mesh_library == null:
+		print("Error: Mesh library is not loaded.")
+		return
+	
+	# Find the block item in the mesh library
+	var block_id = mesh_library.find_item_by_name(block_type)
+	if block_id == -1:
+		print("Error: Block type '" + block_type + "' not found in mesh library.")
+		return
+	
+	# Set the block in the grid map
+	grid_map.set_cell_item(Vector3i(x, y, z), block_id)

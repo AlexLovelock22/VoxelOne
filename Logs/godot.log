@@ -1,134 +1,880 @@
 Godot Engine v4.2.2.stable.mono.official.15073afe3 - https://godotengine.org
-Vulkan API 1.3.270 - Forward+ - Using Vulkan Device #0: AMD - AMD Radeon RX 7900 XT
+Vulkan API 1.4.308 - Forward+ - Using Vulkan Device #0: AMD - AMD Radeon RX 7900 XT
  
-USER ERROR: Error opening file 'res://icon.svg'.
-   at: load_image (core/io/image_loader.cpp:90)
-1
-Attempting to load world with 24 render distance.
-Chunks loaded: 625
-Loading chunk(-13, 0, -13)
-Loading chunk(-13, 0, -12)
-Loading chunk(-13, 0, -11)
-Loading chunk(-13, 0, -10)
-Loading chunk(-13, 0, -9)
-Loading chunk(-13, 0, -8)
-Loading chunk(-13, 0, -7)
-Loading chunk(-13, 0, -6)
-Loading chunk(-13, 0, -5)
-Loading chunk(-13, 0, -4)
-Loading chunk(-13, 0, -3)
-Loading chunk(-13, 0, -2)
-Loading chunk(-13, 0, -1)
-Loading chunk(-13, 0, 0)
-Loading chunk(-13, 0, 1)
-Loading chunk(-13, 0, 2)
-Loading chunk(-13, 0, 3)
-Loading chunk(-13, 0, 4)
-Loading chunk(-13, 0, 5)
-Loading chunk(-13, 0, 6)
-Loading chunk(-13, 0, 7)
-Loading chunk(-13, 0, 8)
-Loading chunk(-13, 0, 9)
-Loading chunk(-13, 0, 10)
-Loading chunk(-13, 0, 11)
-Loading chunk(-12, 0, -13)
-Loading chunk(-12, 0, -12)
-Loading chunk(-12, 0, -11)
-Loading chunk(-12, 0, -10)
-Loading chunk(-12, 0, -9)
-Loading chunk(-12, 0, -8)
-Loading chunk(-12, 0, -7)
-Loading chunk(-12, 0, -6)
-Loading chunk(-12, 0, -5)
-Loading chunk(-12, 0, -4)
-Loading chunk(-12, 0, -3)
-Loading chunk(-12, 0, -2)
-Loading chunk(-12, 0, -1)
-Loading chunk(-12, 0, 0)
-Loading chunk(-12, 0, 1)
-Loading chunk(-12, 0, 2)
-Loading chunk(-12, 0, 3)
-Loading chunk(-12, 0, 4)
-Loading chunk(-12, 0, 5)
-Loading chunk(-12, 0, 6)
-Loading chunk(-12, 0, 7)
-Loading chunk(-12, 0, 8)
-Loading chunk(-12, 0, 9)
-Loading chunk(-12, 0, 10)
-Loading chunk(-12, 0, 11)
-Loading chunk(-11, 0, -13)
-Loading chunk(-11, 0, -12)
-Loading chunk(-11, 0, -11)
-Loading chunk(-11, 0, -10)
-Loading chunk(-11, 0, -9)
-Loading chunk(-11, 0, -8)
-Loading chunk(-11, 0, -7)
-Loading chunk(-11, 0, -6)
-Loading chunk(-11, 0, -5)
-Loading chunk(-11, 0, -4)
-Loading chunk(-11, 0, -3)
-Loading chunk(-11, 0, -2)
-Loading chunk(-11, 0, -1)
-Loading chunk(-11, 0, 0)
-Loading chunk(-11, 0, 1)
-Loading chunk(-11, 0, 2)
-Loading chunk(-11, 0, 3)
-Loading chunk(-11, 0, 4)
-Loading chunk(-11, 0, 5)
-Loading chunk(-11, 0, 6)
-Loading chunk(-11, 0, 7)
-Loading chunk(-11, 0, 8)
-Loading chunk(-11, 0, 9)
-Loading chunk(-11, 0, 10)
-Loading chunk(-11, 0, 11)
-Loading chunk(-10, 0, -13)
-Loading chunk(-10, 0, -12)
-Loading chunk(-10, 0, -11)
-Loading chunk(-10, 0, -10)
-Loading chunk(-10, 0, -9)
-Loading chunk(-10, 0, -8)
-Loading chunk(-10, 0, -7)
-Loading chunk(-10, 0, -6)
-Loading chunk(-10, 0, -5)
-Loading chunk(-10, 0, -4)
-Loading chunk(-10, 0, -3)
-Loading chunk(-10, 0, -2)
-Loading chunk(-10, 0, -1)
-Loading chunk(-10, 0, 0)
-Loading chunk(-10, 0, 1)
-Loading chunk(-10, 0, 2)
-Loading chunk(-10, 0, 3)
-Loading chunk(-10, 0, 4)
-Loading chunk(-10, 0, 5)
-Loading chunk(-10, 0, 6)
-Loading chunk(-10, 0, 7)
-Loading chunk(-10, 0, 8)
-Loading chunk(-10, 0, 9)
-Loading chunk(-10, 0, 10)
-Loading chunk(-10, 0, 11)
-Loading chunk(-9, 0, -13)
-Loading chunk(-9, 0, -12)
-Loading chunk(-9, 0, -11)
-Loading chunk(-9, 0, -10)
-Loading chunk(-9, 0, -9)
-Loading chunk(-9, 0, -8)
-Loading chunk(-9, 0, -7)
-Loading chunk(-9, 0, -6)
-Loading chunk(-9, 0, -5)
-Loading chunk(-9, 0, -4)
-Loading chunk(-9, 0, -3)
-Loading chunk(-9, 0, -2)
-Loading chunk(-9, 0, -1)
-Loading chunk(-9, 0, 0)
-USER ERROR: BVH request_item error.
-   at: request_item (./core/math/bvh_structs.inc:106)
-USER ERROR: BVH request_item error.
-   at: request_item (./core/math/bvh_structs.inc:106)
-USER ERROR: BVH request_item error.
-   at: request_item (./core/math/bvh_structs.inc:106)
-USER ERROR: BVH request_item error.
-   at: request_item (./core/math/bvh_structs.inc:106)
-USER ERROR: BVH request_item error.
-   at: request_item (./core/math/bvh_structs.inc:106)
-USER ERROR: FATAL: Index p_index = 4294967294 is out of bounds (count = 32772).
-   at: operator[] (./core/templates/local_vector.h:161)
+✅ Chunk mesh updated with 332 vertices, 498 indices
+✅ Chunk mesh updated with 228 vertices, 342 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 520 vertices, 780 indices
+✅ Chunk mesh updated with 552 vertices, 828 indices
+✅ Chunk mesh updated with 472 vertices, 708 indices
+✅ Chunk mesh updated with 360 vertices, 540 indices
+✅ Chunk mesh updated with 580 vertices, 870 indices
+✅ Chunk mesh updated with 584 vertices, 876 indices
+✅ Chunk mesh updated with 496 vertices, 744 indices
+✅ Chunk mesh updated with 528 vertices, 792 indices
+✅ Chunk mesh updated with 656 vertices, 984 indices
+✅ Chunk mesh updated with 256 vertices, 384 indices
+✅ Chunk mesh updated with 400 vertices, 600 indices
+✅ Chunk mesh updated with 588 vertices, 882 indices
+✅ Chunk mesh updated with 400 vertices, 600 indices
+✅ Chunk mesh updated with 480 vertices, 720 indices
+✅ Chunk mesh updated with 464 vertices, 696 indices
+✅ Chunk mesh updated with 520 vertices, 780 indices
+✅ Chunk mesh updated with 316 vertices, 474 indices
+✅ Chunk mesh updated with 276 vertices, 414 indices
+✅ Chunk mesh updated with 460 vertices, 690 indices
+✅ Chunk mesh updated with 568 vertices, 852 indices
+✅ Chunk mesh updated with 436 vertices, 654 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 384 vertices, 576 indices
+✅ Chunk mesh updated with 440 vertices, 660 indices
+✅ Chunk mesh updated with 488 vertices, 732 indices
+✅ Chunk mesh updated with 404 vertices, 606 indices
+✅ Chunk mesh updated with 268 vertices, 402 indices
+✅ Chunk mesh updated with 300 vertices, 450 indices
+✅ Chunk mesh updated with 480 vertices, 720 indices
+✅ Chunk mesh updated with 468 vertices, 702 indices
+✅ Chunk mesh updated with 376 vertices, 564 indices
+✅ Chunk mesh updated with 456 vertices, 684 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 416 vertices, 624 indices
+✅ Chunk mesh updated with 304 vertices, 456 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 400 vertices, 600 indices
+✅ Chunk mesh updated with 564 vertices, 846 indices
+✅ Chunk mesh updated with 444 vertices, 666 indices
+✅ Chunk mesh updated with 360 vertices, 540 indices
+✅ Chunk mesh updated with 428 vertices, 642 indices
+✅ Chunk mesh updated with 544 vertices, 816 indices
+✅ Chunk mesh updated with 364 vertices, 546 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 440 vertices, 660 indices
+✅ Chunk mesh updated with 404 vertices, 606 indices
+✅ Chunk mesh updated with 500 vertices, 750 indices
+✅ Chunk mesh updated with 588 vertices, 882 indices
+✅ Chunk mesh updated with 360 vertices, 540 indices
+✅ Chunk mesh updated with 400 vertices, 600 indices
+✅ Chunk mesh updated with 508 vertices, 762 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 500 vertices, 750 indices
+✅ Chunk mesh updated with 396 vertices, 594 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 336 vertices, 504 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 376 vertices, 564 indices
+✅ Chunk mesh updated with 368 vertices, 552 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 596 vertices, 894 indices
+✅ Chunk mesh updated with 564 vertices, 846 indices
+✅ Chunk mesh updated with 244 vertices, 366 indices
+✅ Chunk mesh updated with 344 vertices, 516 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 528 vertices, 792 indices
+✅ Chunk mesh updated with 444 vertices, 666 indices
+✅ Chunk mesh updated with 284 vertices, 426 indices
+✅ Chunk mesh updated with 240 vertices, 360 indices
+✅ Chunk mesh updated with 616 vertices, 924 indices
+✅ Chunk mesh updated with 316 vertices, 474 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 636 vertices, 954 indices
+✅ Chunk mesh updated with 328 vertices, 492 indices
+✅ Chunk mesh updated with 496 vertices, 744 indices
+✅ Chunk mesh updated with 472 vertices, 708 indices
+✅ Chunk mesh updated with 540 vertices, 810 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 480 vertices, 720 indices
+✅ Chunk mesh updated with 392 vertices, 588 indices
+✅ Chunk mesh updated with 568 vertices, 852 indices
+✅ Chunk mesh updated with 496 vertices, 744 indices
+✅ Chunk mesh updated with 340 vertices, 510 indices
+✅ Chunk mesh updated with 432 vertices, 648 indices
+✅ Chunk mesh updated with 540 vertices, 810 indices
+✅ Chunk mesh updated with 564 vertices, 846 indices
+✅ Chunk mesh updated with 600 vertices, 900 indices
+✅ Chunk mesh updated with 440 vertices, 660 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 504 vertices, 756 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 496 vertices, 744 indices
+✅ Chunk mesh updated with 452 vertices, 678 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 472 vertices, 708 indices
+✅ Chunk mesh updated with 404 vertices, 606 indices
+✅ Chunk mesh updated with 424 vertices, 636 indices
+✅ Chunk mesh updated with 472 vertices, 708 indices
+✅ Chunk mesh updated with 256 vertices, 384 indices
+✅ Chunk mesh updated with 560 vertices, 840 indices
+✅ Chunk mesh updated with 552 vertices, 828 indices
+✅ Chunk mesh updated with 272 vertices, 408 indices
+✅ Chunk mesh updated with 536 vertices, 804 indices
+✅ Chunk mesh updated with 372 vertices, 558 indices
+✅ Chunk mesh updated with 712 vertices, 1068 indices
+✅ Chunk mesh updated with 404 vertices, 606 indices
+✅ Chunk mesh updated with 540 vertices, 810 indices
+✅ Chunk mesh updated with 596 vertices, 894 indices
+✅ Chunk mesh updated with 408 vertices, 612 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 540 vertices, 810 indices
+✅ Chunk mesh updated with 460 vertices, 690 indices
+✅ Chunk mesh updated with 588 vertices, 882 indices
+✅ Chunk mesh updated with 440 vertices, 660 indices
+✅ Chunk mesh updated with 620 vertices, 930 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 528 vertices, 792 indices
+✅ Chunk mesh updated with 268 vertices, 402 indices
+✅ Chunk mesh updated with 336 vertices, 504 indices
+✅ Chunk mesh updated with 444 vertices, 666 indices
+✅ Chunk mesh updated with 352 vertices, 528 indices
+✅ Chunk mesh updated with 584 vertices, 876 indices
+✅ Chunk mesh updated with 320 vertices, 480 indices
+✅ Chunk mesh updated with 572 vertices, 858 indices
+✅ Chunk mesh updated with 588 vertices, 882 indices
+✅ Chunk mesh updated with 472 vertices, 708 indices
+✅ Chunk mesh updated with 352 vertices, 528 indices
+✅ Chunk mesh updated with 480 vertices, 720 indices
+✅ Chunk mesh updated with 520 vertices, 780 indices
+✅ Chunk mesh updated with 560 vertices, 840 indices
+✅ Chunk mesh updated with 444 vertices, 666 indices
+✅ Chunk mesh updated with 568 vertices, 852 indices
+✅ Chunk mesh updated with 408 vertices, 612 indices
+✅ Chunk mesh updated with 456 vertices, 684 indices
+✅ Chunk mesh updated with 352 vertices, 528 indices
+✅ Chunk mesh updated with 464 vertices, 696 indices
+✅ Chunk mesh updated with 276 vertices, 414 indices
+✅ Chunk mesh updated with 228 vertices, 342 indices
+✅ Chunk mesh updated with 580 vertices, 870 indices
+✅ Chunk mesh updated with 540 vertices, 810 indices
+✅ Chunk mesh updated with 424 vertices, 636 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 612 vertices, 918 indices
+✅ Chunk mesh updated with 480 vertices, 720 indices
+✅ Chunk mesh updated with 664 vertices, 996 indices
+✅ Chunk mesh updated with 364 vertices, 546 indices
+✅ Chunk mesh updated with 512 vertices, 768 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 440 vertices, 660 indices
+✅ Chunk mesh updated with 432 vertices, 648 indices
+✅ Chunk mesh updated with 756 vertices, 1134 indices
+✅ Chunk mesh updated with 496 vertices, 744 indices
+✅ Chunk mesh updated with 268 vertices, 402 indices
+✅ Chunk mesh updated with 208 vertices, 312 indices
+✅ Chunk mesh updated with 388 vertices, 582 indices
+✅ Chunk mesh updated with 416 vertices, 624 indices
+✅ Chunk mesh updated with 436 vertices, 654 indices
+✅ Chunk mesh updated with 428 vertices, 642 indices
+✅ Chunk mesh updated with 408 vertices, 612 indices
+✅ Chunk mesh updated with 508 vertices, 762 indices
+✅ Chunk mesh updated with 560 vertices, 840 indices
+✅ Chunk mesh updated with 548 vertices, 822 indices
+✅ Chunk mesh updated with 508 vertices, 762 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 660 vertices, 990 indices
+✅ Chunk mesh updated with 312 vertices, 468 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 348 vertices, 522 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 584 vertices, 876 indices
+✅ Chunk mesh updated with 448 vertices, 672 indices
+✅ Chunk mesh updated with 500 vertices, 750 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 352 vertices, 528 indices
+✅ Chunk mesh updated with 308 vertices, 462 indices
+✅ Chunk mesh updated with 448 vertices, 672 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 520 vertices, 780 indices
+✅ Chunk mesh updated with 356 vertices, 534 indices
+✅ Chunk mesh updated with 252 vertices, 378 indices
+✅ Chunk mesh updated with 512 vertices, 768 indices
+✅ Chunk mesh updated with 496 vertices, 744 indices
+✅ Chunk mesh updated with 352 vertices, 528 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 320 vertices, 480 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 456 vertices, 684 indices
+✅ Chunk mesh updated with 220 vertices, 330 indices
+✅ Chunk mesh updated with 432 vertices, 648 indices
+✅ Chunk mesh updated with 460 vertices, 690 indices
+✅ Chunk mesh updated with 552 vertices, 828 indices
+✅ Chunk mesh updated with 388 vertices, 582 indices
+✅ Chunk mesh updated with 384 vertices, 576 indices
+✅ Chunk mesh updated with 548 vertices, 822 indices
+✅ Chunk mesh updated with 604 vertices, 906 indices
+✅ Chunk mesh updated with 612 vertices, 918 indices
+✅ Chunk mesh updated with 328 vertices, 492 indices
+✅ Chunk mesh updated with 444 vertices, 666 indices
+✅ Chunk mesh updated with 588 vertices, 882 indices
+✅ Chunk mesh updated with 548 vertices, 822 indices
+✅ Chunk mesh updated with 400 vertices, 600 indices
+✅ Chunk mesh updated with 548 vertices, 822 indices
+✅ Chunk mesh updated with 680 vertices, 1020 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 480 vertices, 720 indices
+✅ Chunk mesh updated with 536 vertices, 804 indices
+✅ Chunk mesh updated with 344 vertices, 516 indices
+✅ Chunk mesh updated with 432 vertices, 648 indices
+✅ Chunk mesh updated with 608 vertices, 912 indices
+✅ Chunk mesh updated with 292 vertices, 438 indices
+✅ Chunk mesh updated with 580 vertices, 870 indices
+✅ Chunk mesh updated with 528 vertices, 792 indices
+✅ Chunk mesh updated with 488 vertices, 732 indices
+✅ Chunk mesh updated with 512 vertices, 768 indices
+✅ Chunk mesh updated with 452 vertices, 678 indices
+✅ Chunk mesh updated with 280 vertices, 420 indices
+✅ Chunk mesh updated with 512 vertices, 768 indices
+✅ Chunk mesh updated with 468 vertices, 702 indices
+✅ Chunk mesh updated with 408 vertices, 612 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 424 vertices, 636 indices
+✅ Chunk mesh updated with 468 vertices, 702 indices
+✅ Chunk mesh updated with 500 vertices, 750 indices
+✅ Chunk mesh updated with 456 vertices, 684 indices
+✅ Chunk mesh updated with 512 vertices, 768 indices
+✅ Chunk mesh updated with 336 vertices, 504 indices
+✅ Chunk mesh updated with 508 vertices, 762 indices
+✅ Chunk mesh updated with 580 vertices, 870 indices
+✅ Chunk mesh updated with 512 vertices, 768 indices
+✅ Chunk mesh updated with 364 vertices, 546 indices
+✅ Chunk mesh updated with 400 vertices, 600 indices
+✅ Chunk mesh updated with 564 vertices, 846 indices
+✅ Chunk mesh updated with 344 vertices, 516 indices
+✅ Chunk mesh updated with 376 vertices, 564 indices
+✅ Chunk mesh updated with 584 vertices, 876 indices
+✅ Chunk mesh updated with 360 vertices, 540 indices
+✅ Chunk mesh updated with 468 vertices, 702 indices
+✅ Chunk mesh updated with 612 vertices, 918 indices
+✅ Chunk mesh updated with 376 vertices, 564 indices
+✅ Chunk mesh updated with 520 vertices, 780 indices
+✅ Chunk mesh updated with 568 vertices, 852 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 596 vertices, 894 indices
+✅ Chunk mesh updated with 520 vertices, 780 indices
+✅ Chunk mesh updated with 388 vertices, 582 indices
+✅ Chunk mesh updated with 184 vertices, 276 indices
+✅ Chunk mesh updated with 528 vertices, 792 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 556 vertices, 834 indices
+✅ Chunk mesh updated with 352 vertices, 528 indices
+✅ Chunk mesh updated with 532 vertices, 798 indices
+✅ Chunk mesh updated with 580 vertices, 870 indices
+✅ Chunk mesh updated with 388 vertices, 582 indices
+✅ Chunk mesh updated with 412 vertices, 618 indices
+✅ Chunk mesh updated with 276 vertices, 414 indices
+✅ Chunk mesh updated with 508 vertices, 762 indices
+✅ Chunk mesh updated with 540 vertices, 810 indices
+✅ Chunk mesh updated with 388 vertices, 582 indices
+✅ Chunk mesh updated with 504 vertices, 756 indices
+✅ Chunk mesh updated with 456 vertices, 684 indices
+✅ Chunk mesh updated with 616 vertices, 924 indices
+✅ Chunk mesh updated with 384 vertices, 576 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 500 vertices, 750 indices
+✅ Chunk mesh updated with 620 vertices, 930 indices
+✅ Chunk mesh updated with 304 vertices, 456 indices
+✅ Chunk mesh updated with 460 vertices, 690 indices
+✅ Chunk mesh updated with 136 vertices, 204 indices
+✅ Chunk mesh updated with 348 vertices, 522 indices
+✅ Chunk mesh updated with 452 vertices, 678 indices
+✅ Chunk mesh updated with 372 vertices, 558 indices
+✅ Chunk mesh updated with 468 vertices, 702 indices
+✅ Chunk mesh updated with 460 vertices, 690 indices
+✅ Chunk mesh updated with 212 vertices, 318 indices
+✅ Chunk mesh updated with 452 vertices, 678 indices
+✅ Chunk mesh updated with 608 vertices, 912 indices
+✅ Chunk mesh updated with 368 vertices, 552 indices
+✅ Chunk mesh updated with 524 vertices, 786 indices
+✅ Chunk mesh updated with 588 vertices, 882 indices
+✅ Chunk mesh updated with 560 vertices, 840 indices
+✅ Chunk mesh updated with 392 vertices, 588 indices
+✅ Chunk mesh updated with 488 vertices, 732 indices
+✅ Chunk mesh updated with 584 vertices, 876 indices
+✅ Chunk mesh updated with 308 vertices, 462 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 424 vertices, 636 indices
+✅ Chunk mesh updated with 404 vertices, 606 indices
+✅ Chunk mesh updated with 440 vertices, 660 indices
+✅ Chunk mesh updated with 316 vertices, 474 indices
+✅ Chunk mesh updated with 504 vertices, 756 indices
+✅ Chunk mesh updated with 432 vertices, 648 indices
+✅ Chunk mesh updated with 312 vertices, 468 indices
+✅ Chunk mesh updated with 292 vertices, 438 indices
+✅ Chunk mesh updated with 572 vertices, 858 indices
+✅ Chunk mesh updated with 508 vertices, 762 indices
+✅ Chunk mesh updated with 620 vertices, 930 indices
+✅ Chunk mesh updated with 456 vertices, 684 indices
+✅ Chunk mesh updated with 476 vertices, 714 indices
+✅ Chunk mesh updated with 416 vertices, 624 indices
+✅ Chunk mesh updated with 444 vertices, 666 indices
+✅ Chunk mesh updated with 604 vertices, 906 indices
+✅ Chunk mesh updated with 468 vertices, 702 indices
+✅ Chunk mesh updated with 212 vertices, 318 indices
+✅ Chunk mesh updated with 596 vertices, 894 indices
+✅ Chunk mesh updated with 420 vertices, 630 indices
+✅ Chunk mesh updated with 436 vertices, 654 indices
+✅ Chunk mesh updated with 484 vertices, 726 indices
+✅ Chunk mesh updated with 624 vertices, 936 indices
+✅ Chunk mesh updated with 252 vertices, 378 indices
+✅ Chunk mesh updated with 516 vertices, 774 indices
+✅ Chunk mesh updated with 336 vertices, 504 indices
+✅ Chunk mesh updated with 492 vertices, 738 indices
+✅ Chunk mesh updated with 288 vertices, 432 indices
+✅ ChunkManager assigned to player.
+🧱 Placing block at: (-5, 8, -5)
+🌍 Requested true at world (-5, 8, -5) → chunk (-1, 0, -1) local (11, 8, 11)
+✅ Placed block at (11, 8, 11) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🧱 Placing block at: (-5, 8, -4)
+🌍 Requested true at world (-5, 8, -4) → chunk (-1, 0, -1) local (11, 8, 12)
+✅ Placed block at (11, 8, 12) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🧱 Placing block at: (-5, 8, -3)
+🌍 Requested true at world (-5, 8, -3) → chunk (-1, 0, -1) local (11, 8, 13)
+✅ Placed block at (11, 8, 13) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🪓 Breaking block at: (-5, 8, -3)
+🌍 Requested BREAK at world (-5, 8, -3) → chunk (-1, 0, -1) local (11, 8, 13)
+🗑️ Removed block at (11, 8, 13) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🪓 Breaking block at: (-5, 8, -4)
+🌍 Requested BREAK at world (-5, 8, -4) → chunk (-1, 0, -1) local (11, 8, 12)
+🗑️ Removed block at (11, 8, 12) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🪓 Breaking block at: (-5, 8, -5)
+🌍 Requested BREAK at world (-5, 8, -5) → chunk (-1, 0, -1) local (11, 8, 11)
+🗑️ Removed block at (11, 8, 11) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 360 vertices, 540 indices
+🧱 Placing block at: (-8, 8, -8)
+🌍 Requested true at world (-8, 8, -8) → chunk (-1, 0, -1) local (8, 8, 8)
+✅ Placed block at (8, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🧱 Placing block at: (-10, 8, -8)
+🌍 Requested true at world (-10, 8, -8) → chunk (-1, 0, -1) local (6, 8, 8)
+✅ Placed block at (6, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 408 vertices, 612 indices
+🧱 Placing block at: (-11, 8, -9)
+🌍 Requested true at world (-11, 8, -9) → chunk (-1, 0, -1) local (5, 8, 7)
+✅ Placed block at (5, 8, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 436 vertices, 654 indices
+🧱 Placing block at: (-11, 9, -9)
+🌍 Requested true at world (-11, 9, -9) → chunk (-1, 0, -1) local (5, 9, 7)
+✅ Placed block at (5, 9, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 436 vertices, 654 indices
+🧱 Placing block at: (-11, 10, -9)
+🌍 Requested true at world (-11, 10, -9) → chunk (-1, 0, -1) local (5, 10, 7)
+✅ Placed block at (5, 10, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 436 vertices, 654 indices
+🪓 Breaking block at: (-11, 9, -9)
+🌍 Requested BREAK at world (-11, 9, -9) → chunk (-1, 0, -1) local (5, 9, 7)
+🗑️ Removed block at (5, 9, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 460 vertices, 690 indices
+🪓 Breaking block at: (-11, 8, -9)
+🌍 Requested BREAK at world (-11, 8, -9) → chunk (-1, 0, -1) local (5, 8, 7)
+🗑️ Removed block at (5, 8, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 432 vertices, 648 indices
+🧱 Placing block at: (-10, 9, -8)
+🌍 Requested true at world (-10, 9, -8) → chunk (-1, 0, -1) local (6, 9, 8)
+✅ Placed block at (6, 9, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 432 vertices, 648 indices
+🧱 Placing block at: (-10, 9, -7)
+🌍 Requested true at world (-10, 9, -7) → chunk (-1, 0, -1) local (6, 9, 9)
+✅ Placed block at (6, 9, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 448 vertices, 672 indices
+🧱 Placing block at: (-12, 8, -8)
+🌍 Requested true at world (-12, 8, -8) → chunk (-1, 0, -1) local (4, 8, 8)
+✅ Placed block at (4, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 476 vertices, 714 indices
+🧱 Placing block at: (-11, 8, -7)
+🌍 Requested true at world (-11, 8, -7) → chunk (-1, 0, -1) local (5, 8, 9)
+✅ Placed block at (5, 8, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 500 vertices, 750 indices
+🪓 Breaking block at: (-10, 8, -8)
+🌍 Requested BREAK at world (-10, 8, -8) → chunk (-1, 0, -1) local (6, 8, 8)
+🗑️ Removed block at (6, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 484 vertices, 726 indices
+🪓 Breaking block at: (-11, 8, -7)
+🌍 Requested BREAK at world (-11, 8, -7) → chunk (-1, 0, -1) local (5, 8, 9)
+🗑️ Removed block at (5, 8, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 460 vertices, 690 indices
+🪓 Breaking block at: (-12, 8, -8)
+🌍 Requested BREAK at world (-12, 8, -8) → chunk (-1, 0, -1) local (4, 8, 8)
+🗑️ Removed block at (4, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 432 vertices, 648 indices
+🧱 Placing block at: (-11, 8, -8)
+🌍 Requested true at world (-11, 8, -8) → chunk (-1, 0, -1) local (5, 8, 8)
+✅ Placed block at (5, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 8, -7)
+🌍 Requested true at world (-11, 8, -7) → chunk (-1, 0, -1) local (5, 8, 9)
+✅ Placed block at (5, 8, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-12, 8, -8)
+🌍 Requested true at world (-12, 8, -8) → chunk (-1, 0, -1) local (4, 8, 8)
+✅ Placed block at (4, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 472 vertices, 708 indices
+🧱 Placing block at: (-12, 8, -7)
+🌍 Requested true at world (-12, 8, -7) → chunk (-1, 0, -1) local (4, 8, 9)
+✅ Placed block at (4, 8, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-13, 8, -8)
+🌍 Requested true at world (-13, 8, -8) → chunk (-1, 0, -1) local (3, 8, 8)
+✅ Placed block at (3, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 472 vertices, 708 indices
+🧱 Placing block at: (-13, 8, -7)
+🌍 Requested true at world (-13, 8, -7) → chunk (-1, 0, -1) local (3, 8, 9)
+✅ Placed block at (3, 8, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 9, -8)
+🌍 Requested true at world (-11, 9, -8) → chunk (-1, 0, -1) local (5, 9, 8)
+✅ Placed block at (5, 9, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 472 vertices, 708 indices
+🧱 Placing block at: (-11, 9, -7)
+🌍 Requested true at world (-11, 9, -7) → chunk (-1, 0, -1) local (5, 9, 9)
+✅ Placed block at (5, 9, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-12, 9, -8)
+🌍 Requested true at world (-12, 9, -8) → chunk (-1, 0, -1) local (4, 9, 8)
+✅ Placed block at (4, 9, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 472 vertices, 708 indices
+🧱 Placing block at: (-12, 9, -7)
+🌍 Requested true at world (-12, 9, -7) → chunk (-1, 0, -1) local (4, 9, 9)
+✅ Placed block at (4, 9, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 11, -9)
+🌍 Requested true at world (-11, 11, -9) → chunk (-1, 0, -1) local (5, 11, 7)
+✅ Placed block at (5, 11, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 12, -9)
+🌍 Requested true at world (-11, 12, -9) → chunk (-1, 0, -1) local (5, 12, 7)
+✅ Placed block at (5, 12, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 13, -9)
+🌍 Requested true at world (-11, 13, -9) → chunk (-1, 0, -1) local (5, 13, 7)
+✅ Placed block at (5, 13, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🪓 Breaking block at: (-11, 11, -9)
+🌍 Requested BREAK at world (-11, 11, -9) → chunk (-1, 0, -1) local (5, 11, 7)
+🗑️ Removed block at (5, 11, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 480 vertices, 720 indices
+🪓 Breaking block at: (-11, 10, -9)
+🌍 Requested BREAK at world (-11, 10, -9) → chunk (-1, 0, -1) local (5, 10, 7)
+🗑️ Removed block at (5, 10, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🪓 Breaking block at: (-11, 12, -9)
+🌍 Requested BREAK at world (-11, 12, -9) → chunk (-1, 0, -1) local (5, 12, 7)
+🗑️ Removed block at (5, 12, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 12, -9)
+🌍 Requested true at world (-11, 12, -9) → chunk (-1, 0, -1) local (5, 12, 7)
+✅ Placed block at (5, 12, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 11, -9)
+🌍 Requested true at world (-11, 11, -9) → chunk (-1, 0, -1) local (5, 11, 7)
+✅ Placed block at (5, 11, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-11, 10, -9)
+🌍 Requested true at world (-11, 10, -9) → chunk (-1, 0, -1) local (5, 10, 7)
+✅ Placed block at (5, 10, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 456 vertices, 684 indices
+🧱 Placing block at: (-12, 9, -9)
+🌍 Requested true at world (-12, 9, -9) → chunk (-1, 0, -1) local (4, 9, 7)
+✅ Placed block at (4, 9, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 472 vertices, 708 indices
+🧱 Placing block at: (-11, 9, -10)
+🌍 Requested true at world (-11, 9, -10) → chunk (-1, 0, -1) local (5, 9, 6)
+✅ Placed block at (5, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 496 vertices, 744 indices
+🧱 Placing block at: (-12, 9, -10)
+🌍 Requested true at world (-12, 9, -10) → chunk (-1, 0, -1) local (4, 9, 6)
+✅ Placed block at (4, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 488 vertices, 732 indices
+🧱 Placing block at: (-12, 10, -10)
+🌍 Requested true at world (-12, 10, -10) → chunk (-1, 0, -1) local (4, 10, 6)
+✅ Placed block at (4, 10, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 508 vertices, 762 indices
+🧱 Placing block at: (-13, 9, -10)
+🌍 Requested true at world (-13, 9, -10) → chunk (-1, 0, -1) local (3, 9, 6)
+✅ Placed block at (3, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 520 vertices, 780 indices
+🧱 Placing block at: (-12, 9, -11)
+🌍 Requested true at world (-12, 9, -11) → chunk (-1, 0, -1) local (4, 9, 5)
+✅ Placed block at (4, 9, 5) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 544 vertices, 816 indices
+🧱 Placing block at: (-11, 9, -10)
+🌍 Requested true at world (-11, 9, -10) → chunk (-1, 0, -1) local (5, 9, 6)
+✅ Placed block at (5, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 544 vertices, 816 indices
+🧱 Placing block at: (-11, 10, -10)
+🌍 Requested true at world (-11, 10, -10) → chunk (-1, 0, -1) local (5, 10, 6)
+✅ Placed block at (5, 10, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 536 vertices, 804 indices
+🧱 Placing block at: (-10, 10, -10)
+🌍 Requested true at world (-10, 10, -10) → chunk (-1, 0, -1) local (6, 10, 6)
+✅ Placed block at (6, 10, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 552 vertices, 828 indices
+🧱 Placing block at: (-10, 9, -10)
+🌍 Requested true at world (-10, 9, -10) → chunk (-1, 0, -1) local (6, 9, 6)
+✅ Placed block at (6, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 540 vertices, 810 indices
+🧱 Placing block at: (-9, 9, -10)
+🌍 Requested true at world (-9, 9, -10) → chunk (-1, 0, -1) local (7, 9, 6)
+✅ Placed block at (7, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 548 vertices, 822 indices
+🧱 Placing block at: (-9, 9, -11)
+🌍 Requested true at world (-9, 9, -11) → chunk (-1, 0, -1) local (7, 9, 5)
+✅ Placed block at (7, 9, 5) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 560 vertices, 840 indices
+🧱 Placing block at: (-10, 9, -11)
+🌍 Requested true at world (-10, 9, -11) → chunk (-1, 0, -1) local (6, 9, 5)
+✅ Placed block at (6, 9, 5) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 568 vertices, 852 indices
+🧱 Placing block at: (-9, 9, -12)
+🌍 Requested true at world (-9, 9, -12) → chunk (-1, 0, -1) local (7, 9, 4)
+✅ Placed block at (7, 9, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 580 vertices, 870 indices
+🧱 Placing block at: (-9, 9, -13)
+🌍 Requested true at world (-9, 9, -13) → chunk (-1, 0, -1) local (7, 9, 3)
+✅ Placed block at (7, 9, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 580 vertices, 870 indices
+🧱 Placing block at: (-10, 9, -12)
+🌍 Requested true at world (-10, 9, -12) → chunk (-1, 0, -1) local (6, 9, 4)
+✅ Placed block at (6, 9, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 580 vertices, 870 indices
+🧱 Placing block at: (-10, 9, -13)
+🌍 Requested true at world (-10, 9, -13) → chunk (-1, 0, -1) local (6, 9, 3)
+✅ Placed block at (6, 9, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 568 vertices, 852 indices
+🧱 Placing block at: (-14, 8, -12)
+🌍 Requested true at world (-14, 8, -12) → chunk (-1, 0, -1) local (2, 8, 4)
+✅ Placed block at (2, 8, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🧱 Placing block at: (-14, 8, -13)
+🌍 Requested true at world (-14, 8, -13) → chunk (-1, 0, -1) local (2, 8, 3)
+✅ Placed block at (2, 8, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🪓 Breaking block at: (-14, 8, -13)
+🌍 Requested BREAK at world (-14, 8, -13) → chunk (-1, 0, -1) local (2, 8, 3)
+🗑️ Removed block at (2, 8, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🪓 Breaking block at: (-14, 8, -12)
+🌍 Requested BREAK at world (-14, 8, -12) → chunk (-1, 0, -1) local (2, 8, 4)
+🗑️ Removed block at (2, 8, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 568 vertices, 852 indices
+🧱 Placing block at: (-14, 8, -12)
+🌍 Requested true at world (-14, 8, -12) → chunk (-1, 0, -1) local (2, 8, 4)
+✅ Placed block at (2, 8, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🧱 Placing block at: (-14, 8, -13)
+🌍 Requested true at world (-14, 8, -13) → chunk (-1, 0, -1) local (2, 8, 3)
+✅ Placed block at (2, 8, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🧱 Placing block at: (-14, 8, -14)
+🌍 Requested true at world (-14, 8, -14) → chunk (-1, 0, -1) local (2, 8, 2)
+✅ Placed block at (2, 8, 2) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 596 vertices, 894 indices
+🧱 Placing block at: (-15, 8, -16)
+🌍 Requested true at world (-15, 8, -16) → chunk (-1, 0, -1) local (1, 8, 0)
+✅ Placed block at (1, 8, 0) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 616 vertices, 924 indices
+🪓 Breaking block at: (-15, 8, -16)
+🌍 Requested BREAK at world (-15, 8, -16) → chunk (-1, 0, -1) local (1, 8, 0)
+🗑️ Removed block at (1, 8, 0) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 596 vertices, 894 indices
+🧱 Placing block at: (-14, 8, -15)
+🌍 Requested true at world (-14, 8, -15) → chunk (-1, 0, -1) local (2, 8, 1)
+✅ Placed block at (2, 8, 1) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🧱 Placing block at: (-14, 8, -16)
+🌍 Requested true at world (-14, 8, -16) → chunk (-1, 0, -1) local (2, 8, 0)
+✅ Placed block at (2, 8, 0) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🧱 Placing block at: (-14, 8, -17)
+🌍 Requested true at world (-14, 8, -17) → chunk (-1, 0, -2) local (2, 8, 15)
+✅ Placed block at (2, 8, 15) in chunk (-1, 0, -2)
+✅ Chunk mesh updated with 420 vertices, 630 indices
+🧱 Placing block at: (-15, 7, -14)
+🌍 Requested true at world (-15, 7, -14) → chunk (-1, 0, -1) local (1, 7, 2)
+✅ Placed block at (1, 7, 2) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 588 vertices, 882 indices
+🧱 Placing block at: (-15, 8, -13)
+🌍 Requested true at world (-15, 8, -13) → chunk (-1, 0, -1) local (1, 8, 3)
+✅ Placed block at (1, 8, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 612 vertices, 918 indices
+🧱 Placing block at: (-16, 8, -13)
+🌍 Requested true at world (-16, 8, -13) → chunk (-1, 0, -1) local (0, 8, 3)
+✅ Placed block at (0, 8, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 612 vertices, 918 indices
+🧱 Placing block at: (-17, 7, -13)
+🌍 Requested true at world (-17, 7, -13) → chunk (-2, 0, -1) local (15, 7, 3)
+✅ Placed block at (15, 7, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 316 vertices, 474 indices
+🧱 Placing block at: (-17, 8, -12)
+🌍 Requested true at world (-17, 8, -12) → chunk (-2, 0, -1) local (15, 8, 4)
+✅ Placed block at (15, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 340 vertices, 510 indices
+🧱 Placing block at: (-17, 7, -13)
+🌍 Requested true at world (-17, 7, -13) → chunk (-2, 0, -1) local (15, 7, 3)
+✅ Placed block at (15, 7, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 340 vertices, 510 indices
+🧱 Placing block at: (-16, 8, -14)
+🌍 Requested true at world (-16, 8, -14) → chunk (-1, 0, -1) local (0, 8, 2)
+✅ Placed block at (0, 8, 2) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 628 vertices, 942 indices
+🧱 Placing block at: (-17, 8, -13)
+🌍 Requested true at world (-17, 8, -13) → chunk (-2, 0, -1) local (15, 8, 3)
+✅ Placed block at (15, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 340 vertices, 510 indices
+🧱 Placing block at: (-18, 8, -12)
+🌍 Requested true at world (-18, 8, -12) → chunk (-2, 0, -1) local (14, 8, 4)
+✅ Placed block at (14, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 356 vertices, 534 indices
+🧱 Placing block at: (-19, 8, -12)
+🌍 Requested true at world (-19, 8, -12) → chunk (-2, 0, -1) local (13, 8, 4)
+✅ Placed block at (13, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 356 vertices, 534 indices
+🧱 Placing block at: (-19, 8, -11)
+🌍 Requested true at world (-19, 8, -11) → chunk (-2, 0, -1) local (13, 8, 5)
+✅ Placed block at (13, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 372 vertices, 558 indices
+🧱 Placing block at: (-20, 8, -11)
+🌍 Requested true at world (-20, 8, -11) → chunk (-2, 0, -1) local (12, 8, 5)
+✅ Placed block at (12, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🪓 Breaking block at: (-20, 8, -11)
+🌍 Requested BREAK at world (-20, 8, -11) → chunk (-2, 0, -1) local (12, 8, 5)
+🗑️ Removed block at (12, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 372 vertices, 558 indices
+🧱 Placing block at: (-20, 8, -12)
+🌍 Requested true at world (-20, 8, -12) → chunk (-2, 0, -1) local (12, 8, 4)
+✅ Placed block at (12, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🪓 Breaking block at: (-20, 8, -12)
+🌍 Requested BREAK at world (-20, 8, -12) → chunk (-2, 0, -1) local (12, 8, 4)
+🗑️ Removed block at (12, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 372 vertices, 558 indices
+🧱 Placing block at: (-20, 8, -11)
+🌍 Requested true at world (-20, 8, -11) → chunk (-2, 0, -1) local (12, 8, 5)
+✅ Placed block at (12, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🪓 Breaking block at: (-20, 8, -11)
+🌍 Requested BREAK at world (-20, 8, -11) → chunk (-2, 0, -1) local (12, 8, 5)
+🗑️ Removed block at (12, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 372 vertices, 558 indices
+🧱 Placing block at: (-20, 8, -12)
+🌍 Requested true at world (-20, 8, -12) → chunk (-2, 0, -1) local (12, 8, 4)
+✅ Placed block at (12, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🪓 Breaking block at: (-20, 8, -12)
+🌍 Requested BREAK at world (-20, 8, -12) → chunk (-2, 0, -1) local (12, 8, 4)
+🗑️ Removed block at (12, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 372 vertices, 558 indices
+🧱 Placing block at: (-20, 8, -11)
+🌍 Requested true at world (-20, 8, -11) → chunk (-2, 0, -1) local (12, 8, 5)
+✅ Placed block at (12, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🪓 Breaking block at: (-20, 8, -11)
+🌍 Requested BREAK at world (-20, 8, -11) → chunk (-2, 0, -1) local (12, 8, 5)
+🗑️ Removed block at (12, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 372 vertices, 558 indices
+🪓 Breaking block at: (-19, 8, -12)
+🌍 Requested BREAK at world (-19, 8, -12) → chunk (-2, 0, -1) local (13, 8, 4)
+🗑️ Removed block at (13, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🪓 Breaking block at: (-19, 8, -11)
+🌍 Requested BREAK at world (-19, 8, -11) → chunk (-2, 0, -1) local (13, 8, 5)
+🗑️ Removed block at (13, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 356 vertices, 534 indices
+🧱 Placing block at: (-19, 7, -12)
+🌍 Requested true at world (-19, 7, -12) → chunk (-2, 0, -1) local (13, 7, 4)
+✅ Placed block at (13, 7, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 356 vertices, 534 indices
+🧱 Placing block at: (-17, 8, -11)
+🌍 Requested true at world (-17, 8, -11) → chunk (-2, 0, -1) local (15, 8, 5)
+✅ Placed block at (15, 8, 5) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-19, 8, -12)
+🌍 Requested true at world (-19, 8, -12) → chunk (-2, 0, -1) local (13, 8, 4)
+✅ Placed block at (13, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-20, 7, -12)
+🌍 Requested true at world (-20, 7, -12) → chunk (-2, 0, -1) local (12, 7, 4)
+✅ Placed block at (12, 7, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-20, 8, -12)
+🌍 Requested true at world (-20, 8, -12) → chunk (-2, 0, -1) local (12, 8, 4)
+✅ Placed block at (12, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-21, 8, -12)
+🌍 Requested true at world (-21, 8, -12) → chunk (-2, 0, -1) local (11, 8, 4)
+✅ Placed block at (11, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-22, 8, -12)
+🌍 Requested true at world (-22, 8, -12) → chunk (-2, 0, -1) local (10, 8, 4)
+✅ Placed block at (10, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-19, 8, -13)
+🌍 Requested true at world (-19, 8, -13) → chunk (-2, 0, -1) local (13, 8, 3)
+✅ Placed block at (13, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 392 vertices, 588 indices
+🧱 Placing block at: (-20, 8, -13)
+🌍 Requested true at world (-20, 8, -13) → chunk (-2, 0, -1) local (12, 8, 3)
+✅ Placed block at (12, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 392 vertices, 588 indices
+🧱 Placing block at: (-21, 8, -13)
+🌍 Requested true at world (-21, 8, -13) → chunk (-2, 0, -1) local (11, 8, 3)
+✅ Placed block at (11, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 392 vertices, 588 indices
+🧱 Placing block at: (-22, 8, -13)
+🌍 Requested true at world (-22, 8, -13) → chunk (-2, 0, -1) local (10, 8, 3)
+✅ Placed block at (10, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 376 vertices, 564 indices
+🧱 Placing block at: (-18, 8, -13)
+🌍 Requested true at world (-18, 8, -13) → chunk (-2, 0, -1) local (14, 8, 3)
+✅ Placed block at (14, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 352 vertices, 528 indices
+🧱 Placing block at: (-17, 8, -14)
+🌍 Requested true at world (-17, 8, -14) → chunk (-2, 0, -1) local (15, 8, 2)
+✅ Placed block at (15, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 364 vertices, 546 indices
+🧱 Placing block at: (-18, 8, -14)
+🌍 Requested true at world (-18, 8, -14) → chunk (-2, 0, -1) local (14, 8, 2)
+✅ Placed block at (14, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-19, 8, -14)
+🌍 Requested true at world (-19, 8, -14) → chunk (-2, 0, -1) local (13, 8, 2)
+✅ Placed block at (13, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-20, 8, -14)
+🌍 Requested true at world (-20, 8, -14) → chunk (-2, 0, -1) local (12, 8, 2)
+✅ Placed block at (12, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-21, 8, -14)
+🌍 Requested true at world (-21, 8, -14) → chunk (-2, 0, -1) local (11, 8, 2)
+✅ Placed block at (11, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-22, 8, -14)
+🌍 Requested true at world (-22, 8, -14) → chunk (-2, 0, -1) local (10, 8, 2)
+✅ Placed block at (10, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 352 vertices, 528 indices
+🧱 Placing block at: (-23, 8, -12)
+🌍 Requested true at world (-23, 8, -12) → chunk (-2, 0, -1) local (9, 8, 4)
+✅ Placed block at (9, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-23, 8, -14)
+🌍 Requested true at world (-23, 8, -14) → chunk (-2, 0, -1) local (9, 8, 2)
+✅ Placed block at (9, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🧱 Placing block at: (-23, 9, -14)
+🌍 Requested true at world (-23, 9, -14) → chunk (-2, 0, -1) local (9, 9, 2)
+✅ Placed block at (9, 9, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 388 vertices, 582 indices
+🪓 Breaking block at: (-23, 9, -14)
+🌍 Requested BREAK at world (-23, 9, -14) → chunk (-2, 0, -1) local (9, 9, 2)
+🗑️ Removed block at (9, 9, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 380 vertices, 570 indices
+🧱 Placing block at: (-23, 8, -13)
+🌍 Requested true at world (-23, 8, -13) → chunk (-2, 0, -1) local (9, 8, 3)
+✅ Placed block at (9, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 352 vertices, 528 indices
+🧱 Placing block at: (-24, 8, -12)
+🌍 Requested true at world (-24, 8, -12) → chunk (-2, 0, -1) local (8, 8, 4)
+✅ Placed block at (8, 8, 4) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-24, 8, -13)
+🌍 Requested true at world (-24, 8, -13) → chunk (-2, 0, -1) local (8, 8, 3)
+✅ Placed block at (8, 8, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 368 vertices, 552 indices
+🧱 Placing block at: (-24, 8, -14)
+🌍 Requested true at world (-24, 8, -14) → chunk (-2, 0, -1) local (8, 8, 2)
+✅ Placed block at (8, 8, 2) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 352 vertices, 528 indices
+🧱 Placing block at: (-23, 9, -13)
+🌍 Requested true at world (-23, 9, -13) → chunk (-2, 0, -1) local (9, 9, 3)
+✅ Placed block at (9, 9, 3) in chunk (-2, 0, -1)
+✅ Chunk mesh updated with 384 vertices, 576 indices
+🧱 Placing block at: (-13, 9, -7)
+🌍 Requested true at world (-13, 9, -7) → chunk (-1, 0, -1) local (3, 9, 9)
+✅ Placed block at (3, 9, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 636 vertices, 954 indices
+🪓 Breaking block at: (-13, 9, -7)
+🌍 Requested BREAK at world (-13, 9, -7) → chunk (-1, 0, -1) local (3, 9, 9)
+🗑️ Removed block at (3, 9, 9) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 624 vertices, 936 indices
+🪓 Breaking block at: (-13, 9, -10)
+🌍 Requested BREAK at world (-13, 9, -10) → chunk (-1, 0, -1) local (3, 9, 6)
+🗑️ Removed block at (3, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 600 vertices, 900 indices
+🪓 Breaking block at: (-12, 9, -10)
+🌍 Requested BREAK at world (-12, 9, -10) → chunk (-1, 0, -1) local (4, 9, 6)
+🗑️ Removed block at (4, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 624 vertices, 936 indices
+🪓 Breaking block at: (-12, 10, -10)
+🌍 Requested BREAK at world (-12, 10, -10) → chunk (-1, 0, -1) local (4, 10, 6)
+🗑️ Removed block at (4, 10, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 608 vertices, 912 indices
+🪓 Breaking block at: (-11, 10, -10)
+🌍 Requested BREAK at world (-11, 10, -10) → chunk (-1, 0, -1) local (5, 10, 6)
+🗑️ Removed block at (5, 10, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 616 vertices, 924 indices
+🪓 Breaking block at: (-11, 9, -9)
+🌍 Requested BREAK at world (-11, 9, -9) → chunk (-1, 0, -1) local (5, 9, 7)
+⚠️ Tried to remove nonexistent block at (5, 9, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 616 vertices, 924 indices
+🪓 Breaking block at: (-12, 9, -11)
+🌍 Requested BREAK at world (-12, 9, -11) → chunk (-1, 0, -1) local (4, 9, 5)
+🗑️ Removed block at (4, 9, 5) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🪓 Breaking block at: (-11, 9, -10)
+🌍 Requested BREAK at world (-11, 9, -10) → chunk (-1, 0, -1) local (5, 9, 6)
+🗑️ Removed block at (5, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 576 vertices, 864 indices
+🪓 Breaking block at: (-10, 9, -10)
+🌍 Requested BREAK at world (-10, 9, -10) → chunk (-1, 0, -1) local (6, 9, 6)
+🗑️ Removed block at (6, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🪓 Breaking block at: (-10, 9, -11)
+🌍 Requested BREAK at world (-10, 9, -11) → chunk (-1, 0, -1) local (6, 9, 5)
+🗑️ Removed block at (6, 9, 5) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 592 vertices, 888 indices
+🪓 Breaking block at: (-8, 8, -8)
+🌍 Requested BREAK at world (-8, 8, -8) → chunk (-1, 0, -1) local (8, 8, 8)
+🗑️ Removed block at (8, 8, 8) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 572 vertices, 858 indices
+🪓 Breaking block at: (-10, 9, -13)
+🌍 Requested BREAK at world (-10, 9, -13) → chunk (-1, 0, -1) local (6, 9, 3)
+🗑️ Removed block at (6, 9, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 580 vertices, 870 indices
+🪓 Breaking block at: (-10, 9, -12)
+🌍 Requested BREAK at world (-10, 9, -12) → chunk (-1, 0, -1) local (6, 9, 4)
+🗑️ Removed block at (6, 9, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 556 vertices, 834 indices
+🪓 Breaking block at: (-9, 9, -11)
+🌍 Requested BREAK at world (-9, 9, -11) → chunk (-1, 0, -1) local (7, 9, 5)
+🗑️ Removed block at (7, 9, 5) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 580 vertices, 870 indices
+🪓 Breaking block at: (-9, 9, -12)
+🌍 Requested BREAK at world (-9, 9, -12) → chunk (-1, 0, -1) local (7, 9, 4)
+🗑️ Removed block at (7, 9, 4) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 580 vertices, 870 indices
+🪓 Breaking block at: (-9, 9, -13)
+🌍 Requested BREAK at world (-9, 9, -13) → chunk (-1, 0, -1) local (7, 9, 3)
+🗑️ Removed block at (7, 9, 3) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 556 vertices, 834 indices
+🪓 Breaking block at: (-9, 9, -10)
+🌍 Requested BREAK at world (-9, 9, -10) → chunk (-1, 0, -1) local (7, 9, 6)
+🗑️ Removed block at (7, 9, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 532 vertices, 798 indices
+🪓 Breaking block at: (-10, 10, -10)
+🌍 Requested BREAK at world (-10, 10, -10) → chunk (-1, 0, -1) local (6, 10, 6)
+🗑️ Removed block at (6, 10, 6) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 508 vertices, 762 indices
+🪓 Breaking block at: (-11, 10, -9)
+🌍 Requested BREAK at world (-11, 10, -9) → chunk (-1, 0, -1) local (5, 10, 7)
+🗑️ Removed block at (5, 10, 7) in chunk (-1, 0, -1)
+✅ Chunk mesh updated with 508 vertices, 762 indices

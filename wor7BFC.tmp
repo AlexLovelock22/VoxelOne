@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://diyn3tveltl68"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_gju3h"]
+[ext_resource type="PackedScene" uid="uid://l60qdcbqrbqn" path="res://player.tscn" id="2_tcese"]
+[ext_resource type="Script" path="res://chunk_manager.gd" id="3_nc4mk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rm27c"]
+sky_horizon_color = Color(0.647889, 0.654962, 0.670815, 1)
+sky_curve = 0.204906
+sky_energy_multiplier = 2.68
+ground_bottom_color = Color(0.206555, 0.165848, 0.133259, 1)
+ground_horizon_color = Color(0.647889, 0.654962, 0.670815, 1)
+sun_curve = 1.0815
+
+[sub_resource type="Sky" id="Sky_8lphf"]
+sky_material = SubResource("ProceduralSkyMaterial_rm27c")
+
+[sub_resource type="Environment" id="Environment_3is03"]
+background_mode = 2
+sky = SubResource("Sky_8lphf")
+ambient_light_sky_contribution = 0.62
+ambient_light_energy = 0.0
+ssr_depth_tolerance = 0.01
+ssao_enabled = true
+ssao_radius = 5.58
+ssao_intensity = 5.59
+ssao_power = 1.09806
+ssao_detail = 1.1
+ssao_sharpness = 1.0
+ssao_light_affect = 0.77
+ssao_ao_channel_affect = 0.9
+ssil_radius = 5.76
+ssil_intensity = 0.1
+ssil_sharpness = 1.0
+ssil_normal_rejection = 0.83
+sdfgi_use_occlusion = true
+glow_enabled = true
+volumetric_fog_density = 0.0005
+
+[node name="WorldRoot" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.186959, 0)
+script = ExtResource("1_gju3h")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3is03")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.743145, -0.1934, 0.640572, 0, 0.95732, 0.289031, -0.669131, 0.214792, -0.711427, -360.801, 164.493, -166.525)
+light_angular_distance = 1.0
+shadow_enabled = true
+shadow_transmittance_bias = -8.667
+shadow_blur = 0.0
+directional_shadow_max_distance = 272.2
+
+[node name="Player" parent="." instance=ExtResource("2_tcese")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4203, 30.3418, 23.8715)
+
+[node name="PlayerArm" parent="Player/Camera3D" index="0"]
+transform = Transform3D(0.480591, 0.0190925, 0.34619, -0.00677681, 0.41065, -0.265908, -0.102373, 0.0624458, 1.64279, 1.31671, -0.676452, -0.73283)
+
+[node name="ChunkManager" type="Node3D" parent="."]
+script = ExtResource("3_nc4mk")
+
+[editable path="Player"]
