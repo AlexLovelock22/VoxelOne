@@ -257,4 +257,24 @@ func is_block_at_grid(world_pos: Vector3i) -> bool:
 
 	return chunk.block_map.has(local_pos)
 
+func get_block_at_world_pos(world_pos: Vector3) -> bool:
+	var block_size = BLOCK_SIZE
+	var chunk_size = CHUNK_SIZE
 
+	var chunk_pos = Vector3i(
+		floor(world_pos.x / (chunk_size * block_size)),
+		0,
+		floor(world_pos.z / (chunk_size * block_size))
+	)
+
+	if not chunks.has(chunk_pos):
+		return false
+
+	var local_pos = world_pos - (chunk_pos * chunk_size * block_size)
+	var block_coords = Vector3i(
+		floor(local_pos.x / block_size),
+		floor(world_pos.y / block_size),
+		floor(local_pos.z / block_size)
+	)
+
+	return chunks[chunk_pos].block_map.has(block_coords)

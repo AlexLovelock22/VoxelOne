@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://diyn3tveltl68"]
+[gd_scene load_steps=12 format=3 uid="uid://diyn3tveltl68"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_gju3h"]
 [ext_resource type="PackedScene" uid="uid://l60qdcbqrbqn" path="res://player.tscn" id="2_tcese"]
@@ -42,6 +42,13 @@ volumetric_fog_density = 0.0005
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tvyc5"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_pktof"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4kfy"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 0.298039)
+
 [node name="WorldRoot" type="Node3D"]
 script = ExtResource("1_gju3h")
 
@@ -74,5 +81,11 @@ mesh = SubResource("BoxMesh_dv1ip")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_tvyc5")
+
+[node name="BlockHighlighter" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.005, 0, 0, 0, 1.005, 0, 0, 0, 1.005, 0, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_pktof")
+surface_material_override/0 = SubResource("StandardMaterial3D_i4kfy")
 
 [editable path="Player"]

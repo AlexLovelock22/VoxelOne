@@ -9,6 +9,7 @@ const AIR_CONTROL = 0.04
 const  gravity = 45
 var sens = 0.002
 
+@onready var highlighter = get_node("/root/WorldRoot/BlockHighlighter")
 @onready var camera_3d = $Camera3D
 @onready var player_arm = $Camera3D/PlayerArm
 @onready var ray_cast_3d = $Camera3D/RayCast3D
@@ -46,7 +47,7 @@ func _unhandled_input(event):
 func _process(delta):
 	if $fps_label:
 		$fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
-	
+	var raycast = $Camera3D/RayCast3D
 	var forward = -global_transform.basis.z.normalized()
 	var dir_name = ""
 
@@ -65,40 +66,63 @@ func _process(delta):
 	var label := get_node("PlayerPos") as Label  # Adjust if nested deeper
 	if label:
 		label.text = "Voxel: (%d, %d, %d)" % [voxel_pos.x, voxel_pos.y, voxel_pos.z]
-
 	
-
-
-func _handle_block_interaction(button_index):
 	ray_cast_3d.enabled = true
 	ray_cast_3d.force_raycast_update()
 
-	if not ray_cast_3d.is_colliding():
-		ray_cast_3d.enabled = false
-		return
+	if ray_cast_3d.is_colliding():
+		var collision_point = ray_cast_3d.get_collision_point()
+		var normal = ray_cast_3d.get_collision_normal()
 
-	var collision_point = ray_cast_3d.get_collision_point()
-	var normal = ray_cast_3d.get_collision_normal()
-
-	if button_index == MOUSE_BUTTON_LEFT:
-		var block_size = chunk_manager.BLOCK_SIZE
-		var block_pos = (collision_point - normal * 0.01) / block_size
+		var block_pos = (collision_point - normal * 0.1) / block_size
 		block_pos = block_pos.floor() * block_size
-		print("🪓 Breaking block at: ", block_pos)
-		if chunk_manager:
-			chunk_manager.set_block_at_world_pos(block_pos, false)
 
-	elif button_index == MOUSE_BUTTON_RIGHT:
-		var block_size = chunk_manager.BLOCK_SIZE
-		var block_pos = (collision_point + normal * 0.2) / block_size
-		block_pos = block_pos.floor() * block_size
-		print("🧱 Placing block at: ", block_pos)
-		if chunk_manager:
-			chunk_manager.set_block_at_world_pos(block_pos, true)
+		# ✅ Center the highlighter cube in the block
+		highlighter.global_position = block_pos + Vector3.ONE * (block_size * 0.5)
+		#highlighter.visible = true
+	#else:
+		#highlighter.visible = false
 
 	ray_cast_3d.enabled = false
+	
+
+func _handle_block_interaction(button_index):
+	var origin = camera_3d.global_position
+	var direction = -camera_3d.global_transform.basis.z.normalized()
+	var block_size = chunk_manager.BLOCK_SIZE
+	var result = perform_dda(origin, direction, 10.0, block_size)
+
+	if not result.hit:
+		print("🚫 DDA hit nothing.")
+		return
+
+	if button_index == MOUSE_BUTTON_LEFT:
+		print("🪓 Breaking block at: ", result.block_pos)
+		chunk_manager.set_block_at_world_pos(result.block_pos, false)
+
+	elif button_index == MOUSE_BUTTON_RIGHT:
+		print("🧱 Placing block at: ", result.previous_empty)
+		chunk_manager.set_block_at_world_pos(result.previous_empty, true)
 
 
+func perform_dda(origin: Vector3, direction: Vector3, max_distance: float, block_size: float) -> Dictionary:
+	var current = origin
+	var step = direction.normalized() * 0.01  # Small step size
+	var traveled = 0.0
+
+	while traveled < max_distance:
+		var block_coords = (current / block_size).floor() * block_size
+		if chunk_manager.get_block_at_world_pos(block_coords):
+			return {
+				"hit": true,
+				"block_pos": block_coords,
+				"previous_empty": ((current - step) / block_size).floor() * block_size,
+				"normal": -step.normalized().sign()
+			}
+		current += step
+		traveled += step.length()
+
+	return { "hit": false }
 
 
 

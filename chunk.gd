@@ -181,11 +181,6 @@ func _generate_visible_mesh():
 					p + Vector3(0, 0, h)
 				]
 
-				# ✅ Log raw vertex positions (especially Y)
-				print("🟨 TOP FACE at chunk (%d, %d, %d), y=%d:" % [x, y, z, y])
-				for v in face_vertices:
-					print("     Vertex: ", v)
-
 				for v in face_vertices:
 					vertices.append(v)
 					normals.append(Vector3.UP)
@@ -706,3 +701,4 @@ func set_block_at_local_pos(local_pos: Vector3i, is_solid: bool):
 		block_map.erase(local_pos)
 
 	generate_mesh()
+
