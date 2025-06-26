@@ -43,6 +43,7 @@ volumetric_fog_density = 0.0005
 [sub_resource type="BoxShape3D" id="BoxShape3D_tvyc5"]
 
 [node name="WorldRoot" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.186959, 0)
 script = ExtResource("1_gju3h")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -57,17 +58,18 @@ shadow_blur = 0.0
 directional_shadow_max_distance = 272.2
 
 [node name="Player" parent="." instance=ExtResource("2_tcese")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.135461, 17.5447, -0.10497)
+BLOCK_SIZE = null
 
-[node name="PlayerArm" parent="Player/Camera3D" index="1"]
+[node name="PlayerArm" parent="Player/Camera3D" index="0"]
 transform = Transform3D(0.480591, 0.0190925, 0.34619, -0.00677681, 0.41065, -0.265908, -0.102373, 0.0624458, 1.64279, 1.31671, -0.676452, -0.73283)
 
 [node name="ChunkManager" type="Node3D" parent="."]
-transform = Transform3D(0.998808, 0, 0, 0, 0.998808, 0, 0, 0, 0.998808, 0, 0, 0)
 script = ExtResource("3_nc4mk")
 chunk_scene = ExtResource("4_anwab")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.526535, 0.128275)
 mesh = SubResource("BoxMesh_dv1ip")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]

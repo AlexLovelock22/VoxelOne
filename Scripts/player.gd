@@ -1,12 +1,12 @@
 extends CharacterBody3D
 
-var SPEED = 11.0
-const RUN_SPEED = 30.0
-const JUMP_VELOCITY = 14.5
-const AIR_DECELERATION = 0.1
+var SPEED = 4.0
+const RUN_SPEED = 1.0
+const JUMP_VELOCITY = 11
+const AIR_DECELERATION = 10.2
 const AIR_CONTROL = 0.04
 
-const  gravity = 50
+const  gravity = 45
 var sens = 0.002
 
 @onready var camera_3d = $Camera3D
@@ -57,6 +57,17 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("ui_focus_next"):
 		print("Looking toward: ", dir_name, " | Vector: ", forward)
+	
+	var block_size: float = chunk_manager.BLOCK_SIZE
+	var world_pos: Vector3 = global_transform.origin
+	var voxel_pos: Vector3i = (world_pos / block_size).floor()
+
+	var label := get_node("PlayerPos") as Label  # Adjust if nested deeper
+	if label:
+		label.text = "Voxel: (%d, %d, %d)" % [voxel_pos.x, voxel_pos.y, voxel_pos.z]
+
+	
+
 
 func _handle_block_interaction(button_index):
 	ray_cast_3d.enabled = true
@@ -86,6 +97,11 @@ func _handle_block_interaction(button_index):
 			chunk_manager.set_block_at_world_pos(block_pos, true)
 
 	ray_cast_3d.enabled = false
+
+
+
+
+
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -148,3 +164,25 @@ func animate_arm(animation_name: String):
 			print("Error: Animation not found - ", animation_name)
 	else:
 		print("Error: animation_player is null")
+
+func _draw_debug_voxel(world_pos: Vector3, size: float) -> void:
+	var debug_box := MeshInstance3D.new()
+	debug_box.mesh = BoxMesh.new()
+	debug_box.scale = Vector3.ONE * (size * 0.95)  # slightly smaller than full block
+	debug_box.translation = world_pos + Vector3(size * 0.5, size * 0.5, size * 0.5)
+
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color(1, 0, 1, 0.8)  # purple-ish
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	debug_box.material_override = material
+
+	get_tree().current_scene.add_child(debug_box)
+
+	# Auto-remove after short delay
+	var timer := Timer.new()
+	timer.wait_time = 0.5
+	timer.one_shot = true
+	timer.timeout.connect(func(): debug_box.queue_free())
+	debug_box.add_child(timer)
+	timer.start()
+

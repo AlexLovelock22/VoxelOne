@@ -2,6 +2,7 @@ extends Node3D
 
 @export var CHUNK_SIZE: int = 16
 @export var BLOCK_SIZE: float = 1.0
+@export var CHUNK_HEIGHT: int = 128
 
 var chunk_manager 
 var noise: FastNoiseLite
@@ -35,11 +36,50 @@ func _generate_block_map():
 		for z in range(CHUNK_SIZE):
 			var world_x = chunk_offset.x + x
 			var world_z = chunk_offset.z + z
-			var height = int(noise.get_noise_2d(world_x, world_z) * CHUNK_SIZE / 2.0) + CHUNK_SIZE / 2
-			for y in range(height):
-				block_map[Vector3i(x, y, z)] = true
-				
 
+			# Get the raw noise value and calculate height
+			var raw_height = noise.get_noise_2d(world_x, world_z)
+			var height = clamp(roundi(raw_height * (CHUNK_SIZE / 2.0) + (CHUNK_SIZE / 2.0)), 0, CHUNK_SIZE)
+
+			# Log column height calculation
+			#print("🌍 Column (%d, %d) raw: %.6f → rounded height: %d" % [world_x, world_z, raw_height, height])
+
+			for y in range(height):
+				var block_pos = Vector3i(x, y, z)
+				block_map[block_pos] = true
+
+				# DEBUG BLOCK: log exact placement for one specific block
+				if x == 0 and y == height - 1 and z == 0:
+					var world_pos = (Vector3(chunk_offset) + Vector3(block_pos)) * BLOCK_SIZE
+					var top_of_block = world_pos.y + BLOCK_SIZE
+					var center_of_block = world_pos.y + (BLOCK_SIZE * 0.5)
+
+					print("🧱 BLOCK DATA")
+					print(" ├─ BlockPos (chunk-local): ", block_pos)
+					print(" ├─ Block world_pos: ", world_pos)
+					print(" ├─ Block center Y: ", center_of_block)
+					print(" └─ Block top Y: ", top_of_block)
+
+					# Visual debug box
+					var box := MeshInstance3D.new()
+					box.mesh = BoxMesh.new()
+					box.mesh.size = Vector3.ONE * BLOCK_SIZE
+					box.global_transform = Transform3D(Basis(), world_pos)
+					box.name = "DEBUG_BLOCK"
+
+					var mat := StandardMaterial3D.new()
+					mat.albedo_color = Color.YELLOW
+					box.material_override = mat
+					get_tree().root.add_child(box)
+
+					print("📦 DEBUG_BLOCK global_transform.origin: ", box.global_transform.origin)
+
+			# Optional special print for specific world pos
+			if world_x == -6 and world_z == 2:
+				print("🌄 Raw height: %.3f → Final height at (%d, %d): %d" %
+					[raw_height, world_x, world_z, height])
+
+	
 func _is_inside_chunk(pos: Vector3i) -> bool:
 	return pos.x >= 0 and pos.x < CHUNK_SIZE \
 		and pos.y >= 0 and pos.y < CHUNK_SIZE \
@@ -140,6 +180,11 @@ func _generate_visible_mesh():
 					p + Vector3(w, 0, h),
 					p + Vector3(0, 0, h)
 				]
+
+				# ✅ Log raw vertex positions (especially Y)
+				print("🟨 TOP FACE at chunk (%d, %d, %d), y=%d:" % [x, y, z, y])
+				for v in face_vertices:
+					print("     Vertex: ", v)
 
 				for v in face_vertices:
 					vertices.append(v)
@@ -585,7 +630,7 @@ func _generate_visible_mesh():
 
 
 	# TODO: Add LEFT, FORWARD, and BACK face passes similarly
-
+	
 	# Finalize mesh
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_NORMAL] = normals

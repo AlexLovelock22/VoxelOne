@@ -163,27 +163,34 @@ func _flush_log_buffer(userdata=null):
 		# Avoid locking main thread
 		OS.delay_msec(50)
 
-func set_block_at_world_pos(world_pos: Vector3, place: bool):
-	var chunk_size := 16  # Or use a constant if available
+func set_block_at_world_pos(world_pos: Vector3, place: bool) -> void:
+	var chunk_size := 16
+
+	# Correct 3D chunk coordinate calculation (including Y)
 	var chunk_coords = Vector3i(
 		floori(world_pos.x / chunk_size),
-		0,
+		floori(world_pos.y / chunk_size),
 		floori(world_pos.z / chunk_size)
 	)
 
+	# Local position within the chunk
 	var local_pos = Vector3i(
 		int(world_pos.x) % chunk_size,
-		int(world_pos.y),
+		int(world_pos.y) % chunk_size,
 		int(world_pos.z) % chunk_size
 	)
 
+	# Handle negative world coords
 	if local_pos.x < 0:
 		local_pos.x += chunk_size
+	if local_pos.y < 0:
+		local_pos.y += chunk_size
 	if local_pos.z < 0:
 		local_pos.z += chunk_size
 
-	print("🌍 Requested %s at world %s → chunk %s local %s" % [(place if place else "BREAK"), world_pos, chunk_coords, local_pos])
+	#print("Requested %s at world %s → chunk %s local %s" % [(place if place else "BREAK"), world_pos, chunk_coords, local_pos])
 
+	# Ensure chunk exists
 	if not chunks.has(chunk_coords):
 		print("❌ No chunk found at %s" % chunk_coords)
 		return
@@ -192,7 +199,7 @@ func set_block_at_world_pos(world_pos: Vector3, place: bool):
 
 	if place:
 		chunk.block_map[local_pos] = true
-		print("✅ Placed block at %s in chunk %s" % [local_pos, chunk_coords])
+		#print("✅ Placed block at %s in chunk %s" % [local_pos, chunk_coords])
 	else:
 		if chunk.block_map.has(local_pos):
 			chunk.block_map.erase(local_pos)
@@ -200,7 +207,54 @@ func set_block_at_world_pos(world_pos: Vector3, place: bool):
 		else:
 			print("⚠️ Tried to remove nonexistent block at %s in chunk %s" % [local_pos, chunk_coords])
 
+	# Always update the current chunk's mesh
 	chunk._generate_visible_mesh()
 
+	# --- Border logic for X and Z neighbors ---
+	var neighbor_directions = []
+
+	if local_pos.x == 0:
+		neighbor_directions.append(Vector3i(-1, 0, 0))
+	elif local_pos.x == chunk_size - 1:
+		neighbor_directions.append(Vector3i(1, 0, 0))
+
+	if local_pos.z == 0:
+		neighbor_directions.append(Vector3i(0, 0, -1))
+	elif local_pos.z == chunk_size - 1:
+		neighbor_directions.append(Vector3i(0, 0, 1))
+
+	# Regenerate neighbor meshes if on edge
+	for dir in neighbor_directions:
+		var neighbor_coords = chunk_coords + dir
+		if chunks.has(neighbor_coords):
+			chunks[neighbor_coords]._generate_visible_mesh()
+			#print("Updated neighbor chunk mesh at", neighbor_coords)
+
+
+func is_block_at_grid(world_pos: Vector3i) -> bool:
+	var chunk_size = CHUNK_SIZE
+	var chunk_pos = Vector3i(
+		floor(world_pos.x / chunk_size),
+		0,  # Y-chunking not supported in your current structure
+		floor(world_pos.z / chunk_size)
+	)
+
+	var chunk = chunks.get(chunk_pos)
+	if chunk == null:
+		return false
+
+	var chunk_height = chunk.CHUNK_HEIGHT
+
+	var local_pos = Vector3i(
+		world_pos.x % chunk_size,
+		world_pos.y % chunk_height,
+		world_pos.z % chunk_size
+	)
+
+	if local_pos.x < 0: local_pos.x += chunk_size
+	if local_pos.y < 0: local_pos.y += chunk_height
+	if local_pos.z < 0: local_pos.z += chunk_size
+
+	return chunk.block_map.has(local_pos)
 
 
