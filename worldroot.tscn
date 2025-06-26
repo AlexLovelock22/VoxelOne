@@ -83,7 +83,6 @@ mesh = SubResource("BoxMesh_dv1ip")
 shape = SubResource("BoxShape3D_tvyc5")
 
 [node name="BlockHighlighter" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.005, 0, 0, 0, 1.005, 0, 0, 0, 1.005, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_pktof")
 surface_material_override/0 = SubResource("StandardMaterial3D_i4kfy")
