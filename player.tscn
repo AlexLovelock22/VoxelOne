@@ -5,6 +5,7 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_1bp00"]
 height = 2.08169
+radius = 0.34618
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_2d4dr"]
 radius = 0.4615
@@ -95,7 +96,7 @@ visible = false
 target_position = Vector3(0, 0, -16)
 
 [node name="PlayerArm" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(0.20635, 0.00858637, 0.155804, -0.00290974, 0.18468, -0.119673, -0.0439558, 0.0280835, 0.739343, 1.31671, -0.676452, -0.73283)
+transform = Transform3D(0.20635, 0.00858639, 0.155804, -0.00290974, 0.18468, -0.119673, -0.0439557, 0.0280835, 0.739343, 1.31671, -0.676452, -0.73283)
 mesh = SubResource("BoxMesh_qdkvv")
 skeleton = NodePath("../..")
 

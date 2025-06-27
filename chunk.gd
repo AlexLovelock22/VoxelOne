@@ -8,6 +8,7 @@ var chunk_manager
 var noise: FastNoiseLite
 var chunk_offset: Vector3i
 var block_map: Dictionary = {}
+var mesh_generated := false
 
 func set_chunk_data(p_noise: FastNoiseLite, p_offset: Vector3i):
 	noise = p_noise
@@ -20,12 +21,10 @@ func generate_chunk():
 	_generate_block_map()
 	# DO NOT call _generate_visible_mesh() here — it will be triggered later by chunk_manager
 
-var mesh_generated := false
 
 func generate_mesh():
 	#print("Meshing chunk at ", chunk_offset)
 	_generate_visible_mesh()
-	mesh_generated = true
 
 func _generate_block_map():
 	if noise == null:
@@ -48,36 +47,6 @@ func _generate_block_map():
 				var block_pos = Vector3i(x, y, z)
 				block_map[block_pos] = true
 
-				# DEBUG BLOCK: log exact placement for one specific block
-				if x == 0 and y == height - 1 and z == 0:
-					var world_pos = (Vector3(chunk_offset) + Vector3(block_pos)) * BLOCK_SIZE
-					var top_of_block = world_pos.y + BLOCK_SIZE
-					var center_of_block = world_pos.y + (BLOCK_SIZE * 0.5)
-
-					print("🧱 BLOCK DATA")
-					print(" ├─ BlockPos (chunk-local): ", block_pos)
-					print(" ├─ Block world_pos: ", world_pos)
-					print(" ├─ Block center Y: ", center_of_block)
-					print(" └─ Block top Y: ", top_of_block)
-
-					# Visual debug box
-					var box := MeshInstance3D.new()
-					box.mesh = BoxMesh.new()
-					box.mesh.size = Vector3.ONE * BLOCK_SIZE
-					box.global_transform = Transform3D(Basis(), world_pos)
-					box.name = "DEBUG_BLOCK"
-
-					var mat := StandardMaterial3D.new()
-					mat.albedo_color = Color.YELLOW
-					box.material_override = mat
-					get_tree().root.add_child(box)
-
-					print("📦 DEBUG_BLOCK global_transform.origin: ", box.global_transform.origin)
-
-			# Optional special print for specific world pos
-			if world_x == -6 and world_z == 2:
-				print("🌄 Raw height: %.3f → Final height at (%d, %d): %d" %
-					[raw_height, world_x, world_z, height])
 
 	
 func _is_inside_chunk(pos: Vector3i) -> bool:
@@ -85,7 +54,8 @@ func _is_inside_chunk(pos: Vector3i) -> bool:
 		and pos.y >= 0 and pos.y < CHUNK_SIZE \
 		and pos.z >= 0 and pos.z < CHUNK_SIZE
 
-
+func is_ready() -> bool:
+	return mesh_generated
 
 func _generate_visible_mesh():
 	# Clean up old mesh + collisions
@@ -645,8 +615,9 @@ func _generate_visible_mesh():
 	collision_shape.shape = shape
 	collider.add_child(collision_shape)
 	add_child(collider)
-
-	print("✅ Chunk mesh updated with %d vertices, %d indices" % [vertices.size(), indices.size()])
+	
+	mesh_generated = true
+	#print("✅ Chunk mesh updated with %d vertices, %d indices" % [vertices.size(), indices.size()])
 
 
 

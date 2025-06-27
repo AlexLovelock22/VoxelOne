@@ -6,6 +6,9 @@ var chunks = {}
 var shared_noise := FastNoiseLite.new()
 var pending_mesh := {}
 
+
+
+var chunk_thread: Thread
 const log_path = "user://chunk_debug.log"
 var log_buffer := []
 var log_thread: Thread = Thread.new()
@@ -15,28 +18,33 @@ const CHUNK_SIZE := 16
 @export var BLOCK_SIZE: float = 1.0
 
 func _ready():
-	_clear_log_file()
-	log_thread = Thread.new()
-	log_thread.start(_flush_log_buffer)
+	chunk_thread = Thread.new()
+	chunk_thread.start(Callable(self, "_threaded_chunk_load"))
 
-	_initialize_noise()
-	var positions := _generate_positions()
+	# ⏳ Wait until the player’s starting chunk is loaded
+	var player_chunk_pos := Vector3i(0, 0, 0)
+	while not chunks.has(player_chunk_pos):
+		await get_tree().process_frame
 
-	for pos in positions:
-		_spawn_chunk(pos)
-
-	for pos in positions:
-		_try_generate_if_ready(pos)
-
+	# Once the chunk under the player exists, let normal game logic proceed
 	_retry_pending_mesh()
 
 	stop_thread = true
 	log_thread.wait_to_finish()
 
-func _clear_log_file():
-	var file = FileAccess.open(log_path, FileAccess.WRITE)
-	file.store_line("=== Chunk Log Start ===")
-	file.close()
+
+func _threaded_chunk_load(userdata = null):
+	var positions := _generate_positions()
+
+	for pos in positions:
+		call_deferred("_spawn_chunk", pos)
+		await get_tree().process_frame  # Spread spawning over time
+
+	await get_tree().process_frame  # Let scene settle
+
+	for pos in positions:
+		_try_generate_if_ready(pos)
+		await get_tree().process_frame  # Spread meshing over time
 
 func _initialize_noise():
 	var rng = RandomNumberGenerator.new()
@@ -54,6 +62,19 @@ func _generate_positions() -> Array:
 func _sort_by_distance_from_origin(a: Vector3i, b: Vector3i) -> bool:
 	return a.length_squared() < b.length_squared()
 
+
+func _threaded_spawn_and_generate_chunks(positions: Array):
+	# This is the only threaded part, only doing non-scene work
+	for pos in positions:
+		call_deferred("_spawn_chunk", pos)
+
+	await get_tree().process_frame  # wait one frame to ensure chunks added
+	for pos in positions:
+		_try_generate_if_ready(pos)
+
+	_retry_pending_mesh()
+
+
 func _spawn_chunk(chunk_pos: Vector3i):
 	if chunks.has(chunk_pos):
 		return
@@ -67,8 +88,18 @@ func _spawn_chunk(chunk_pos: Vector3i):
 	add_child(chunk_instance)
 	chunks[chunk_pos] = chunk_instance
 
+func _threaded_generate_chunk(chunk_pos: Vector3i, chunk_instance: Node):
+	chunk_instance.generate_chunk()
+	call_deferred("_finalize_chunk", chunk_pos, chunk_instance)
+
+func _finalize_chunk(chunk_pos: Vector3i, chunk_instance: Node):
+	add_child(chunk_instance)
+
 	var quadrant = _get_quadrant(chunk_pos)
-	#_log("🧱 Spawned chunk at: %s [%s]" % [chunk_pos, quadrant])
+	# _log("🧱 Spawned chunk at: %s [%s]" % [chunk_pos, quadrant])
+
+	_try_generate_if_ready(chunk_pos)
+
 
 func _get_quadrant(pos: Vector3i) -> String:
 	if pos.x >= 0 and pos.z >= 0:
@@ -81,20 +112,14 @@ func _get_quadrant(pos: Vector3i) -> String:
 		return "NE"
 
 func _try_generate_if_ready(pos: Vector3i):
-	if not chunks.has(pos):
-		#_log("❌ Attempted to mesh non-existent chunk: %s" % pos)
-		return
-
 	for dir in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
 		if not chunks.has(pos + dir):
-			#_log("⏳ Delaying mesh gen for %s, missing neighbor at %s" % [pos, pos + dir])
 			pending_mesh[pos] = true
 			return
 
-	#_log("✅ All neighbors ready for %s → meshing now." % pos)
 	var chunk = chunks[pos]
 	chunk.generate_mesh()
-	#_log("✔️ Mesh generated for chunk %s" % pos)
+
 
 func _retry_pending_mesh():
 	var completed := []
@@ -139,30 +164,6 @@ func is_block_solid_at_world_pos(world_pos: Vector3i) -> bool:
 	return solid
 
 
-
-# --- Buffered logging ---
-func _log(msg: String):
-	log_mutex.lock()
-	log_buffer.append(msg)
-	log_mutex.unlock()
-
-func _flush_log_buffer(userdata=null):
-	while not stop_thread:
-		log_mutex.lock()
-		var pending = log_buffer.duplicate()
-		log_buffer.clear()
-		log_mutex.unlock()
-
-		if pending.size() > 0:
-			var file = FileAccess.open(log_path, FileAccess.READ_WRITE)
-			file.seek_end()
-			for line in pending:
-				file.store_line(line)
-			file.close()
-
-		# Avoid locking main thread
-		OS.delay_msec(50)
-
 func set_block_at_world_pos(world_pos: Vector3, place: bool) -> void:
 	var chunk_size := 16
 
@@ -199,11 +200,11 @@ func set_block_at_world_pos(world_pos: Vector3, place: bool) -> void:
 
 	if place:
 		chunk.block_map[local_pos] = true
-		#print("✅ Placed block at %s in chunk %s" % [local_pos, chunk_coords])
+
 	else:
 		if chunk.block_map.has(local_pos):
 			chunk.block_map.erase(local_pos)
-			print("🗑️ Removed block at %s in chunk %s" % [local_pos, chunk_coords])
+			
 		else:
 			print("⚠️ Tried to remove nonexistent block at %s in chunk %s" % [local_pos, chunk_coords])
 
@@ -231,32 +232,6 @@ func set_block_at_world_pos(world_pos: Vector3, place: bool) -> void:
 			#print("Updated neighbor chunk mesh at", neighbor_coords)
 
 
-func is_block_at_grid(world_pos: Vector3i) -> bool:
-	var chunk_size = CHUNK_SIZE
-	var chunk_pos = Vector3i(
-		floor(world_pos.x / chunk_size),
-		0,  # Y-chunking not supported in your current structure
-		floor(world_pos.z / chunk_size)
-	)
-
-	var chunk = chunks.get(chunk_pos)
-	if chunk == null:
-		return false
-
-	var chunk_height = chunk.CHUNK_HEIGHT
-
-	var local_pos = Vector3i(
-		world_pos.x % chunk_size,
-		world_pos.y % chunk_height,
-		world_pos.z % chunk_size
-	)
-
-	if local_pos.x < 0: local_pos.x += chunk_size
-	if local_pos.y < 0: local_pos.y += chunk_height
-	if local_pos.z < 0: local_pos.z += chunk_size
-
-	return chunk.block_map.has(local_pos)
-
 func get_block_at_world_pos(world_pos: Vector3) -> bool:
 	var block_size = BLOCK_SIZE
 	var chunk_size = CHUNK_SIZE
@@ -278,3 +253,20 @@ func get_block_at_world_pos(world_pos: Vector3) -> bool:
 	)
 
 	return chunks[chunk_pos].block_map.has(block_coords)
+
+func world_to_chunk_coords(world_pos: Vector3) -> Vector3i:
+	var chunk_size = chunk_scene.instantiate().CHUNK_SIZE
+	var block_size = chunk_scene.instantiate().BLOCK_SIZE
+	var chunk_world_scale = chunk_size * block_size
+	return Vector3i(
+		floor(world_pos.x / chunk_world_scale),
+		0,
+		floor(world_pos.z / chunk_world_scale)
+	)
+	
+func is_chunk_ready(world_pos: Vector3) -> bool:
+	var chunk_coords = world_to_chunk_coords(world_pos)
+	if not chunks.has(chunk_coords):
+		return false
+	var chunk = chunks[chunk_coords]
+	return chunk.is_meshed

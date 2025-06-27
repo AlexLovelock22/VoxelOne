@@ -1,10 +1,12 @@
 extends CharacterBody3D
 
-var SPEED = 4.0
-const RUN_SPEED = 1.0
-const JUMP_VELOCITY = 11
-const AIR_DECELERATION = 10.2
-const AIR_CONTROL = 0.04
+var WALK_SPEED = 5.5
+const RUN_SPEED = 9.0
+const JUMP_VELOCITY = 13
+const GROUND_DECELERATION = 54.0
+const AIR_ACCELERATION = 1
+const AIR_DECELERATION = 20.2
+var frozen := true
 
 const  gravity = 45
 var sens = 0.002
@@ -66,42 +68,22 @@ func _process(delta):
 	var label := get_node("PlayerPos") as Label  # Adjust if nested deeper
 	if label:
 		label.text = "Voxel: (%d, %d, %d)" % [voxel_pos.x, voxel_pos.y, voxel_pos.z]
-	
-	ray_cast_3d.enabled = true
-	ray_cast_3d.force_raycast_update()
 
-	if ray_cast_3d.is_colliding():
-		var collision_point = ray_cast_3d.get_collision_point()
-		var normal = ray_cast_3d.get_collision_normal()
 
-		var block_pos = (collision_point - normal * 0.1) / block_size
-		block_pos = block_pos.floor() * block_size
-
-		# ✅ Center the highlighter cube in the block
-		highlighter.global_position = block_pos + Vector3.ONE * (block_size * 0.5)
-		#highlighter.visible = true
-	#else:
-		#highlighter.visible = false
-
-	ray_cast_3d.enabled = false
-	
 
 func _handle_block_interaction(button_index):
 	var origin = camera_3d.global_position
 	var direction = -camera_3d.global_transform.basis.z.normalized()
 	var block_size = chunk_manager.BLOCK_SIZE
 	var result = perform_dda(origin, direction, 10.0, block_size)
-
+	
 	if not result.hit:
-		print("🚫 DDA hit nothing.")
 		return
-
+	
 	if button_index == MOUSE_BUTTON_LEFT:
-		print("🪓 Breaking block at: ", result.block_pos)
 		chunk_manager.set_block_at_world_pos(result.block_pos, false)
-
+	
 	elif button_index == MOUSE_BUTTON_RIGHT:
-		print("🧱 Placing block at: ", result.previous_empty)
 		chunk_manager.set_block_at_world_pos(result.previous_empty, true)
 
 
@@ -109,7 +91,7 @@ func perform_dda(origin: Vector3, direction: Vector3, max_distance: float, block
 	var current = origin
 	var step = direction.normalized() * 0.01  # Small step size
 	var traveled = 0.0
-
+	
 	while traveled < max_distance:
 		var block_coords = (current / block_size).floor() * block_size
 		if chunk_manager.get_block_at_world_pos(block_coords):
@@ -121,92 +103,60 @@ func perform_dda(origin: Vector3, direction: Vector3, max_distance: float, block
 			}
 		current += step
 		traveled += step.length()
-
+	
 	return { "hit": false }
 
-
-
-
 func _physics_process(delta):
+	if frozen and chunk_manager:
+		var chunk_pos: Vector3i = chunk_manager.world_to_chunk_coords(global_position)
+		if chunk_manager.chunks.has(chunk_pos):
+			var chunk = chunk_manager.chunks[chunk_pos]
+			if chunk.is_ready():
+				frozen = false
+			else:
+				velocity = Vector3.ZERO
+				move_and_slide()
+				return
+		else:
+			velocity = Vector3.ZERO
+			move_and_slide()
+			return
+
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	if Input.is_action_just_pressed("fly_down"):
-		velocity.y = -10
-
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
+	var SPEED: float
 	if Input.is_action_pressed("run") and is_on_floor():
 		SPEED = RUN_SPEED
 	else:
-		SPEED = 10.0
+		SPEED = WALK_SPEED
 
 	if is_on_floor():
 		if direction:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
+			if sign(velocity.x) != sign(direction.x):
+				velocity.x = direction.x * SPEED
+			else:
+				velocity.x = move_toward(velocity.x, direction.x * SPEED, GROUND_DECELERATION * delta)
+
+			if sign(velocity.z) != sign(direction.z):
+				velocity.z = direction.z * SPEED
+			else:
+				velocity.z = move_toward(velocity.z, direction.z * SPEED, GROUND_DECELERATION * delta)
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
+			velocity.x = move_toward(velocity.x, 0, GROUND_DECELERATION * delta)
+			velocity.z = move_toward(velocity.z, 0, GROUND_DECELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, AIR_DECELERATION * delta)
-		velocity.z = move_toward(velocity.z, 0, AIR_DECELERATION * delta)
-
 		if direction:
-			velocity.x = lerp(velocity.x, direction.x * SPEED, AIR_CONTROL)
-			velocity.z = lerp(velocity.z, direction.z * SPEED, AIR_CONTROL)
-
-	is_moving = velocity.length() > movement_threshold
-	apply_bobbing(delta)
+			velocity.x = move_toward(velocity.x, direction.x * SPEED, AIR_ACCELERATION * delta)
+			velocity.z = move_toward(velocity.z, direction.z * SPEED, AIR_ACCELERATION * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0, AIR_DECELERATION * delta)
+			velocity.z = move_toward(velocity.z, 0, AIR_DECELERATION * delta)
 
 	move_and_slide()
-
-func apply_bobbing(delta):
-	if is_moving and is_on_floor():
-		bobbing_phase += delta * bobbing_frequency * SPEED
-		var vertical_bob = sin(bobbing_phase) * bobbing_amplitude
-		var horizontal_bob = cos(bobbing_phase * 2.0) * bobbing_amplitude * 0.5
-		bobbing_offset = Vector3(horizontal_bob, vertical_bob, 0)
-	else:
-		bobbing_phase = 0.0
-		bobbing_offset = Vector3.ZERO
-
-	camera_3d.position = camera_3d.position.lerp(original_camera_position + bobbing_offset, delta * 5.0)
-	player_arm.position = player_arm.position.lerp(original_arm_position + bobbing_offset * 0.5, delta * 5.0)
-
-func animate_arm(animation_name: String):
-	if arm_move:
-		if arm_move.has_animation(animation_name):
-			arm_move.stop()
-			arm_move.play(animation_name)
-			arm_move.seek(0, true)
-		else:
-			print("Error: Animation not found - ", animation_name)
-	else:
-		print("Error: animation_player is null")
-
-func _draw_debug_voxel(world_pos: Vector3, size: float) -> void:
-	var debug_box := MeshInstance3D.new()
-	debug_box.mesh = BoxMesh.new()
-	debug_box.scale = Vector3.ONE * (size * 0.95)  # slightly smaller than full block
-	debug_box.translation = world_pos + Vector3(size * 0.5, size * 0.5, size * 0.5)
-
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(1, 0, 1, 0.8)  # purple-ish
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	debug_box.material_override = material
-
-	get_tree().current_scene.add_child(debug_box)
-
-	# Auto-remove after short delay
-	var timer := Timer.new()
-	timer.wait_time = 0.5
-	timer.one_shot = true
-	timer.timeout.connect(func(): debug_box.queue_free())
-	debug_box.add_child(timer)
-	timer.start()
-

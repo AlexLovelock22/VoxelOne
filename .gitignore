@@ -1,2 +1,15 @@
 # Godot 4+ specific ignores
 .godot/
+
+
+# Godot log files
+Logs/
+*.log
+
+# Temporary files
+*.tmp
+
+# Godot-specific files to consider ignoring (optional)
+.import/
+export.cfg
+export_presets.cfg
