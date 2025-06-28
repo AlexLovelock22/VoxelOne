@@ -3,7 +3,7 @@ extends CharacterBody3D
 var WALK_SPEED = 5.5
 const RUN_SPEED = 9.0
 const JUMP_VELOCITY = 13
-const GROUND_DECELERATION = 54.0
+const GROUND_DECELERATION = 44.0
 const AIR_ACCELERATION = 1
 const AIR_DECELERATION = 20.2
 var frozen := true
@@ -49,25 +49,25 @@ func _unhandled_input(event):
 func _process(delta):
 	if $fps_label:
 		$fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
-	var raycast = $Camera3D/RayCast3D
-	var forward = -global_transform.basis.z.normalized()
-	var dir_name = ""
-
-	if abs(forward.x) > abs(forward.z):
-		dir_name = "East" if forward.x > 0 else "West"
-	else:
-		dir_name = "South" if forward.z > 0 else "North"
-
-	if Input.is_action_just_pressed("ui_focus_next"):
-		print("Looking toward: ", dir_name, " | Vector: ", forward)
-	
-	var block_size: float = chunk_manager.BLOCK_SIZE
-	var world_pos: Vector3 = global_transform.origin
-	var voxel_pos: Vector3i = (world_pos / block_size).floor()
-
-	var label := get_node("PlayerPos") as Label  # Adjust if nested deeper
-	if label:
-		label.text = "Voxel: (%d, %d, %d)" % [voxel_pos.x, voxel_pos.y, voxel_pos.z]
+	#var raycast = $Camera3D/RayCast3D
+	#var forward = -global_transform.basis.z.normalized()
+	#var dir_name = ""
+#
+	#if abs(forward.x) > abs(forward.z):
+		#dir_name = "East" if forward.x > 0 else "West"
+	#else:
+		#dir_name = "South" if forward.z > 0 else "North"
+#
+	#if Input.is_action_just_pressed("ui_focus_next"):
+		#print("Looking toward: ", dir_name, " | Vector: ", forward)
+	#
+	#var block_size: float = chunk_manager.BLOCK_SIZE
+	#var world_pos: Vector3 = global_transform.origin
+	#var voxel_pos: Vector3i = (world_pos / block_size).floor()
+#
+	#var label := get_node("PlayerPos") as Label  # Adjust if nested deeper
+	#if label:
+		#label.text = "Voxel: (%d, %d, %d)" % [voxel_pos.x, voxel_pos.y, voxel_pos.z]
 
 
 
@@ -160,3 +160,10 @@ func _physics_process(delta):
 			velocity.z = move_toward(velocity.z, 0, AIR_DECELERATION * delta)
 
 	move_and_slide()
+	
+#func _physics_process(delta):
+	## Just apply gravity, no movement or raycasts
+	#if not is_on_floor():
+		#velocity.y -= gravity * delta
+	#move_and_slide()
+

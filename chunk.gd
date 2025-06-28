@@ -21,6 +21,20 @@ func generate_chunk():
 	_generate_block_map()
 	# DO NOT call _generate_visible_mesh() here — it will be triggered later by chunk_manager
 
+var was_visible := false
+var frame_skip := 0
+
+func _process(_delta):
+	frame_skip += 1
+	if frame_skip < 10:
+		return
+	frame_skip = 0
+
+	var is_visible = $MeshInstance3D.is_visible_in_tree()
+	if is_visible != was_visible:
+		var status = "🟢 Visible" if is_visible else "⚪ Hidden"
+		print("%s — Chunk at %s" % [status, chunk_offset])
+		was_visible = is_visible
 
 func generate_mesh():
 	#print("Meshing chunk at ", chunk_offset)
@@ -602,20 +616,28 @@ func _generate_visible_mesh():
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
 	arrays[Mesh.ARRAY_INDEX] = indices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		# Apply mesh to the visual instance
 	$MeshInstance3D.mesh = mesh
+	$MeshInstance3D.force_update_transform()
 
-	# Collision
-	var collider = StaticBody3D.new()
-	var collision_shape = CollisionShape3D.new()
-	var shape = ConcavePolygonShape3D.new()
-	var faces = PackedVector3Array()
-	for i in indices:
-		faces.append(vertices[i])
-	shape.set_faces(faces)
-	collision_shape.shape = shape
-	collider.add_child(collision_shape)
-	add_child(collider)
+	# ✅ Add simple gray material to avoid default white primitives
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.7, 0.7, 0.7)
+	$MeshInstance3D.material_override = mat
+
+	## Collision
+	#var collider = StaticBody3D.new()
+	#var collision_shape = CollisionShape3D.new()
+	#var shape = ConcavePolygonShape3D.new()
+	#var faces = PackedVector3Array()
+	#for i in indices:
+		#faces.append(vertices[i])
+	#shape.set_faces(faces)
+	#collision_shape.shape = shape
+	#collider.add_child(collision_shape)
+	#add_child(collider)
 	
+	print("✅ Generated mesh with ", mesh.get_surface_count(), " surfaces")
 	mesh_generated = true
 	#print("✅ Chunk mesh updated with %d vertices, %d indices" % [vertices.size(), indices.size()])
 

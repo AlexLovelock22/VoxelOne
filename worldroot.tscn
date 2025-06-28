@@ -22,7 +22,6 @@ sky = SubResource("Sky_8lphf")
 ambient_light_sky_contribution = 0.62
 ambient_light_energy = 0.0
 ssr_depth_tolerance = 0.01
-ssao_enabled = true
 ssao_radius = 11.56
 ssao_intensity = 1.69
 ssao_power = 1.09806
@@ -36,7 +35,6 @@ ssil_intensity = 0.1
 ssil_sharpness = 1.0
 ssil_normal_rejection = 0.83
 sdfgi_use_occlusion = true
-glow_enabled = true
 volumetric_fog_density = 0.0005
 
 [sub_resource type="BoxMesh" id="BoxMesh_dv1ip"]
@@ -76,12 +74,14 @@ script = ExtResource("3_nc4mk")
 chunk_scene = ExtResource("4_anwab")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 1, 0)
 mesh = SubResource("BoxMesh_dv1ip")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
 shape = SubResource("BoxShape3D_tvyc5")
 
 [node name="BlockHighlighter" type="MeshInstance3D" parent="."]

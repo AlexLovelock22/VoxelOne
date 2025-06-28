@@ -5,7 +5,7 @@ extends Node3D
 var chunks = {}
 var shared_noise := FastNoiseLite.new()
 var pending_mesh := {}
-
+@export var debug_monitor_enabled: bool = true
 
 
 var chunk_thread: Thread
@@ -33,9 +33,9 @@ func _ready():
 	log_thread.wait_to_finish()
 
 
+
 func _threaded_chunk_load(userdata = null):
 	var positions := _generate_positions()
-
 	for pos in positions:
 		call_deferred("_spawn_chunk", pos)
 		await get_tree().process_frame  # Spread spawning over time
